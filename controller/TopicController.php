@@ -13,7 +13,7 @@
             $topicManager = new TopicManager();
 
             return [
-                "view" => VIEW_DIR."forum/listTopics.php",
+                "view" => VIEW_DIR."forum/Topic/listerTopics.php",
                 "data" => [
                     "topics" => $topicManager->findAll(["dateCreation", "DESC"])
                 ]

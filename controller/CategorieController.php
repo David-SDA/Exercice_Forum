@@ -13,7 +13,7 @@
             $categorieManager = new CategorieManager();
 
             return [
-                "view" => VIEW_DIR."forum/listCategories.php",
+                "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
                 "data" => [
                     "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
                 ]
