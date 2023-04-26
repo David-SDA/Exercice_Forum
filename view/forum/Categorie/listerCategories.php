@@ -13,6 +13,6 @@ foreach($categories as $categorie){
     <p><a href="index.php?ctrl=topic&action=listerTopicsDansCategorie&id=<?= $categorie->getId() ?>"><?=$categorie->getNomCategorie()?></a></p>
     <?php
 }
+?>
 
-
-  
+    <a href="index.php?ctrl=categorie&action=allerPageAjoutCategorie">AJOUTER UNE CATÉGORIE</a>

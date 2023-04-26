@@ -19,4 +19,11 @@
                 ]
             ];
         }
+
+        public function allerPageAjoutCategorie(){
+            return [
+                "view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php",
+                "data" => [""]
+            ];
+        }
     }
