@@ -9,5 +9,14 @@
 
     class CategorieController extends AbstractController implements ControllerInterface{
         
-        public function index(){}
+        public function index(){
+            $categorieManager = new CategorieManager();
+
+            return [
+                "view" => VIEW_DIR."forum/listCategories.php",
+                "data" => [
+                    "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                ]
+            ];
+        }
     }

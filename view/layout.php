@@ -42,7 +42,8 @@
                             ?>
                             <a href="./view/security/login.php">Connexion</a>
                             <a href="/security/register.html">Inscription</a>
-                            <a href="index.php?ctrl=topic&action=listTopics">la liste des topics</a>
+                            <a href="index.php?ctrl=topic&action=listTopics">La liste des topics</a>
+                            <a href="index.php?ctrl=categorie&action=listCategories">La liste des catégorie</a>
                         <?php
                         }
                    
