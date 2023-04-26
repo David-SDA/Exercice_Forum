@@ -10,4 +10,15 @@
     class PostController extends AbstractController implements ControllerInterface{
         
         public function index(){}
+
+        public function listerPostsDansTopic(){
+            $postManager = new PostManager();
+
+            return [
+                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                "data" => [
+                    "posts" => $postManager->trouverPostsDansTopic($_GET["id"])
+                ]
+            ];
+        }
     }

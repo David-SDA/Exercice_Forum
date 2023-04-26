@@ -10,6 +10,6 @@ $topics = $result["data"]['topics'];
 foreach($topics as $topic){
 
     ?>
-    <p><a href="#"><?=$topic->getTitre() . " crée le " . $topic->getDateCreation()?></a></p>
+    <p><a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $topic->getId() ?>"><?=$topic->getTitre() . " crée le " . $topic->getDateCreation()?></a></p>
     <?php
 }
