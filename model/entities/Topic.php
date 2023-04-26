@@ -6,102 +6,116 @@
     final class Topic extends Entity{
 
         private $id;
-        private $title;
-        private $user;
-        private $creationdate;
-        private $closed;
+        private $titre;
+        private $dateCreation;
+        private $verrouiller;
+        private $membre;
+        private $categorie;
 
         public function __construct($data){         
             $this->hydrate($data);        
         }
  
         /**
-         * Get the value of id
+         * Obtient la valeur de l'id
          */ 
-        public function getId()
-        {
-                return $this->id;
+        public function getId(){
+            return $this->id;
         }
 
         /**
-         * Set the value of id
+         * Définit la valeur de l'id
          *
          * @return  self
          */ 
-        public function setId($id)
-        {
-                $this->id = $id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of title
-         */ 
-        public function getTitle()
-        {
-                return $this->title;
-        }
-
-        /**
-         * Set the value of title
-         *
-         * @return  self
-         */ 
-        public function setTitle($title)
-        {
-                $this->title = $title;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of user
-         */ 
-        public function getUser()
-        {
-                return $this->user;
-        }
-
-        /**
-         * Set the value of user
-         *
-         * @return  self
-         */ 
-        public function setUser($user)
-        {
-                $this->user = $user;
-
-                return $this;
-        }
-
-        public function getCreationdate(){
-            $formattedDate = $this->creationdate->format("d/m/Y, H:i:s");
-            return $formattedDate;
-        }
-
-        public function setCreationdate($date){
-            $this->creationdate = new \DateTime($date);
+        public function setId($id){
+            $this->id = $id;
             return $this;
         }
 
         /**
-         * Get the value of closed
+         * Obtient la valeur du titre
          */ 
-        public function getClosed()
-        {
-                return $this->closed;
+        public function getTitre(){
+            return $this->titre;
         }
 
         /**
-         * Set the value of closed
+         * Définit la valeur du titre
          *
          * @return  self
          */ 
-        public function setClosed($closed)
-        {
-                $this->closed = $closed;
+        public function setTitre($titre){
+            $this->titre = $titre;
+            return $this;
+        }
 
-                return $this;
+        /**
+         * Obtient la valeur de la date de création
+         */
+        public function getDateCreation(){
+                $formattedDate = $this->dateCreation->format("d/m/Y, H:i:s");
+                return $formattedDate;
+        }
+    
+        /**
+         * Définit la valeur de la date de création
+         * 
+         * @return self
+         */
+        public function setDateCreation($date){
+            $this->dateCreation = new \DateTime($date);
+            return $this;
+        }
+
+        /**
+         * Obtient la valeur de vérouiller
+         */ 
+        public function getVerrouiller(){
+            return $this->verrouiller;
+        }
+    
+        /**
+         * Définit la valeur de vérouiller
+         *
+         * @return  self
+         */ 
+        public function setVerrouiller($verrouiller){
+            $this->verrouiller = $verrouiller;
+            return $this;
+        }
+
+        /**
+         * Obtient la valeur du membre
+         */ 
+        public function getMembre(){
+            return $this->membre;
+        }
+
+        /**
+         * Définit la valeur du membre
+         *
+         * @return  self
+         */ 
+        public function setMembre($membre){
+            $this->membre = $membre;
+            return $this;
+        }
+
+        /**
+         * Obtient la valeur de la catégorie
+         */
+        public function getCategorie(){
+            return $this->categorie;
+        }
+
+        /**
+         * Définit la valeur de la catégorie
+         * 
+         * @return self
+         */
+        public function setCategorie($categorie){
+            $this->categorie = $categorie;
+            return $this;
         }
     }
