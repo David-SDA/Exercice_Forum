@@ -13,3 +13,6 @@ foreach($topics as $topic){
     <p><a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a></p>
     <?php
 }
+?>
+
+    <a href="index.php?ctrl=topic&action=allerPageAjoutTopic">AJOUTER UN TOPIC</a>
