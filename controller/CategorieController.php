@@ -21,9 +21,14 @@
         }
 
         public function allerPageAjoutCategorie(){
-            return [
-                "view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php",
-                "data" => [""]
-            ];
+            return ["view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php"];
+        }
+
+        public function ajouterCategorie(){
+            $categorieManager = new CategorieManager();
+            
+            $nomCategorie = filter_input(INPUT_POST, "nomCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $categorieManager->add(["nomCategorie" => $nomCategorie]);
+            return["view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php"];
         }
     }
