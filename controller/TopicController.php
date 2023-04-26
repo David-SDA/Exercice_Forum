@@ -19,4 +19,15 @@
                 ]
             ];
         }
+
+        public function listerTopicsDansCategorie(){
+            $topicManager = new TopicManager();
+
+            return [
+                "view" => VIEW_DIR . "forum/Topic/listerTopicsDansCategorie.php",
+                "data" => [
+                    "topics" => $topicManager->trouverTopicsParCategorie($_GET["id"])
+                ]
+            ];
+        }
     }
