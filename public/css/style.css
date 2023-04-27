@@ -4,3 +4,33 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+
+header nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 10vh;
+    background-color: #f6e0b5;
+}
+header nav a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    height: 10vh;
+    padding: 0 30px 0 30px;
+}
+header nav a:hover{
+    background-color: #66545e;
+    color: #fff;
+}
+
+#nav-left{
+    margin-left: 3vw;
+}
+
+#nav-right{
+    display: flex;
+    margin-right: 3vw;
+}
