@@ -34,6 +34,7 @@ main{
     text-align: center;
 }
 
+/* Le footer */
 footer{
     display: flex;
     justify-content: center;
@@ -49,6 +50,7 @@ footer a{
     color: #343a40;
 }
 
+/* Les différents formulaires */
 form{
     border-radius: 10px;
     margin: 1vh auto auto auto;
@@ -84,6 +86,7 @@ form textarea{
     padding: 5px;
 }
 
+/* Tout les liens d'ajout (<a>) */
 .lienAjout{
     font-weight: 500;
     text-decoration: none;
@@ -105,6 +108,7 @@ form textarea{
     transform: scale(0.9);
 }
 
+/* Tout les bouton d'ajout (<input>) */
 .boutonAjout{
     margin-top: 1vh;
     padding: 5px;
