@@ -21,4 +21,23 @@
                 ]
             ];
         }
+
+        public function ajouterPost(){
+            $postManager = new PostManager();
+
+            $contenu = filter_input(INPUT_POST, "contenu", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $postManager->add([
+                "contenu" => $contenu,
+                "membre_id" => 2, // membre fixe
+                "topic_id" => $id
+            ]);
+
+            return [
+                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                "data" => [
+                    "posts" => $postManager->trouverPostsDansTopic($id)
+                ]
+            ];
+        }
     }
