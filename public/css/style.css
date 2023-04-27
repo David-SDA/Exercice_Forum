@@ -49,6 +49,42 @@ footer a{
     color: #343a40;
 }
 
+.lienAjout{
+    font-weight: 500;
+    text-decoration: none;
+    color: #343a40;
+    padding: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5vh;
+    width: 20vw;
+    transition: all 0.5s ease-in-out;
+}
+.lienAjout:hover{
+    background-color: #ffc107;
+    transform: scale(0.9);
+}
+
+.boutonAjout{
+    margin-top: 5vh;
+    padding: 5px;
+    font-weight: 500;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+.boutonAjout:hover{
+    background-color: #ffc107;
+    transform: scale(0.9);
+}
+
 #wrapper{
     position: relative;
 }

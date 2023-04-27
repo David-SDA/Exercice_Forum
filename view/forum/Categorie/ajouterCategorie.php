@@ -4,5 +4,5 @@
     <label for="nomCategorie">Nom de la catégorie : </label>
     <input type="text" name="nomCategorie" id="nomCategorie">
 
-    <input type="submit" value="Ajouter la catégorie" name="submitCategorie">
+    <input type="submit" value="Ajouter la catégorie" name="submitCategorie" class="boutonAjout">
 </form>

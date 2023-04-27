@@ -18,4 +18,4 @@ foreach($posts as $post){
 }
 ?>
 
-<a href="index.php?ctrl=post&action=allerPageAjoutPost&id=<?= $_GET["id"] ?>">AJOUTER UN POST</a>
+<a href="index.php?ctrl=post&action=allerPageAjoutPost&id=<?= $_GET["id"] ?>" class="lienAjout">AJOUTER UN POST</a>

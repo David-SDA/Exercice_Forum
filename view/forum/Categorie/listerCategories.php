@@ -15,4 +15,4 @@ foreach($categories as $categorie){
 }
 ?>
 
-    <a href="index.php?ctrl=categorie&action=allerPageAjoutCategorie">AJOUTER UNE CATÉGORIE</a>
+    <a href="index.php?ctrl=categorie&action=allerPageAjoutCategorie" class="lienAjout">AJOUTER UNE CATÉGORIE</a>

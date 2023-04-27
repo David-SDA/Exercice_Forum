@@ -5,5 +5,5 @@
         <label for="contenu">Contenu du message : </label>
         <textarea name="contenu" id="contenu" cols="60" rows="10" required></textarea>
     </div>
-    <input type="submit" value="Ajouter le post" name="ajouterPost">
+    <input type="submit" value="Ajouter le post" name="ajouterPost" class="boutonAjout">
 </form>

@@ -15,4 +15,4 @@ foreach($topics as $topic){
 }
 ?>
 
-    <a href="index.php?ctrl=categorie&action=allerPageAjoutTopic">AJOUTER UN TOPIC</a>
+    <a href="index.php?ctrl=categorie&action=allerPageAjoutTopic" class="lienAjout">AJOUTER UN TOPIC</a>

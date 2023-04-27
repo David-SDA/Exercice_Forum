@@ -27,5 +27,5 @@ $categories = $result["data"]["categories"];
         <label for="contenu">Contenu du premier post :</label>
         <textarea name="contenu" id="contenu" cols="30" rows="10" required></textarea>
     </div>
-    <input type="submit" value="Ajouter le topic" name="submitTopic">
+    <input type="submit" value="Ajouter le topic" name="submitTopic" class="boutonAjout">
 </form>
