@@ -4,9 +4,8 @@ $categories = $result["data"]["categories"];
 
 ?>
 
-<h1>Ajouter un topic</h1>
-
 <form action="index.php?ctrl=topic&action=ajouterTopic" method="post">
+    <h1>Ajouter un topic</h1>
     <div>
         <label for="titre">Nom du topic : </label>
         <input type="text" name="titre" id="titre" required>
