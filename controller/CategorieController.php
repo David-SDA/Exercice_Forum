@@ -31,4 +31,14 @@
             $categorieManager->add(["nomCategorie" => $nomCategorie]);
             return["view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php"];
         }
+
+        public function allerPageAjoutTopic(){
+            $categorieManager = new CategorieManager();
+            return [
+                "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
+                "data" => [
+                    "categories" => $categorieManager->findAll()
+                ]
+            ];
+        }
     }
