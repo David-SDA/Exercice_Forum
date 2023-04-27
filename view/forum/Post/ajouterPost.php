@@ -1,4 +1,4 @@
-<a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $_GET["id"] ?>">Retour au topic</a>
+<a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $_GET["id"] ?>" class="retourTopic"><span><i class="fas fa-arrow-left"></i></span>Retour au topic</a>
 <h2>Ajouter un post</h2>
 <form action="index.php?ctrl=post&action=ajouterPost&id=<?= $_GET["id"] ?>" method="post">
     <div>

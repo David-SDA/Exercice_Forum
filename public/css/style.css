@@ -124,6 +124,26 @@ form textarea{
     transform: scale(0.9);
 }
 
+/* Lien de retour au topic */
+.retourTopic{
+    font-weight: 500;
+    color: #000;
+    position: absolute;
+    top: 11vh;
+    left: 1vw;
+    padding: 5px;
+    text-decoration: none;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+.retourTopic span{
+    transition: 0.5s ease;
+}
+.retourTopic:hover span{
+    margin-right: 1vw;
+}
+
 #wrapper{
     position: relative;
 }
