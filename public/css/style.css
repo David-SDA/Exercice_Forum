@@ -34,6 +34,25 @@ main{
     text-align: center;
 }
 
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+    height: 10vh;
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+}
+footer a{
+    text-decoration: none;
+    color: #343a40;
+}
+
+#wrapper{
+    position: relative;
+}
+
 /* La partie gauche de la barre de navigation */
 #nav-left{
     margin-left: 3vw;
