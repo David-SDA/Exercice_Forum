@@ -23,11 +23,11 @@
 
         public function listerTopicsDansCategorie(){
             $topicManager = new TopicManager();
-
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             return [
                 "view" => VIEW_DIR . "forum/Topic/listerTopicsDansCategorie.php",
                 "data" => [
-                    "topics" => $topicManager->trouverTopicsParCategorie($_GET["id"])
+                    "topics" => $topicManager->trouverTopicsParCategorie($id)
                 ]
             ];
         }

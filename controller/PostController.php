@@ -14,10 +14,11 @@
         public function listerPostsDansTopic(){
             $postManager = new PostManager();
 
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             return [
                 "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                 "data" => [
-                    "posts" => $postManager->trouverPostsDansTopic($_GET["id"])
+                    "posts" => $postManager->trouverPostsDansTopic($id)
                 ]
             ];
         }
