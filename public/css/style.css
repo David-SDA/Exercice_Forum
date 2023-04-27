@@ -5,6 +5,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/* La barre de navigation qui se trouve dans le header */
 header nav{
     display: flex;
     flex-direction: row;
@@ -13,6 +14,7 @@ header nav{
     height: 10vh;
     background-color: #007bff;
 }
+/* Les liens de la barre de navigation */
 header nav a{
     display: flex;
     align-items: center;
@@ -21,15 +23,23 @@ header nav a{
     height: 10vh;
     padding: 0 30px 0 30px;
 }
+/* Changements lorsqu'on passe la souris par dessus un lien de la barre de navigation */
 header nav a:hover{
     background-color: #ffc107;
     color: #343a40;
 }
 
+/* Le contenu de la page */
+main{
+    text-align: center;
+}
+
+/* La partie gauche de la barre de navigation */
 #nav-left{
     margin-left: 3vw;
 }
 
+/* La partie droite de la barre de navigation */
 #nav-right{
     display: flex;
     margin-right: 3vw;
