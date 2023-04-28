@@ -10,6 +10,9 @@
 
     class TopicController extends AbstractController implements ControllerInterface{
         
+        /**
+         * Permet de lister les topic
+         */
         public function index(){
             $topicManager = new TopicManager();
 
@@ -21,6 +24,9 @@
             ];
         }
 
+        /**
+         * Permet de lister les topic d'une categorie
+         */
         public function listerTopicsDansCategorie(){
             $topicManager = new TopicManager();
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -32,9 +38,12 @@
             ];
         }
 
+        /**
+         * Permet d'ajouter un topic
+         */
         public function ajouterTopic(){
             $topicManager = new TopicManager();
-            $postManager = new PostManager(); // solution viable
+            $postManager = new PostManager(); // solution viable ?
 
             $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $categorie = filter_input(INPUT_POST, "categorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);

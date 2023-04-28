@@ -14,6 +14,9 @@
             parent::connect();
         }
 
+        /**
+         * Permet de trouver les posts d'un topic
+         */
         public function trouverPostsDansTopic($id){
             $sql = "SELECT *
                     FROM " . $this->tableName . " p

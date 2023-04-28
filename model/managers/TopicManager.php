@@ -14,6 +14,9 @@
             parent::connect();
         }
 
+        /**
+         * Permet de trouver les topics d'un catégorie
+         */
         public function trouverTopicsParCategorie($id){
             $sql = "SELECT *
                     FROM " . $this->tableName . " t

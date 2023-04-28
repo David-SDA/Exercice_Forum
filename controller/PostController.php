@@ -11,6 +11,9 @@
         
         public function index(){}
 
+        /**
+         * Permet de lister les posts d'un topic
+         */
         public function listerPostsDansTopic(){
             $postManager = new PostManager();
 
@@ -23,10 +26,16 @@
             ];
         }
 
+        /**
+         * Permet d'aller à la page d'ajout d'un post
+         */
         public function allerPageAjoutPost(){
             return ["view" => VIEW_DIR . "forum/Post/ajouterPost.php"];
         }
 
+        /**
+         * Permet d'ajoute un post
+         */
         public function ajouterPost(){
             $postManager = new PostManager();
 

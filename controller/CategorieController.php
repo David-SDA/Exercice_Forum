@@ -9,6 +9,9 @@
 
     class CategorieController extends AbstractController implements ControllerInterface{
         
+        /**
+         * Permet de lister les catégories
+         */
         public function index(){
             $categorieManager = new CategorieManager();
 
@@ -20,10 +23,16 @@
             ];
         }
 
+        /**
+         * Permet d'aller à la page d'ajout d'une catégorie
+         */
         public function allerPageAjoutCategorie(){
             return ["view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php"];
         }
 
+        /**
+         * Permet d'ajouter une catégorie et de créer un message de confirmation
+         */
         public function ajouterCategorie(){
             $categorieManager = new CategorieManager();
             
@@ -39,6 +48,9 @@
             return["view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php"];
         }
 
+        /**
+         * Permet d'aller à la page d'ajout d'un topic
+         */
         public function allerPageAjoutTopic(){
             $categorieManager = new CategorieManager();
             return [
