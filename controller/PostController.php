@@ -32,11 +32,18 @@
 
             $contenu = filter_input(INPUT_POST, "contenu", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $postManager->add([
+
+            $sessionManager = new Session();
+            if($postManager->add([
                 "contenu" => $contenu,
                 "membre_id" => 2, // membre fixe
                 "topic_id" => $id
-            ]);
+            ])){
+                $sessionManager->addFlash("success", "Ajout réussi !");
+            }
+            else{
+                $sessionManager->addFlash("error", "Echec de l'ajout !");
+            }
 
             return [
                 "view" => VIEW_DIR . "forum/Post/ajouterPost.php",
