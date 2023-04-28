@@ -39,16 +39,23 @@
             $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $categorie = filter_input(INPUT_POST, "categorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $contenu = filter_input(INPUT_POST, "contenu", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $sessionManager = new Session();
             $id = $topicManager->add([
                 "titre" => $titre,
                 "membre_id" => 2, // membre fixe
                 "categorie_id" => $categorie
             ]);
-            $postManager->add([
+            if($id && $postManager->add([
                 "contenu" => $contenu,
                 "membre_id" => 2, // membre fixe
                 "topic_id" => $id
-            ]);
+            ])){
+                $sessionManager->addFlash("success", "Ajout réussi !");
+            }
+            else{
+                $sessionManager->addFlash("error", "Echec de l'ajout !");
+            }
             return [
                 "view" => VIEW_DIR . "home.php",
                 "data" => [
