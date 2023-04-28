@@ -55,7 +55,10 @@
             }
 
             return [
-                "view" => VIEW_DIR . "forum/Post/ajouterPost.php",
+                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                "data" => [
+                    "posts" => $postManager->trouverPostsDansTopic($id)
+                ]
             ];
         }
     }
