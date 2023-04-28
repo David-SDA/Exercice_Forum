@@ -6,7 +6,7 @@
     use App\AbstractController;
     use App\ControllerInterface;
     use Model\Managers\TopicManager;
-    use Model\Managers\PostManager; // solution viable ?
+    use Model\Managers\PostManager;
 
     class TopicController extends AbstractController implements ControllerInterface{
         
@@ -43,7 +43,7 @@
          */
         public function ajouterTopic(){
             $topicManager = new TopicManager();
-            $postManager = new PostManager(); // solution viable ?
+            $postManager = new PostManager();
 
             $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $categorie = filter_input(INPUT_POST, "categorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
