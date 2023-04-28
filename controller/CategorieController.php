@@ -28,7 +28,14 @@
             $categorieManager = new CategorieManager();
             
             $nomCategorie = filter_input(INPUT_POST, "nomCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $categorieManager->add(["nomCategorie" => $nomCategorie]);
+            $sessionManager = new Session();
+            if($categorieManager->add(["nomCategorie" => $nomCategorie])){
+                $sessionManager->addFlash("success", "Ajout réussi !");
+            }
+            else{
+                $sessionManager->addFlash("error", "Echec de l'ajout !");
+            }
+
             return["view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php"];
         }
 
