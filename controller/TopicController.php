@@ -66,7 +66,7 @@
                 $sessionManager->addFlash("error", "Echec de l'ajout !");
             }
             return [
-                "view" => VIEW_DIR . "home.php",
+                "view" => VIEW_DIR."forum/Topic/listerTopics.php",
                 "data" => [
                     "topics" => $topicManager->findAll(["dateCreation", "DESC"])
                 ]
