@@ -22,7 +22,7 @@
             <header>
                 <nav>
                     <div id="nav-left">
-                        <a href="/Exercice_Forum">Accueil</a>
+                        <a href="/Exercice_Forum">ACCUEIL</a>
                         <?php
                         if(App\Session::isAdmin()){
                             ?>
@@ -45,8 +45,8 @@
                             ?>
                             <a href="./view/security/login.php">Connexion</a>
                             <a href="/security/register.html">Inscription</a>
-                            <a href="index.php?ctrl=topic">La liste des topics</a>
-                            <a href="index.php?ctrl=categorie">La liste des catégories</a>
+                            <a href="index.php?ctrl=topic">TOPICS</a>
+                            <a href="index.php?ctrl=categorie">CATÉGORIES</a>
                         <?php
                         }
                    
@@ -61,7 +61,7 @@
             </main>
         </div>
         <footer>
-            <p>&copy; 2020 - Forum CDA - <a href="/home/forumRules.html">Règlement du forum</a> - <a href="">Mentions légales</a></p>
+            <p>&copy; 2023 - Forum CDA - <a href="/home/forumRules.html">Règlement du forum</a> - <a href="">Mentions légales</a></p>
             <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
         </footer>
     </div>
