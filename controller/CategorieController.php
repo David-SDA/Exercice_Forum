@@ -45,7 +45,12 @@
                 $sessionManager->addFlash("error", "Echec de l'ajout !");
             }
 
-            return["view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php"];
+            return [
+                "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                "data" => [
+                    "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                ]
+            ];
         }
 
         /**
