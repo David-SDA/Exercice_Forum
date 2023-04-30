@@ -109,7 +109,7 @@ form textarea{
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #000;
+
 }
 .unTopic:hover{
     background-color: #808080;
@@ -142,23 +142,23 @@ form textarea{
 
 /* Tout les liens d'ajout (<a>) */
 .lienAjout{
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 1.5em;
     text-decoration: none;
-    color: #343a40;
+    background-color: #00adb5;
+    color: #eee;
     padding: 5px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    border: 1px solid #000;
-    border-radius: 5px;
-    margin: auto;
+    border-radius: 20px;
+    margin: 1vh 15vw 1vh 80vw;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 5vh;
-    width: 20vw;
+    height: 6vh;
+    width: 15vw;
     transition: all 0.5s ease-in-out;
 }
 .lienAjout:hover{
-    background-color: #ffc107;
     transform: scale(0.9);
 }
 

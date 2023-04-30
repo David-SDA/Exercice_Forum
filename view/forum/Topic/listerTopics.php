@@ -38,6 +38,5 @@ $topics = $result["data"]['topics'];
     <?php
     }
     ?>
-
-        <a href="index.php?ctrl=categorie&action=allerPageAjoutTopic" class="lienAjout">AJOUTER UN TOPIC</a>
 </div>
+<a href="index.php?ctrl=categorie&action=allerPageAjoutTopic" class="lienAjout">AJOUTER UN TOPIC</a>
