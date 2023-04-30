@@ -4,13 +4,13 @@ $topics = $result["data"]['topics'];
     
 ?>
 <div class="listeTopic">
-    <h1>LISTE DES TOPICS</h1>
+    <h1>TOPICS</h1>
     <?php
     if($topics != NULL){
         foreach($topics as $topic){
             ?>
             <div class="unTopic">
-                <p><i><?= $topic->getMembre()->getPseudo() ?></i></p>
+                <p class="pseudo"><i><?= $topic->getMembre()->getPseudo() ?></i></p>
                 <div class="unTopicCentre">
                     <a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a>
                     <p><i><?= $topic->getDateCreation() ?></i></p>
@@ -27,7 +27,7 @@ $topics = $result["data"]['topics'];
                         }
                     ?>
                 </div>
-                <p><i><?= $topic->getCategorie()->getNomCategorie() ?></i></p>
+                <p class="categorie"><i><?= $topic->getCategorie()->getNomCategorie() ?></i></p>
             </div>
     <?php
         }
