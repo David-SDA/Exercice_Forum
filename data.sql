@@ -24,9 +24,13 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `id_categorie` int NOT NULL AUTO_INCREMENT,
   `nomCategorie` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id_categorie`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Les données exportées n'étaient pas sélectionnées.
+-- Listage des données de la table forum.categorie : ~0 rows (environ)
+INSERT INTO `categorie` (`id_categorie`, `nomCategorie`) VALUES
+	(1, 'Sport'),
+	(2, 'Culture'),
+	(3, 'Automobile');
 
 -- Listage de la structure de table forum. membre
 CREATE TABLE IF NOT EXISTS `membre` (
@@ -37,9 +41,12 @@ CREATE TABLE IF NOT EXISTS `membre` (
   `dateInscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `role` varchar(10) NOT NULL,
   PRIMARY KEY (`id_membre`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Les données exportées n'étaient pas sélectionnées.
+-- Listage des données de la table forum.membre : ~2 rows (environ)
+INSERT INTO `membre` (`id_membre`, `pseudo`, `email`, `motDePasse`, `dateInscription`, `role`) VALUES
+	(1, 'pseudo1', 'test1@test.com', 'test1', '2023-04-30 10:40:29', 'Membre'),
+	(2, 'pseudo2', 'test2@test.com', 'test2', '2023-04-30 10:41:02', 'Admin');
 
 -- Listage de la structure de table forum. post
 CREATE TABLE IF NOT EXISTS `post` (
@@ -55,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Les données exportées n'étaient pas sélectionnées.
+-- Listage des données de la table forum.post : ~0 rows (environ)
 
 -- Listage de la structure de table forum. topic
 CREATE TABLE IF NOT EXISTS `topic` (
@@ -72,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `topic` (
   CONSTRAINT `topic_ibfk_2` FOREIGN KEY (`categorie_id`) REFERENCES `categorie` (`id_categorie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Les données exportées n'étaient pas sélectionnées.
+-- Listage des données de la table forum.topic : ~0 rows (environ)
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
