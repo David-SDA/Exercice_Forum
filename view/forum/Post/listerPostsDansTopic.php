@@ -3,7 +3,7 @@
 $posts = $result["data"]["posts"];
 ?>
 
-<h1>Liste des posts du topic</h1>
+<h1><i>Liste des posts du topic</i></h1>
 
 <?php
 $verrouiller = 0;

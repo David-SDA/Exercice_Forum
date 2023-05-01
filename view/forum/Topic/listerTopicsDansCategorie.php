@@ -5,7 +5,7 @@ $topics = $result["data"]['topics'];
 if($topics != NULL){
     ?>
     <div class="listeTopic">
-        <h1>Liste topics dans la catégorie</h1>
+        <h1>LISTE DES TOPICS DANS LA CATÉGORIE</h1>
         <?php
         foreach($topics as $topic){
         ?>
