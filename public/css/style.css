@@ -140,6 +140,11 @@ form textarea{
 .unTopicCentre a{
     font-size: 1.5em;
     text-decoration: none;
+    color: #393e46;
+    font-weight: 500;
+}
+.unTopicCentre a:hover{
+    text-decoration: underline;
 }
 
 /* Tout les liens d'ajout (<a>) */
