@@ -13,6 +13,8 @@ header nav{
     justify-content: space-between;
     height: 10vh;
     background-color: #222831;
+    font-weight: 600;
+    font-size: 1.4em;
 }
 /* Les liens de la barre de navigation */
 header nav a{
