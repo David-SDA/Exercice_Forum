@@ -163,6 +163,10 @@ form textarea{
 .lienAjout:hover{
     transform: scale(0.9);
 }
+.grand{
+    margin-right: 20vw;
+    width: 20vw;
+}
 
 /* Tout les bouton d'ajout (<input>) */
 .boutonAjout{
@@ -220,6 +224,23 @@ form textarea{
 }
 .retourTopic:hover span{
     margin-right: 1vw;
+}
+
+/* Une catégorie dans la liste des catégories */
+.uneCategorie{
+    padding: 1.5vh;
+    font-size: 1.5em;
+    font-weight: 500;
+}
+.uneCategorie a{
+    text-decoration: none;
+    color: #393e46;
+}
+.uneCategorie a:hover{
+    text-decoration: underline;
+}
+.uneCategorie:hover{
+    background-color: #808080;
 }
 
 /* Le contenu de la page sauf le footer */
