@@ -5,9 +5,9 @@ $categories = $result["data"]["categories"];
 ?>
 
 <form action="index.php?ctrl=topic&action=ajouterTopic" method="post">
-    <h1>Ajouter un topic</h1>
+    <h1><i>AJOUTER UN TOPIC</i></h1>
     <div>
-        <label for="titre">Nom du topic : </label>
+        <label for="titre">Titre : </label>
         <input type="text" name="titre" id="titre" required>
     </div>
     <div>
@@ -26,5 +26,5 @@ $categories = $result["data"]["categories"];
         <label for="contenu">Contenu du premier post :</label>
         <textarea name="contenu" id="contenu" cols="30" rows="10" required></textarea>
     </div>
-    <input type="submit" value="Ajouter le topic" name="submitTopic" class="boutonAjout">
+    <input type="submit" value="AJOUTER UN TOPIC" name="submitTopic" class="lienAjout ajoutFormulaire">
 </form>
