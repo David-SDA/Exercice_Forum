@@ -105,6 +105,10 @@ form textarea{
     font-size: 1.3em;
 }
 
+.formCategorie{
+    margin: 25vh auto;
+}
+
 /* La liste des topic */
 .listeTopic{
     background-color: #eee;
