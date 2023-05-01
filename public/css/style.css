@@ -178,6 +178,28 @@ form textarea{
     transform: scale(0.9);
 }
 
+.postDuTopic{
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    width: 80vw;
+    margin-top: 2vh;
+    background-color: #eee;
+}
+.postDuTopic .infoPost{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1vh 2vw;
+}
+.postDuTopic p{
+    background-color: #fff;
+    margin: 1vh 1vw;
+    border-radius: 10px;
+    padding: 1vh 1vw;
+    text-align: justify;
+}
+
 /* Lien de retour au topic */
 .retourTopic{
     font-weight: 500;

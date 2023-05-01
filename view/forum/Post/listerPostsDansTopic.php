@@ -1,10 +1,9 @@
 <?php
 
 $posts = $result["data"]["posts"];
-    
 ?>
 
-<h1>Liste posts du topic</h1>
+<h1>Liste des posts du topic</h1>
 
 <?php
 $verrouiller = 0;
@@ -13,10 +12,13 @@ if($posts != NULL){
         $verrouiller = $post->getTopic()->getVerrouiller();
 
         ?>
-        <h3>Par : <?= $post->getMembre()->getPseudo() ?></h3>
-        <h5><?= $post->getDateCreation() ?></h5>
-        <p><?=$post->getContenu()?></p>
-
+        <div class="postDuTopic">
+            <div class="infoPost">
+                <h3><?= $post->getMembre()->getPseudo() ?></h3>
+                <h5><?= $post->getDateCreation() ?></h5>
+            </div>
+            <p><?=$post->getContenu()?></p>
+        </div>
 <?php
     }
 }
