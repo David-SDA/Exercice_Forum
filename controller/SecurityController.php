@@ -91,19 +91,33 @@
             $sessionManager = new Session(); // Pour pouvoir utiliser le message flash
             $membreManager = new MembreManager(); // Pour la gestion de la base de données membre
 
-            /* Filtrage des variables post */
-            $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
-            $motDePasse = filter_input(INPUT_POST, "motDePasse", FILTER_SANITIZE_SPECIAL_CHARS);
-
-            /* Si l'email n'existe pas, on l'indique visuellement et on le redirige vers le formulaire de connexion */
-            if(!$membreManager->trouverEmail($email)){
-                $sessionManager->addFlash("error", "L'email saisit n'existe pas ! Soignez l'orthographe ou inscrivez-vous !");
-                return [
-                    "view" => VIEW_DIR."security/connexion.php",
-                ];
+            if(isset($_POST["submitConnexion"])){
+                /* Filtrage des variables post */
+                $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+                $motDePasse = filter_input(INPUT_POST, "motDePasse", FILTER_SANITIZE_SPECIAL_CHARS);
             }
 
-            /* On cherche le mot de passe associé à l'adresse mail */
-            
+            if($email && $motDePasse){
+                $motDePasseBdd = $membreManager->trouverMotDePasse($email); // On cherche le mot de passe associé à l'adresse mail
+
+                if($motDePasseBdd){
+                    $hash = $motDePasseBdd["motDePasse"];
+                    $membre = $membreManager->trouverEmail($email);
+
+                    if(password_verify($motDePasse, $hash)){
+                        $sessionManager->addFlash("success", "Connexion réussi !");
+                        Session::setUser($membre);
+                    }
+                }
+                else{
+                    $sessionManager->addFlash("error", "L'email ou le mot de passe n'est pas bon ! Réessayez");
+                    return [
+                        "view" => VIEW_DIR . "security/connexion.php",
+                    ];
+                }
+            }
+            return [
+                "view" => VIEW_DIR . "home.php",
+            ];
         }
     }

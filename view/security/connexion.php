@@ -6,7 +6,7 @@
     </div>
     <div>
         <label for="motDePasse">Mot de passe :</label>
-        <input type="password" name="motDePasse" id="motDePasse">
+        <input type="password" name="motDePasse" id="motDePasse" required>
     </div>
     <input type="submit" value="SE CONNECTER" name="submitConnexion" class="lienAjout ajoutFormulaire">
 </form>
