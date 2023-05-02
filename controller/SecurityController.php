@@ -18,22 +18,29 @@
 
         public function inscription(){
             $sessionManager = new Session();
-            $membreManager = new MembreManager;
+            $membreManager = new MembreManager();
+            $topicManager = new TopicManager();
 
             $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
-            $motDePasse = filter_input(INPUT_POST, "moDePasse", FILTER_SANITIZE_SPECIAL_CHARS);
+            $motDePasse = filter_input(INPUT_POST, "motDePasse", FILTER_SANITIZE_SPECIAL_CHARS);
+            $motDePasseConfirmation = filter_input(INPUT_POST, "motDePasseConfirmation", FILTER_SANITIZE_SPECIAL_CHARS);
             
-            if($membreManager->trouverPseudo($pseudo)){
-                $sessionManager->addFlash("success", "Trouvé !");
+            if($membreManager->trouverEmail($email)){
+                $sessionManager->addFlash("error", "L'email saisit existe déjà ! Saisissez-en un autre !");
+                return [
+                    "view" => VIEW_DIR."security/inscription.php",
+                ];
             }
-            else{
-                $sessionManager->addFlash("error", "Pas trouvé !");
+            if($membreManager->trouverPseudo($pseudo)){
+                $sessionManager->addFlash("error", "Le pseudo saisit existe déjà ! Saisissez-en un autre !");
+                return [
+                    "view" => VIEW_DIR."security/inscription.php",
+                ];
             }
 
-            $topicManager = new TopicManager();
             return [
-                "view" => VIEW_DIR."forum/Topic/listerTopics.php",
+                "view" => VIEW_DIR."forum/Topic/listerTopics.php", // Il faudra rediriger vers le formulaire de connexion
                 "data" => [
                     "topics" => $topicManager->findAll(["dateCreation", "DESC"])
                 ]

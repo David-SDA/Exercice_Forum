@@ -14,7 +14,7 @@
     </div>
     <div>
         <label for="motDePasseConfirmation">Confirmation du mot de passe :</label>
-        <input type="password" name="motDePasseConfimation" id="motDePasseConfirmation" required>
+        <input type="password" name="motDePasseConfirmation" id="motDePasseConfirmation" required>
     </div>
     <input type="submit" value="S'INSCRIRE" name="submitInscription" class="lienAjout ajoutFormulaire">
 </form>
