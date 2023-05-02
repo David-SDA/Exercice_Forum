@@ -24,7 +24,7 @@
             $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
             $motDePasse = filter_input(INPUT_POST, "moDePasse", FILTER_SANITIZE_SPECIAL_CHARS);
             
-            if($membreManager->trouverEmail($email)){
+            if($membreManager->trouverPseudo($pseudo)){
                 $sessionManager->addFlash("success", "Trouvé !");
             }
             else{

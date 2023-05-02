@@ -17,9 +17,19 @@
         public function trouverEmail($email){
             $requete = "SELECT *
                         FROM " . $this->tableName . "
-                        WHERE email= :email";
+                        WHERE email = :email";
             return $this->getOneOrNullResult(
                 DAO::select($requete, ["email" => $email]),
+                $this->className
+            );
+        }
+
+        public function trouverPseudo($pseudo){
+            $requete = "SELECT *
+                        FROM " . $this->tableName . "
+                        WHERE pseudo = :pseudo";
+            return $this->getOneOrNullResult(
+                DAO::select($requete, ["pseudo" => $pseudo]),
                 $this->className
             );
         }
