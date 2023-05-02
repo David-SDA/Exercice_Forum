@@ -5,5 +5,5 @@
 <p>
     <a href="/security/login.html">Se connecter</a>
     <span>&nbsp;-&nbsp;</span>
-    <a href="/security/register.html">S'inscrire</a>
+    <a href="/Exercice_Forum/view/security/inscription.php">S'inscrire</a>
 </p>

@@ -5,6 +5,7 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
+    use Model\Managers\MembreManager;
     use Model\Managers\UserManager;
     use Model\Managers\TopicManager;
     use Model\Managers\PostManager;
@@ -24,7 +25,7 @@
         public function users(){
             $this->restrictTo("ROLE_USER");
 
-            $manager = new UserManager();
+            $manager = new MembreManager();
             $users = $manager->findAll(['registerdate', 'DESC']);
 
             return [
