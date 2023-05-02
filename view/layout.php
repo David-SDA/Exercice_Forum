@@ -37,6 +37,8 @@
                         
                         if(App\Session::getUser()){
                             ?>
+                            <a href="index.php?ctrl=topic">TOPICS</a>
+                            <a href="index.php?ctrl=categorie">CATÉGORIES</a>
                             <a href="/security/viewProfile.html"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
                             <a href="/security/logout.html">Déconnexion</a>
                             <?php
@@ -45,8 +47,6 @@
                             ?>
                             <a href="index.php?ctrl=security&action=allerPageConnexion">Connexion</a>
                             <a href="index.php?ctrl=security&action=allerPageInscription">Inscription</a>
-                            <a href="index.php?ctrl=topic">TOPICS</a>
-                            <a href="index.php?ctrl=categorie">CATÉGORIES</a>
                         <?php
                         }
                    

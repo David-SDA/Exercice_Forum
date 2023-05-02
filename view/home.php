@@ -1,9 +1,15 @@
 <h1>BIENVENUE SUR LE FORUM</h1>
 
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ut nemo quia voluptas numquam, itaque ipsa soluta ratione eum temporibus aliquid, facere rerum in laborum debitis labore aliquam ullam cumque.</p>
-
-<p>
-    <a href="index.php?ctrl=security&action=allerPageConnexion">Se connecter</a>
-    <span>&nbsp;-&nbsp;</span>
-    <a href="index.php?ctrl=security&action=allerPageInscription">S'inscrire</a>
-</p>
+<?php
+    if(App\Session::getUser()){
+        ?>
+        <p>Vous pouvez accéder au différentes rubriques dans la barre de navigation !</p>
+    <?php
+    }
+    else{
+        ?>
+        <p>Connectez-vous pour accéder au forum.</p>
+        <p>Si vous n'avez pas de compte, vous pouvez en créer un !</p>
+        <p>Tout est disponible dans la barre de navigation !</p>
+        <?php
+    }
