@@ -45,11 +45,27 @@
                 ];
             }
 
-            return [
-                "view" => VIEW_DIR."forum/Topic/listerTopics.php", // Il faudra rediriger vers le formulaire de connexion
-                "data" => [
-                    "topics" => $topicManager->findAll(["dateCreation", "DESC"])
-                ]
-            ];
+            $motDePasseHash = password_hash($motDePasse, PASSWORD_DEFAULT);
+
+            if($membreManager->add([
+                "pseudo" => $pseudo,
+                "email" => $email,
+                "motDePasse" => $motDePasseHash,
+                "role" => "membre"
+            ])){
+                $sessionManager->addFlash("success", "Inscription réussi ! Connectez-vous !");
+                return [
+                    "view" => VIEW_DIR."forum/Topic/listerTopics.php", // Il faudra rediriger vers le formulaire de connexion
+                    "data" => [
+                        "topics" => $topicManager->findAll(["dateCreation", "DESC"])
+                    ]
+                ];
+            }
+            else{
+                $sessionManager->addFlash("error", "Échec de l'inscription ! ");
+                return [
+                    "view" => VIEW_DIR."security/inscription.php",
+                ];
+            }
         }
     }
