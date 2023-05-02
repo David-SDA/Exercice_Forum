@@ -128,4 +128,10 @@
                 ];
             }
         }
+
+        public function allerPageProfil(){
+            return [
+                "view" => VIEW_DIR . "security/profil.php"
+            ];
+        }
     }
