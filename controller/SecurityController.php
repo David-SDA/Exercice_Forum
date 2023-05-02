@@ -134,4 +134,11 @@
                 "view" => VIEW_DIR . "security/profil.php"
             ];
         }
+
+        public function deconnexion(){
+            session_destroy();
+            return [
+                "view" => VIEW_DIR . "home.php"
+            ];
+        }
     }
