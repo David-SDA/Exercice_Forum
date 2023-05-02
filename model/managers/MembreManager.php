@@ -18,14 +18,29 @@
             $requete = "SELECT *
                         FROM " . $this->tableName . "
                         WHERE email = :email";
-            return $this->getSingleScalarResult(DAO::select($requete, ["email" => $email]));
+            return $this->getOneOrNullResult(
+                DAO::select($requete, ["email" => $email]),
+                $this->className
+            );
         }
 
         public function trouverPseudo($pseudo){
             $requete = "SELECT *
                         FROM " . $this->tableName . "
                         WHERE pseudo = :pseudo";
-            return $this->getSingleScalarResult(DAO::select($requete, ["pseudo" => $pseudo]));
+            return $this->getOneOrNullResult(
+                DAO::select($requete, ["pseudo" => $pseudo]),
+                $this->className
+            );
+        }
+
+        public function trouverMotDePasse($email){
+            $requete = "SELECT *
+                        FROM " . $this->tableName . "
+                        WHERE email = :email";
+            return $this->getSingleScalarResult(
+                DAO::select($requete, ["email" => $email])
+            );
         }
 
     }
