@@ -14,5 +14,14 @@
             parent::connect();
         }
 
+        public function trouverEmail($email){
+            $requete = "SELECT *
+                        FROM " . $this->tableName . "
+                        WHERE email= :email";
+            return $this->getOneOrNullResult(
+                DAO::select($requete, ["email" => $email]),
+                $this->className
+            );
+        }
 
     }

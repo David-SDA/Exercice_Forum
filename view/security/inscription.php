@@ -1,4 +1,4 @@
-<form action="#">
+<form action="index.php?ctrl=security&action=inscription" method="post">
     <h1><i>S'INSCRIRE</i></h1>
     <div>
         <label for="pseudo">Pseudo :</label>
