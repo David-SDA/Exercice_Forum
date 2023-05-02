@@ -68,12 +68,7 @@
                 "role" => "membre"
             ])){
                 $sessionManager->addFlash("success", "Inscription réussi ! Connectez-vous !");
-                return [
-                    "view" => VIEW_DIR."forum/Topic/listerTopics.php", // Il faudra rediriger vers le formulaire de connexion
-                    "data" => [
-                        "topics" => $topicManager->findAll(["dateCreation", "DESC"])
-                    ]
-                ];
+                return ["view" => VIEW_DIR."security/connexion.php"];
             }
             else{
                 $sessionManager->addFlash("error", "Échec de l'inscription ! ");
@@ -81,5 +76,12 @@
                     "view" => VIEW_DIR."security/inscription.php",
                 ];
             }
+        }
+
+        /**
+         * Permet d'aller à la page de connexion
+         */
+        public function allerPageConnexion(){
+            return ["view" => VIEW_DIR . "security/connexion.php"];
         }
     }
