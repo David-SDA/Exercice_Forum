@@ -1,4 +1,4 @@
-<form action="#" method="post">
+<form action="index.php?ctrl=security&action=connexion" method="post">
     <h1><i>SE CONNECTER</i></h1>
     <div>
         <label for="email">Email : </label>

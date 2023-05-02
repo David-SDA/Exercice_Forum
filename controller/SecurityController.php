@@ -25,7 +25,6 @@
         public function inscription(){
             $sessionManager = new Session(); // Pour pouvoir utiliser le message flash
             $membreManager = new MembreManager(); // Pour la gestion de la base de données membre
-            $topicManager = new TopicManager(); // En option, le temps de faire le formulaire de connexion
 
             /* Filtrage des variables post */
             $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -83,5 +82,28 @@
          */
         public function allerPageConnexion(){
             return ["view" => VIEW_DIR . "security/connexion.php"];
+        }
+
+        /**
+         * Permet de se connecter
+         */
+        public function connexion(){
+            $sessionManager = new Session(); // Pour pouvoir utiliser le message flash
+            $membreManager = new MembreManager(); // Pour la gestion de la base de données membre
+
+            /* Filtrage des variables post */
+            $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+            $motDePasse = filter_input(INPUT_POST, "motDePasse", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            /* Si l'email n'existe pas, on l'indique visuellement et on le redirige vers le formulaire de connexion */
+            if(!$membreManager->trouverEmail($email)){
+                $sessionManager->addFlash("error", "L'email saisit n'existe pas ! Soignez l'orthographe ou inscrivez-vous !");
+                return [
+                    "view" => VIEW_DIR."security/connexion.php",
+                ];
+            }
+
+            /* On cherche le mot de passe associé à l'adresse mail */
+            
         }
     }
