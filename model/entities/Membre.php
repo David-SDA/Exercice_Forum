@@ -118,5 +118,13 @@
             $this->role = $role;
             return $this;
         }
+
+        public function hasRole($role){
+            return $this->role == $role;
+        }
+
+        public function __toString(){
+            return $this->pseudo . "(le pseudo normalement)";
+        }
     }
 ?>
