@@ -18,20 +18,14 @@
             $requete = "SELECT *
                         FROM " . $this->tableName . "
                         WHERE email = :email";
-            return $this->getOneOrNullResult(
-                DAO::select($requete, ["email" => $email]),
-                $this->className
-            );
+            return $this->getSingleScalarResult(DAO::select($requete, ["email" => $email]));
         }
 
         public function trouverPseudo($pseudo){
             $requete = "SELECT *
                         FROM " . $this->tableName . "
                         WHERE pseudo = :pseudo";
-            return $this->getOneOrNullResult(
-                DAO::select($requete, ["pseudo" => $pseudo]),
-                $this->className
-            );
+            return $this->getSingleScalarResult(DAO::select($requete, ["pseudo" => $pseudo]));
         }
 
     }
