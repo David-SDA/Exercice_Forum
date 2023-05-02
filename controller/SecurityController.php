@@ -38,6 +38,12 @@
                     "view" => VIEW_DIR."security/inscription.php",
                 ];
             }
+            if($motDePasse != $motDePasseConfirmation){
+                $sessionManager->addFlash("error", "Les mots de passe ne sont pas identiques ! Veuillez les saisirs à nouveau !");
+                return [
+                    "view" => VIEW_DIR."security/inscription.php",
+                ];
+            }
 
             return [
                 "view" => VIEW_DIR."forum/Topic/listerTopics.php", // Il faudra rediriger vers le formulaire de connexion
