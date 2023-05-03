@@ -22,4 +22,10 @@ $categories = $result["data"]['categories'];
     }
     ?>
 </div>
-<a href="index.php?ctrl=categorie&action=allerPageAjoutCategorie" class="lienAjout grand">AJOUTER UNE CATÉGORIE</a>
+<?php
+if(App\Session::getUser()->hasRole("ROLE_ADMIN")){
+    ?>
+    <a href="index.php?ctrl=categorie&action=allerPageAjoutCategorie" class="lienAjout grand">AJOUTER UNE CATÉGORIE</a>
+    <?php
+}
+?>
