@@ -34,24 +34,20 @@
         public function supprimerPostsDuTopic($id){
             $sql = "DELETE FROM " . $this->tableName . "
                     WHERE " . $this->tableName .  ".topic_id = :id";
-            return DAO::delete($sql, ["id" => $id]);
+            return DAO::delete($sql, ["id" => $id], false);
         }
 
         /**
-         * Permet de récupérer le post le plus ancien
+         * Permet de récupérer le post le plus ancien grâce à l'id du topic
          */
         public function trouverPlusAncienPost($id){
-            $sql = "SELECT *
-                    FROM " . $this->className . "
-                    WHERE " . $this->className . ".topic_id = :id
-                    AND " . $this->className . ".dateCreation = (
-                        SELECT MIN(" . $this->className . ".dateCreation)
-                        FROM " . $this->className . "
-                        WHERE " . $this->className . ".topic_id = :id
-                    )";
-            return $this->getOneOrNullResult(
-                DAO::select($sql, ["id" => $id], false),
-                $this->className
-            );
+            $sql = "SELECT " . $this->tableName . ".id_" . $this->tableName . "
+                    FROM " . $this->tableName . "
+                    WHERE " . $this->tableName . ".topic_id = :id
+                    AND " . $this->tableName . ".dateCreation = (
+                        SELECT MIN(" . $this->tableName . ".dateCreation)
+                        FROM " . $this->tableName . "
+                        WHERE " . $this->tableName . ".topic_id = :id)";
+            return $this->getSingleScalarResult(DAO::select($sql, ["id" => $id], false));
         }
     }
