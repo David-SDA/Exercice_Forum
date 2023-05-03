@@ -155,8 +155,8 @@ form textarea{
     background-color: #eee;
 }
 
-/* L'élément à droite de l'élément principale */
-.elementDroite{
+/* L'élément à droite et à gauche dans l'élément principal */
+.elementGauche, .elementDroite{
     display: flex;
     flex-direction: column;
 }
