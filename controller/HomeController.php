@@ -12,21 +12,22 @@
     
     class HomeController extends AbstractController implements ControllerInterface{
 
+        /**
+         * Permet d'aller à la page home
+         */
         public function index(){
-            
-           
-                return [
-                    "view" => VIEW_DIR."home.php"
-                ];
-            }
-            
-        
-   
-        public function users(){
-            $this->restrictTo("ROLE_MEMBER");
+            return [
+                "view" => VIEW_DIR."home.php"
+            ];
+        }
 
+        /**
+         * Permet de lister les membres
+         */
+        public function membres(){
+            $this->restrictTo("ROLE_MEMBER");
             $manager = new MembreManager();
-            $users = $manager->findAll(['registerdate', 'DESC']);
+            $users = $manager->findAll(['dateInscription', 'DESC']);
 
             return [
                 "view" => VIEW_DIR."security/users.php",
@@ -36,10 +37,12 @@
             ];
         }
 
-        public function forumRules(){
-            
+        /**
+         * Permet d'aller à la page des règles du forum
+         */
+        public function forumRegles(){
             return [
-                "view" => VIEW_DIR."rules.php"
+                "view" => VIEW_DIR . "regles.php"
             ];
         }
 

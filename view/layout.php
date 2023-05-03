@@ -26,7 +26,7 @@
                         <?php
                         if(App\Session::isAdmin()){
                             ?>
-                            <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
+                            <a href="index.php?ctrl=home&action=membres">Voir la liste des gens</a>
                           
                             <?php
                         }
@@ -61,7 +61,7 @@
             </main>
         </div>
         <footer>
-            <p>&copy; 2023 - Forum CDA - <a href="/home/forumRules.html">Règlement du forum</a> - <a href="">Mentions légales</a></p>
+            <p>&copy; 2023 - Forum CDA - <a href="index.php?ctrl=home&action=forumRegles">Règlement du forum</a> - <a href="">Mentions légales</a></p>
             <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
         </footer>
     </div>
