@@ -22,7 +22,7 @@
             <header>
                 <nav>
                     <div id="nav-left">
-                        <a href="/Exercice_Forum">ACCUEIL</a>
+                        <a href="index.php?ctrl=home">ACCUEIL</a>
                         <?php
                         if(App\Session::isAdmin()){
                             ?>

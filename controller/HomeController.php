@@ -23,7 +23,7 @@
         
    
         public function users(){
-            $this->restrictTo("ROLE_USER");
+            $this->restrictTo("ROLE_MEMBER");
 
             $manager = new MembreManager();
             $users = $manager->findAll(['registerdate', 'DESC']);
