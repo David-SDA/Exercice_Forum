@@ -53,4 +53,16 @@
             );
         }
 
+        /**
+         * Permet de compter le nombre de topics écrit par un membre
+         */
+        public function nombreTopicsDeMembre($id){
+            $requete = "SELECT COUNT(t.id_topic) AS nbTopics
+                        FROM " . $this->tableName . " m, topic t
+                        WHERE m.id_membre = t.membre_id
+                        AND m.id_membre = :id";
+            return $this->getSingleScalarResult(
+                DAO::select($requete, ["id" => $id], false)
+            );
+        }
     }

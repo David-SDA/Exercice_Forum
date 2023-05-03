@@ -124,7 +124,7 @@
         }
 
         public function __toString(){
-            return $this->pseudo;
+            return $this->pseudo . "";
         }
     }
 ?>

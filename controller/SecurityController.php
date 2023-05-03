@@ -130,8 +130,12 @@
         }
 
         public function allerPageProfil(){
+            $membreManager = new MembreManager();
             return [
-                "view" => VIEW_DIR . "security/profil.php"
+                "view" => VIEW_DIR . "security/profil.php",
+                "data" => [
+                    "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId())
+                ]
             ];
         }
 
