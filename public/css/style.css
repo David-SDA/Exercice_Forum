@@ -155,6 +155,11 @@ form textarea{
     background-color: #eee;
 }
 
+/* L'élément à droite de l'élément principale */
+.elementDroite{
+    display: flex;
+    flex-direction: column;
+}
 /* Les éléments à gauche et à droite que l'on veut aligner au centre de la ligne */
 .elementGauche.centre, .elementDroite.centre{
     padding-bottom: 0;
