@@ -108,7 +108,7 @@
                     $motDePasseBdd = $membreManager->trouverMotDePasse($email); // On cherche le mot de passe associé à l'adresse mail
                     /* Si on trouve bien le mot de passe */
                     if($motDePasseBdd){
-                        $hash = $motDePasseBdd["motDePasse"]; // On récupère le hash
+                        $hash = $motDePasseBdd->getMotDePasse(); // On récupère le hash
                         $membre = $membreManager->trouverEmail($email); // On récupère l'utilisateur
                         /* Si le mot de passe correspond au hachage */
                         if(password_verify($motDePasse, $hash)){

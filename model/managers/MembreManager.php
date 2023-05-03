@@ -14,6 +14,9 @@
             parent::connect();
         }
 
+        /**
+         * Permet de trouver un membre par l'email
+         */
         public function trouverEmail($email){
             $requete = "SELECT *
                         FROM " . $this->tableName . " m
@@ -24,22 +27,29 @@
             );
         }
 
+        /**
+         * Permet de trouver un membre par l'email
+         */
         public function trouverPseudo($pseudo){
             $requete = "SELECT *
                         FROM " . $this->tableName . " m
                         WHERE m.pseudo = :pseudo";
             return $this->getOneOrNullResult(
-                DAO::select($requete, ["pseudo" => $pseudo]),
+                DAO::select($requete, ["pseudo" => $pseudo], false),
                 $this->className
             );
         }
 
+        /**
+         * Permet de trouver le mot de passe associé à l'email
+         */
         public function trouverMotDePasse($email){
-            $requete = "SELECT *
+            $requete = "SELECT motDePasse
                         FROM " . $this->tableName . " m
                         WHERE m.email = :email";
-            return $this->getSingleScalarResult(
-                DAO::select($requete, ["email" => $email])
+            return $this->getOneOrNullResult(
+                DAO::select($requete, ["email" => $email], false),
+                $this->className
             );
         }
 
