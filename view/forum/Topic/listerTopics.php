@@ -10,7 +10,10 @@ $topics = $result["data"]['topics'];
         foreach($topics as $topic){
             ?>
             <div class="element">
-                <p class="elementGauche"><i><?= $topic->getMembre()->getPseudo() ?></i></p>
+                <p class="elementGauche">
+                    <i><?= $topic->getMembre()->getPseudo() ?></i>
+                    <p>Nombre de posts : </p>
+                </p>
                 <div class="elementCentre">
                     <a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a>
                     <p><i><?= $topic->getDateCreation() ?></i></p>
