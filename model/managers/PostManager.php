@@ -37,4 +37,21 @@
             return DAO::delete($sql, ["id" => $id]);
         }
 
+        /**
+         * Permet de récupérer le post le plus ancien
+         */
+        public function trouverPlusAncienPost($id){
+            $sql = "SELECT *
+                    FROM " . $this->className . "
+                    WHERE " . $this->className . ".topic_id = :id
+                    AND " . $this->className . ".dateCreation = (
+                        SELECT MIN(" . $this->className . ".dateCreation)
+                        FROM " . $this->className . "
+                        WHERE " . $this->className . ".topic_id = :id
+                    )";
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ["id" => $id], false),
+                $this->className
+            );
+        }
     }
