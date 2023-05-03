@@ -45,7 +45,7 @@
             $sessionManager = new Session();
             if($postManager->add([
                 "contenu" => $contenu,
-                "membre_id" => 2, // membre fixe
+                "membre_id" => Session::getUser()->getId(),
                 "topic_id" => $id
             ])){
                 $sessionManager->addFlash("success", "Ajout réussi !");

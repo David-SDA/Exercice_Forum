@@ -52,12 +52,12 @@
             $sessionManager = new Session();
             $id = $topicManager->add([
                 "titre" => $titre,
-                "membre_id" => 2, // membre fixe
+                "membre_id" => Session::getUser()->getId(),
                 "categorie_id" => $categorie
             ]);
             if($id && $postManager->add([
                 "contenu" => $contenu,
-                "membre_id" => 2, // membre fixe
+                "membre_id" => Session::getUser()->getId(),
                 "topic_id" => $id
             ])){
                 $sessionManager->addFlash("success", "Ajout réussi !");
