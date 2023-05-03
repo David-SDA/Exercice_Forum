@@ -24,15 +24,14 @@
         /**
          * Permet de lister les membres
          */
-        public function membres(){
-            $this->restrictTo("ROLE_MEMBER");
-            $manager = new MembreManager();
-            $users = $manager->findAll(['dateInscription', 'DESC']);
+        public function listerMembres(){
+            $this->restrictTo("ROLE_ADMIN");
+            $membreManager = new MembreManager();
 
             return [
-                "view" => VIEW_DIR."security/users.php",
+                "view" => VIEW_DIR."security/listeMembres.php",
                 "data" => [
-                    "users" => $users
+                    "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
                 ]
             ];
         }

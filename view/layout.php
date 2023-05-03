@@ -26,7 +26,7 @@
                         <?php
                         if(App\Session::isAdmin()){
                             ?>
-                            <a href="index.php?ctrl=home&action=membres">Voir la liste des gens</a>
+                            <a href="index.php?ctrl=home&action=listerMembres">Voir la liste des gens</a>
                           
                             <?php
                         }
