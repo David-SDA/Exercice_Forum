@@ -134,7 +134,8 @@
             return [
                 "view" => VIEW_DIR . "security/profil.php",
                 "data" => [
-                    "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId())
+                    "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId()),
+                    "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId())
                 ]
             ];
         }

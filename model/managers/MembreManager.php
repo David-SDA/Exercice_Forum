@@ -65,4 +65,17 @@
                 DAO::select($requete, ["id" => $id], false)
             );
         }
+
+        /**
+         * Permet de compter le nombre de posts écrit par un membre
+         */
+        public function nombrePostsDeMembre($id){
+            $requete = "SELECT COUNT(p.id_post) AS nbPosts
+                        FROM " . $this->tableName . " m, post p
+                        WHERE m.id_membre = p.membre_id
+                        AND m.id_membre = :id";
+            return $this->getSingleScalarResult(
+                DAO::select($requete, ["id" => $id], false)
+            );
+        }
     }
