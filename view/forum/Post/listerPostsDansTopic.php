@@ -1,6 +1,7 @@
 <?php
 
 $posts = $result["data"]["posts"];
+$ancienPost = $result["data"]["ancien"];
 ?>
 
 <h1><i>Liste des posts du topic</i></h1>
@@ -20,9 +21,11 @@ if($posts != NULL){
                     <h5>
                         <?php
                         if(App\Session::isAdmin()){
+                            if($ancienPost != $post->getId()){
                         ?>
-                            <a href="index.php?ctrl=post&action=supprimerPost&id=<?= $post->getId() ?>&idTopic=<?= $post->getTopic()->getId() ?>"><i class="far fa-trash-alt"></i></a>
+                                <a href="index.php?ctrl=post&action=supprimerPost&id=<?= $post->getId() ?>&idTopic=<?= $post->getTopic()->getId() ?>"><i class="far fa-trash-alt"></i></a>
                         <?php
+                            }
                         }
                         ?>
                     </h5>

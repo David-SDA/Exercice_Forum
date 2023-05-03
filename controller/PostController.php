@@ -21,7 +21,8 @@
             return [
                 "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                 "data" => [
-                    "posts" => $postManager->trouverPostsDansTopic($id)
+                    "posts" => $postManager->trouverPostsDansTopic($id),
+                    "ancien" => $postManager->trouverPlusAncienPost($id)
                 ]
             ];
         }
