@@ -46,6 +46,15 @@
             ];
         }
 
+        /**
+         * Permet d'aller à la page des mentions légales du forum
+         */
+        public function mentionsLegales(){
+            return [
+                "view" => VIEW_DIR . "mentionsLegales.php"
+            ];
+        }
+
         /*public function ajax(){
             $nb = $_GET['nb'];
             $nb++;
