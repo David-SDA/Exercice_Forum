@@ -1,7 +1,7 @@
 <?php
 
 $posts = $result["data"]["posts"];
-$ancienPost = $result["data"]["ancien"];
+$idAncienPost = $result["data"]["ancien"];
 ?>
 
 <h1><i>Liste des posts du topic</i></h1>
@@ -21,7 +21,7 @@ if($posts != NULL){
                     <h5>
                         <?php
                         if(App\Session::isAdmin()){
-                            if($ancienPost != $post->getId()){
+                            if($idAncienPost != $post->getId() && $post->getTopic()->getVerrouiller() != 1){
                         ?>
                                 <a href="index.php?ctrl=post&action=supprimerPost&id=<?= $post->getId() ?>&idTopic=<?= $post->getTopic()->getId() ?>"><i class="far fa-trash-alt"></i></a>
                         <?php
