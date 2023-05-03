@@ -72,4 +72,30 @@
                 ]
             ];
         }
+
+        public function supprimerTopic(){
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+            $session = new Session();
+
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if($id){
+                if($postManager->supprimerPostsDuTopic($id) && $topicManager->delete($id)){
+                    $session->addFlash("success", "Suppression réussi !");
+                }
+                else{
+                    $session->addFlash("error", "Echec de l'ajout !");
+                }
+            }
+            else{
+                $session->addFlash("error", "Echec de l'ajout !!");
+            }
+
+            return [
+                "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
+                "data" =>[
+                    "topics" => $topicManager->findAll(["dateCreation", "DESC"])
+                ]
+            ];
+        }
     }

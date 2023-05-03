@@ -27,7 +27,16 @@ $topics = $result["data"]['topics'];
                         }
                     ?>
                 </div>
-                <p class="elementDroite"><i><?= $topic->getCategorie()->getNomCategorie() ?></i></p>
+                <p class="elementDroite">
+                    <i><?= $topic->getCategorie()->getNomCategorie() ?></i>
+                        <?php
+                        if(App\Session::isAdmin()){
+                        ?>
+                            <a href="index.php?ctrl=topic&action=supprimerTopic&id=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>
+                        <?php
+                        }
+                        ?>
+                </p>
             </div>
     <?php
         }

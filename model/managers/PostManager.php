@@ -28,4 +28,13 @@
             );
         }
 
+        /**
+         * Permet de supprimer les posts du topic
+         */
+        public function supprimerPostsDuTopic($id){
+            $sql = "DELETE FROM " . $this->tableName . "
+                    WHERE " . $this->tableName .  ".topic_id = :id";
+            return DAO::delete($sql, ["id" => $id]);
+        }
+
     }
