@@ -69,7 +69,7 @@
                         "pseudo" => $pseudo,
                         "email" => $email,
                         "motDePasse" => $motDePasseHash,
-                        "role" => "membre"
+                        "role" => "ROLE_MEMBER"
                     ])){
                         $sessionManager->addFlash("success", "Inscription réussi ! Connectez-vous !");
                         return ["view" => VIEW_DIR."security/connexion.php"];

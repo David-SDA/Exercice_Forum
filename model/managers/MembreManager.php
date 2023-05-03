@@ -19,7 +19,7 @@
                         FROM " . $this->tableName . " m
                         WHERE m.email = :email";
             return $this->getOneOrNullResult(
-                DAO::select($requete, ["email" => $email]),
+                DAO::select($requete, ["email" => $email], false),
                 $this->className
             );
         }
