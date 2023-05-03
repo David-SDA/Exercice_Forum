@@ -27,10 +27,10 @@ $topics = $result["data"]['topics'];
                         }
                     ?>
                 </div>
-                <p class="elementDroite">
+                <p class="elementDroite"></p>
                     <i><?= $topic->getCategorie()->getNomCategorie() ?></i>
                         <?php
-                        if(App\Session::isAdmin()){
+                        if(App\Session::isAdmin() || App\Session::getUser()->getId() == $topic->getMembre()->getId()){
                         ?>
                             <a href="index.php?ctrl=topic&action=supprimerTopic&id=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>
                         <?php

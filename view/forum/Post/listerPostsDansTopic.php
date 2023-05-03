@@ -20,7 +20,7 @@ if($posts != NULL){
                     <h5><?= $post->getDateCreation() ?></h5>
                     <h5>
                         <?php
-                        if(App\Session::isAdmin()){
+                        if(App\Session::isAdmin() || App\Session::getUser()->getId() == $post->getMembre()->getId()){
                             if($idAncienPost != $post->getId() && $post->getTopic()->getVerrouiller() != 1){
                         ?>
                                 <a href="index.php?ctrl=post&action=supprimerPost&id=<?= $post->getId() ?>&idTopic=<?= $post->getTopic()->getId() ?>"><i class="far fa-trash-alt"></i></a>
