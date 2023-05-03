@@ -119,10 +119,16 @@
             return $this;
         }
 
+        /**
+         * Permet de vérifier le rôle d'un membre
+         */
         public function hasRole($role){
             return $this->role == $role;
         }
 
+        /**
+         * Méthode toString de la classe
+         */
         public function __toString(){
             return $this->pseudo . "";
         }
