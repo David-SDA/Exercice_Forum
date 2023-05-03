@@ -264,13 +264,8 @@ form textarea{
     min-height: 90vh;
 }
 
-/* La partie gauche de la barre de navigation */
-#nav-left{
-    margin-left: 3vw;
-}
-
-/* La partie droite de la barre de navigation */
-#nav-right{
+/* Les parties gauche et droite de la barre de navigation */
+#nav-left, #nav-right{
     display: flex;
     margin-right: 3vw;
 }
