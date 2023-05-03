@@ -109,8 +109,8 @@ form textarea{
     margin: 25vh auto;
 }
 
-/* La liste des topic */
-.listeTopic{
+/* Une liste */
+.liste{
     background-color: #eee;
     border: 1px solid #000;
     border-radius: 20px;
@@ -118,51 +118,62 @@ form textarea{
     margin-top: 2vh;
     overflow: hidden;
 }
-.listeTopic h1{
+.liste h1{
     color: #393e46;
     font-style: italic;
     border-bottom: 1px solid #000;
 }
 
-/* Un topic dans la liste des topics */
-.unTopic{
+/* Un element dans la liste */
+.element{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 
 }
-.unTopic:hover{
+.element:hover{
     background-color: #808080;
 }
-
-/* Le contenu au centre du rectangle d'un topic */
-.unTopicCentre{
-    width: 40vw;
-    text-align: center;
-    padding: 10px;
-    line-height: 1.6;
-}
-.unTopic .pseudo{
+.element .elementGauche{
     text-align: start;
     padding-left: 3vw;
     padding-bottom: 5vh;
 }
-.unTopic .categorie{
+.element .elementDroite{
     text-align: end;
     padding-right: 3vw;
     padding-bottom: 5vh;
 }
-.unTopic .pseudo, .unTopic .categorie{
+.element .elementGauche, .element .elementDroite{
     width: 20vw;
 }
-.unTopicCentre a{
+.element.bordBas{
+    border-bottom: 1px solid #000;
+}
+.element.bordBas:hover{
+    background-color: #eee;
+}
+
+/* Les éléments à gauche et à droite que l'on veut aligner au centre de la ligne */
+.elementGauche.centre, .elementDroite.centre{
+    padding-bottom: 0;
+}
+
+/* Le contenu au centre du rectangle */
+.elementCentre{
+    width: 40vw;
+    text-align: center;
+    padding: 20px;
+    line-height: 1.6;
+}
+.elementCentre a{
     font-size: 1.5em;
     text-decoration: none;
     color: #000;
     font-weight: 500;
 }
-.unTopicCentre a:hover{
+.elementCentre a:hover{
     text-decoration: underline;
 }
 

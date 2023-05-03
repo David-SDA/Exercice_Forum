@@ -4,7 +4,7 @@ $categories = $result["data"]['categories'];
     
 ?>
 
-<div class="listeTopic">
+<div class="liste">
     <h1>CATÉGORIES</h1>
     <?php
     if($categories != NULL){
