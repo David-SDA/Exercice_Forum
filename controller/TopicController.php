@@ -80,7 +80,9 @@
             ];
         }
 
-        /* Permet de supprimer un topic avec ses posts inclues */
+        /**
+         * Permet de supprimer un topic avec ses posts inclues
+         */
         public function supprimerTopic(){
             $topicManager = new TopicManager();
             $postManager = new PostManager();
@@ -95,11 +97,11 @@
                     $session->addFlash("success", "Suppression réussi !");
                 }
                 else{
-                    $session->addFlash("error", "Echec de l'ajout !");
+                    $session->addFlash("error", "Echec de la suppression !");
                 }
             }
             else{
-                $session->addFlash("error", "Echec de l'ajout !!");
+                $session->addFlash("error", "Echec de la suppression !!");
             }
 
             return [

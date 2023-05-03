@@ -15,7 +15,18 @@ if($posts != NULL){
         <div class="postDuTopic">
             <div class="infoPost">
                 <h3><?= $post->getMembre()->getPseudo() ?></h3>
-                <h5><?= $post->getDateCreation() ?></h5>
+                <div>
+                    <h5><?= $post->getDateCreation() ?></h5>
+                    <h5>
+                        <?php
+                        if(App\Session::isAdmin()){
+                        ?>
+                            <a href="index.php?ctrl=post&action=supprimerPost&id=<?= $post->getId() ?>&idTopic=<?= $post->getTopic()->getId() ?>"><i class="far fa-trash-alt"></i></a>
+                        <?php
+                        }
+                        ?>
+                    </h5>
+                </div>
             </div>
             <p><?=$post->getContenu()?></p>
         </div>

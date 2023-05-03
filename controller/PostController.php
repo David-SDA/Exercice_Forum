@@ -61,4 +61,36 @@
                 ]
             ];
         }
+
+        /**
+         * Permet de supprimer un post
+         */
+        public function supprimerPost(){
+            $postManager = new PostManager();
+            $session = new Session();
+
+            /* On filtre les inputs */
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            /* Si le filtrage fonctionne */
+            if($id){
+                if($postManager->delete($id)){ // On supprime le post
+                    $session->addFlash("success", "Suppression réussi !");
+                }
+                else{
+                    $session->addFlash("error", "Echec de la suppression !");
+                }
+            }
+            else{
+                $session->addFlash("error", "Echec de la suppression !");
+            }
+
+            return [
+                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                "data" => [
+                    "posts" => $postManager->trouverPostsDansTopic($idTopic)
+                ]
+            ];
+        }
     }
