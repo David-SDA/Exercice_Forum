@@ -14,7 +14,7 @@ $membres = $result["data"]["membres"];
         <div class="element">
             <p class="elementGauche centre"><?= $membre->getDateInscription() ?></p>
             <p class="elementCentre"><b><?= $membre->getPseudo() ?></b></p>
-            <p class="elementDroite centre"><?= $membre->getRole() ?></p>
+            <p class="elementDroite centre"><?= ($membre->hasRole("ROLE_ADMIN") ? "ADMIN" : "MEMBRE") ?></p>
         </div>
         <?php
     }

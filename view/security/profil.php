@@ -1,7 +1,7 @@
 <?php
 if(App\Session::getUser()){
     ?>
-    <h2><i>Votre profil</i></h2>
+    <h2><i><?= App\Session::getUser()->getPseudo() ?></i></h2>
     <div class="detailProfil">
         <p><b><i>Pseudo : </i></b><?= App\Session::getUser()->getPseudo() ?></p>
         <p><b><i>Email : </i></b><?= App\Session::getUser()->getEmail() ?></p>
