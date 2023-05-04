@@ -149,7 +149,7 @@
         public function deconnexion(){
             session_destroy();
             return [
-                "view" => VIEW_DIR . "security/connexion.php"
+                "view" => VIEW_DIR . "home.php"
             ];
         }
     }
