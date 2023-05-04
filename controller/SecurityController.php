@@ -44,6 +44,7 @@
                             "view" => VIEW_DIR."security/inscription.php",
                         ];
                     }
+
                     /* Si le pseudo existe, on indique visuellement que celui-ci existe déjà et on le redirige vers le formulaire d'inscription  */
                     if($membreManager->trouverPseudo($pseudo)){
                         $sessionManager->addFlash("error", "Le pseudo saisit existe déjà ! Saisissez-en un autre !");
@@ -51,6 +52,7 @@
                             "view" => VIEW_DIR."security/inscription.php",
                         ];
                     }
+
                     /* Lorsque les deux mots de passe ne sont pas identiques, on l'indique visuellement et on le redirige vers le formulaire d'inscription */
                     if($motDePasse != $motDePasseConfirmation){
                         $sessionManager->addFlash("error", "Les mots de passe ne sont pas identiques ! Veuillez les saisirs à nouveau !");
@@ -82,6 +84,10 @@
                     }
                 }
             }
+            $sessionManager->addFlash("error", "Les mots de passe ne sont pas identiques ! Veuillez les saisirs à nouveau !");
+            return [
+                "view" => VIEW_DIR."security/inscription.php",
+            ];
         }
 
         /**
@@ -123,10 +129,10 @@
                         ];
                     }
                 }
-                return [
-                    "view" => VIEW_DIR . "home.php" // On se redirige à la page d'accueil
-                ];
             }
+            return [
+                "view" => VIEW_DIR . "home.php" // On se redirige à la page d'accueil
+            ];
         }
 
         /**
