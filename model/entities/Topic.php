@@ -11,6 +11,7 @@
         private $verrouiller;
         private $membre;
         private $categorie;
+        private $nombrePosts;
 
         public function __construct($data){         
             $this->hydrate($data);        
@@ -116,6 +117,23 @@
          */
         public function setCategorie($categorie){
             $this->categorie = $categorie;
+            return $this;
+        }
+
+        /**
+         * Obtient la valeur du nombre de posts
+         */
+        public function getNombrePosts(){
+            return $this->nombrePosts;
+        }
+
+        /**
+         * Définit la valeur du nombre de posts
+         * 
+         * @return self
+         */
+        public function setNombrePosts($nombrePosts){
+            $this->nombrePosts = $nombrePosts;
             return $this;
         }
     }
