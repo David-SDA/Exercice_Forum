@@ -2,13 +2,15 @@
 
 $posts = $result["data"]["posts"];
 $idAncienPost = $result["data"]["ancien"];
+$topic = $result["data"]["topic"];
 ?>
-
-<h1><i>Liste des posts du topic</i></h1>
 
 <?php
 $verrouiller = 0;
 if($posts != NULL){
+    ?>
+    <h1><i><?= $topic->getTitre() ?></i></h1>
+    <?php
     foreach($posts as $post){
         $verrouiller = $post->getTopic()->getVerrouiller();
 

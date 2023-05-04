@@ -6,6 +6,7 @@
     use App\AbstractController;
     use App\ControllerInterface;
     use Model\Managers\PostManager;
+    use Model\Managers\TopicManager;
 
     class PostController extends AbstractController implements ControllerInterface{
         
@@ -16,13 +17,15 @@
          */
         public function listerPostsDansTopic(){
             $postManager = new PostManager();
+            $topicManager = new TopicManager();
 
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             return [
                 "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                 "data" => [
                     "posts" => $postManager->trouverPostsDansTopic($id),
-                    "ancien" => $postManager->trouverPlusAncienPost($id)
+                    "ancien" => $postManager->trouverPlusAncienPost($id),
+                    "topic" => $topicManager->findOneById($id)
                 ]
             ];
         }
