@@ -43,6 +43,7 @@ footer{
     align-items: center;
     height: 10vh;
     width: 100%;
+    margin-top: 5vh;
     background-color: #222831;
     color: #eee;
 }
