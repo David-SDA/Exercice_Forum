@@ -11,8 +11,8 @@ $topics = $result["data"]['topics'];
             ?>
             <div class="element">
                 <p class="elementGauche">
-                    <i><?= $topic->getMembre()->getPseudo() ?></i>
-                    <p>Nombre de posts : </p>
+                    <b><i><?= $topic->getMembre()->getPseudo() ?></i></b><br>
+                    <i>Posts : <?= $topic->getNombrePosts() ?></i>
                 </p>
                 <div class="elementCentre">
                     <a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a>

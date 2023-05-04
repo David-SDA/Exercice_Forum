@@ -19,7 +19,7 @@
             return [
                 "view" => VIEW_DIR."forum/Topic/listerTopics.php",
                 "data" => [
-                    "topics" => $topicManager->findAll(["dateCreation", "DESC"]) // On cherche tout les topic trier du plus récent au plus ancien
+                    "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"]) // On cherche tout les topic trier du plus récent au plus ancien
                 ]
             ];
         }
