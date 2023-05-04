@@ -96,7 +96,7 @@
             
             /* Si le filtrage fonctionne */
             if($id){
-                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($id)){ // on vérifie que le membre actuelle est bien celui qui supprime le topic
+                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($id) || $session->isAdmin()){ // on vérifie que le membre actuelle est bien celui qui supprime le topic ou que c'est l'admin
                     if($postManager->supprimerPostsDuTopic($id) && $topicManager->delete($id)){ // On supprime les posts du topic puis le topic
                         $session->addFlash("success", "Suppression réussi !");
                     }
@@ -129,7 +129,7 @@
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             if($id){
-                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($id)){ // on vérifie que le membre actuelle est bien celui qui supprime le topic
+                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($id) || $session->isAdmin()){ // on vérifie que le membre actuelle est bien celui qui supprime le topic ou que c'est l'admin
                     if($topicManager->verrouillerTopic($id)){
                         $session->addFlash("success", "Verrouillage réussi !");
                     }

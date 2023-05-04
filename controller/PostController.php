@@ -80,7 +80,7 @@
 
             /* Si le filtrage fonctionne */
             if($id){
-                if($session->getUser()->getId() == $postManager->trouverIdMembrePost($id)){ // on vérifie que le membre actuelle est bien celui qui supprime le post
+                if($session->getUser()->getId() == $postManager->trouverIdMembrePost($id) || $session->isAdmin()){ // on vérifie que le membre actuelle est bien celui qui supprime le post ou que c'est un admin
                     if($postManager->delete($id)){ // On supprime le post
                         $session->addFlash("success", "Suppression réussi !");
                     }
