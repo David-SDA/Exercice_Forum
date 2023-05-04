@@ -38,4 +38,22 @@
             return $this->getSingleScalarResult(DAO::select($sql, ["id" => $id], false));
         }
 
+        /**
+         * Permet d'obtenir les topics avec le nombre de posts dans chaque topic
+         */
+        public function trouverTopicAvecNombrePosts($order = null){
+            $orderQuery = ($order) ? "ORDER BY " . $order[0] . " " . $order[1] : "";
+            
+            $sql = "SELECT *, (SELECT COUNT(post.id_post)
+                                FROM post
+                                WHERE post." . $this->tableName . "_id = id_" . $this->tableName . "
+                                ) AS nombrePosts
+                    FROM " . $this->tableName . " a
+                    ". $orderQuery;
+            return $this->getMultipleResults(
+                DAO::select($sql),
+                $this->className
+            );
+        }
+
     }
