@@ -5,6 +5,7 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
+    use Model\Managers\CategorieManager;
     use Model\Managers\TopicManager;
     use Model\Managers\PostManager;
 
@@ -25,10 +26,11 @@
         }
 
         /**
-         * Permet de lister les topic d'une categorie
+         * Permet de lister les topics d'une categorie
          */
         public function listerTopicsDansCategorie(){
             $topicManager = new TopicManager();
+            $categorieManager = new CategorieManager();
 
             /* On filtre l'input */
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -36,7 +38,8 @@
             return [
                 "view" => VIEW_DIR . "forum/Topic/listerTopicsDansCategorie.php",
                 "data" => [
-                    "topics" => $topicManager->trouverTopicsParCategorie($id, ["dateCreation", "DESC"])
+                    "topics" => $topicManager->trouverTopicsParCategorie($id, ["dateCreation", "DESC"]),
+                    "categorie" => $categorieManager->findOneById($id)
                 ]
             ];
         }

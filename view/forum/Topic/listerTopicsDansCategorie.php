@@ -1,11 +1,12 @@
 <?php
 
-$topics = $result["data"]['topics'];
+$topics = $result["data"]["topics"];
+$categorie = $result["data"]["categorie"];
     
 if($topics != NULL){
     ?>
     <div class="liste">
-        <h1>LISTE DES TOPICS DANS LA CATÉGORIE</h1>
+        <h1><?= $categorie->getNomCategorie() ?></h1>
         <?php
         foreach($topics as $topic){
         ?>
@@ -49,7 +50,7 @@ if($topics != NULL){
 }
 else{
 ?>
-    <h1>Pas de topic dans cette catégorie !</h1>
+    <h1>Pas de topic dans la catégorie <?= $categorie->getNomCategorie() ?></h1>
 <?php
 }
 ?>
