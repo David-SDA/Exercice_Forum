@@ -16,7 +16,7 @@ if($posts != NULL){
         }
         else{
             ?>
-            <a href="index.php?ctrl=topic&action=deverrouillerTopic&id=<?= $topic->getId() ?>" class="lienAjout">DÉVERROUILLER LE TOPIC</a>
+            <a href="index.php?ctrl=topic&action=deverrouillerTopic&id=<?= $topic->getId() ?>" class="lienAjout grand">DÉVERROUILLER LE TOPIC</a>
         <?php
         }
     }

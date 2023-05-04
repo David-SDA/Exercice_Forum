@@ -71,4 +71,13 @@
             return DAO::update($sql, ["id" => $id]);
         }
 
+        /**
+         * Permet de verrouiller un topic
+         */
+        public function deverrouillerTopic($id){
+            $sql = "UPDATE " . $this->tableName . "
+                    SET verrouiller = 0
+                    WHERE " . $this->tableName . ".id_" .$this->tableName . " = :id";
+            return DAO::update($sql, ["id" => $id]);
+        }
     }
