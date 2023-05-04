@@ -129,6 +129,9 @@
             }
         }
 
+        /**
+         * Permet d'aller à la page du profil d'un membre
+         */
         public function allerPageProfil(){
             $membreManager = new MembreManager();
             return [
@@ -140,6 +143,9 @@
             ];
         }
 
+        /**
+         * Permet de se déconnecter
+         */
         public function deconnexion(){
             session_destroy();
             return [

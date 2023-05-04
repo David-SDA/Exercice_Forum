@@ -77,7 +77,7 @@
 
             /* Si le filtrage fonctionne */
             if($id){
-                if($session->getUser()->getId() == $postManager->trouverIdMembrePost($id)){
+                if($session->getUser()->getId() == $postManager->trouverIdMembrePost($id)){ // on vérifie que le membre actuelle est bien celui qui supprime le post
                     if($postManager->delete($id)){ // On supprime le post
                         $session->addFlash("success", "Suppression réussi !");
                     }

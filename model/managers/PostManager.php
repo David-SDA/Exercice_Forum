@@ -51,6 +51,9 @@
             return $this->getSingleScalarResult(DAO::select($sql, ["id" => $id], false));
         }
 
+        /**
+         * Permet de trouver l'id du membre qui a écrit un post
+         */
         public function trouverIdMembrePost($id){
             $sql = "SELECT " . $this->tableName . ".membre_id
                     FROM " . $this->tableName . "

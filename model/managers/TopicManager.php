@@ -28,7 +28,10 @@
             );
         }
 
-        public function idDuUserDuTopic($id){
+        /**
+         * Permet de trouver l'id du membre qui a créer un topic
+         */
+        public function idDuMembreDuTopic($id){
             $sql = "SELECT " . $this->tableName . ".membre_id
                     FROM " . $this->tableName . "
                     WHERE " . $this->tableName . ".id_" . $this->tableName . " = :id";
