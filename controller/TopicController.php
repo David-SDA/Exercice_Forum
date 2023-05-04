@@ -36,7 +36,7 @@
             return [
                 "view" => VIEW_DIR . "forum/Topic/listerTopicsDansCategorie.php",
                 "data" => [
-                    "topics" => $topicManager->trouverTopicsParCategorie($id)
+                    "topics" => $topicManager->trouverTopicsParCategorie($id, ["dateCreation", "DESC"])
                 ]
             ];
         }

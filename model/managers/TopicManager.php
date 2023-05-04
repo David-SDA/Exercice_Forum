@@ -15,13 +15,18 @@
         }
 
         /**
-         * Permet de trouver les topics d'un catégorie
+         * Permet de trouver les topics d'une catégorie
          */
-        public function trouverTopicsParCategorie($id){
-            $sql = "SELECT *
+        public function trouverTopicsParCategorie($id, $order){
+            $orderQuery = ($order) ? "ORDER BY " . $order[0] . " " . $order[1] : "";
+            
+            $sql = "SELECT *, (SELECT COUNT(post.id_post)
+                                FROM post
+                                WHERE post." . $this->tableName . "_id = id_" . $this->tableName . "
+                                ) AS nombrePosts
                     FROM " . $this->tableName . " t
                     WHERE t.categorie_id = :id
-                    ORDER BY t.dateCreation DESC";
+                    " . $orderQuery;
             return $this->getMultipleResults(
                 DAO::select($sql, ["id" => $id]),
                 $this->className

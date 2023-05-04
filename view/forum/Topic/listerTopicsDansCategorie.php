@@ -10,7 +10,10 @@ if($topics != NULL){
         foreach($topics as $topic){
         ?>
         <div class="element">
-            <p class="elementGauche"><i><?= $topic->getMembre()->getPseudo() ?></i></p>
+            <p class="elementGauche">
+                <b><i><?= $topic->getMembre()->getPseudo() ?></i></b><br>
+                <i>Posts : <?= $topic->getNombrePosts() ?></i>
+            </p>
             <div class="elementCentre">
                 <a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a>
                 <p><i><?= $topic->getDateCreation() ?></i></p>
