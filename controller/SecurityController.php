@@ -140,11 +140,13 @@
          */
         public function allerPageProfil(){
             $membreManager = new MembreManager();
+            $topicManager = new TopicManager();
             return [
                 "view" => VIEW_DIR . "security/profil.php",
                 "data" => [
                     "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId()),
-                    "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId())
+                    "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId()),
+                    "topics" => $topicManager->trouverTopicsMembre(Session::getUser()->getId(), ["dateCreation", "DESC"])
                 ]
             ];
         }

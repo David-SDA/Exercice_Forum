@@ -80,4 +80,23 @@
                     WHERE " . $this->tableName . ".id_" .$this->tableName . " = :id";
             return DAO::update($sql, ["id" => $id]);
         }
+
+        /**
+         * Permet d'obtenir les topics d'un membre
+         */
+        public function trouverTopicsMembre($id, $order = null){
+            $orderQuery = ($order) ? "ORDER BY " . $order[0] . " " . $order[1] : "";
+            
+            $sql = "SELECT *, (SELECT COUNT(post.id_post)
+                                FROM post
+                                WHERE post." . $this->tableName . "_id = id_" . $this->tableName . "
+                                ) AS nombrePosts
+                    FROM " . $this->tableName . "
+                    WHERE " . $this->tableName .".membre_id = :id
+                    ". $orderQuery;
+            return $this->getMultipleResults(
+                DAO::select($sql, ["id" => $id]),
+                $this->className
+            );
+        }
     }
