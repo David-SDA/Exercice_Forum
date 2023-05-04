@@ -77,11 +77,13 @@
 
             /* Si le filtrage fonctionne */
             if($id){
-                if($postManager->delete($id)){ // On supprime le post
-                    $session->addFlash("success", "Suppression réussi !");
-                }
-                else{
-                    $session->addFlash("error", "Echec de la suppression !");
+                if($session->getUser()->getId() == $postManager->trouverIdMembrePost($id)){
+                    if($postManager->delete($id)){ // On supprime le post
+                        $session->addFlash("success", "Suppression réussi !");
+                    }
+                    else{
+                        $session->addFlash("error", "Echec de la suppression !");
+                    }
                 }
             }
             else{

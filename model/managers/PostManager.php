@@ -50,4 +50,11 @@
                         WHERE " . $this->tableName . ".topic_id = :id)";
             return $this->getSingleScalarResult(DAO::select($sql, ["id" => $id], false));
         }
+
+        public function trouverIdMembrePost($id){
+            $sql = "SELECT " . $this->tableName . ".membre_id
+                    FROM " . $this->tableName . "
+                    WHERE " . $this->tableName . ".id_" . $this->tableName . " = :id";
+            return $this->getSingleScalarResult(DAO::select($sql, ["id" => $id], false));
+        }
     }
