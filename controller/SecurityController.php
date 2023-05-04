@@ -147,7 +147,13 @@
          * Permet de se déconnecter
          */
         public function deconnexion(){
-            session_destroy();
+            $session = new Session();
+            if(session_unset() && session_destroy()){
+                $session->addFlash("success", "Déconnexion réussi !");
+            }
+            else{
+                $session->addFlash("error", "Echec de la déconnexion !");
+            }
             return [
                 "view" => VIEW_DIR . "home.php"
             ];
