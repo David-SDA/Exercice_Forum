@@ -8,6 +8,18 @@ $topic = $result["data"]["topic"];
 <?php
 $verrouiller = 0;
 if($posts != NULL){
+    if(App\Session::isAdmin() || App\Session::getUser()->getId() == $topic->getMembre()->getId()){
+        if(!$topic->getVerrouiller()){
+        ?>
+            <a href="index.php?ctrl=topic&action=verrouillerTopic&id=<?= $topic->getId() ?>" class="lienAjout">VERROUILLER LE TOPIC</a>
+        <?php
+        }
+        else{
+            ?>
+            <a href="index.php?ctrl=topic&action=deverrouillerTopic&id=<?= $topic->getId() ?>" class="lienAjout">DÉVERROUILLER LE TOPIC</a>
+        <?php
+        }
+    }
     ?>
     <h1><i><?= $topic->getTitre() ?></i></h1>
     <?php

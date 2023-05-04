@@ -61,4 +61,14 @@
             );
         }
 
+        /**
+         * Permet de verrouiller un topic
+         */
+        public function verrouillerTopic($id){
+            $sql = "UPDATE " . $this->tableName . "
+                    SET verrouiller = 1
+                    WHERE " . $this->tableName . ".id_" .$this->tableName . " = :id";
+            return DAO::update($sql, ["id" => $id]);
+        }
+
     }

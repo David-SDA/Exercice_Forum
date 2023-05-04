@@ -116,4 +116,38 @@
                 ]
             ];
         }
+
+        /**
+         * Permet de verrouiller un topic
+         */
+        public function verrouillerTopic(){
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+            $session = new Session();
+
+            /* On filtre l'input */
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if($id){
+                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($id)){ // on vérifie que le membre actuelle est bien celui qui supprime le topic
+                    if($topicManager->verrouillerTopic($id)){
+                        $session->addFlash("success", "Verrouillage réussi !");
+                    }
+                    else{
+                        $session->addFlash("error", "Echec du verrouillage !");
+                    }
+                }
+            }
+            else{
+                $session->addFlash("error", "Echec du verrouillage !");
+            }
+            return [
+                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                "data" => [
+                    "posts" => $postManager->trouverPostsDansTopic($id),
+                    "ancien" => $postManager->trouverPlusAncienPost($id),
+                    "topic" => $topicManager->findOneById($id)
+                ]
+            ];
+        }
     }
