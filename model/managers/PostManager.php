@@ -34,7 +34,7 @@
         public function supprimerPostsDuTopic($id){
             $sql = "DELETE FROM " . $this->tableName . "
                     WHERE " . $this->tableName .  ".topic_id = :id";
-            return DAO::delete($sql, ["id" => $id], false);
+            return DAO::delete($sql, ["id" => $id]);
         }
 
         /**

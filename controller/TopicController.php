@@ -93,7 +93,7 @@
             
             /* Si le filtrage fonctionne */
             if($id){
-                if($session->getUser()->getId() == $topicManager->){ // on vérifie que le membre actuelle est bien celui qui supprime le topic
+                if($session->getUser()->getId() == $topicManager->idDuUserDuTopic($id)){ // on vérifie que le membre actuelle est bien celui qui supprime le topic
                     if($postManager->supprimerPostsDuTopic($id) && $topicManager->delete($id)){ // On supprime les posts du topic puis le topic
                         $session->addFlash("success", "Suppression réussi !");
                     }
