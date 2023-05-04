@@ -42,6 +42,7 @@
          */
         public function ajouterPost(){
             $postManager = new PostManager();
+            $topicManager = new TopicManager();
 
             $contenu = filter_input(INPUT_POST, "contenu", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -62,7 +63,8 @@
                 "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                 "data" => [
                     "posts" => $postManager->trouverPostsDansTopic($id),
-                    "ancien" => $postManager->trouverPlusAncienPost($id)
+                    "ancien" => $postManager->trouverPlusAncienPost($id),
+                    "topic" => $topicManager->findOneById($id)
                 ]
             ];
         }
@@ -72,6 +74,7 @@
          */
         public function supprimerPost(){
             $postManager = new PostManager();
+            $topicManager = new TopicManager();
             $session = new Session();
 
             /* On filtre les inputs */
@@ -97,7 +100,8 @@
                 "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                 "data" => [
                     "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                    "ancien" => $postManager->trouverPlusAncienPost($id)
+                    "ancien" => $postManager->trouverPlusAncienPost($id),
+                    "topic" => $topicManager->findOneById($id)
                 ]
             ];
         }
