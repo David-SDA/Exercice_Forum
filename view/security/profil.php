@@ -62,3 +62,35 @@ $topics = $result["data"]['topics'];
     }
     ?>
 </div>
+
+<?php
+$derniersPosts = $result["data"]["derniersPosts"];
+?>
+<div class="liste">
+<?php
+    if($derniersPosts != NULL){
+        ?>
+        <h2><i>VOS DERNIERS POSTS</i></h2>
+        <div class="element bordBas">
+            <p class="elementGauche centre"><i><b>DATE DE CRÉATION</b></i></p>
+            <p class="elementCentre"><i><b>CONTENU</b></i></p>
+            <p class="elementDroite centre"><i><b>NOM DU TOPIC</b></i></p>
+        </div>
+        <?php
+        foreach($derniersPosts as $post){
+            ?>
+            <div class="element">
+                <p class="elementGauche"><i><?= $post->getDateCreation() ?></i></p>
+                <p class="elementCentre"><?= $post->getContenu() ?></p>
+                <div class="elementDroite"><p><a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $post->getTopic()->getId() ?>"><?= $post->getTopic()->getTitre() ?></a></p></div>
+            </div>
+            <?php
+        }
+    }
+    else{
+        ?>
+        <h2>VOUS N'AVEZ ÉCRIT DE POST</h2>
+        <?php
+    }
+?>
+</div>
