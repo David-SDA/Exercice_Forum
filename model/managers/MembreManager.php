@@ -80,12 +80,22 @@
         }
 
         /**
-         * Permet de modifier le mot de passe
+         * Permet de modifier le mot de passe d'un membre
          */
         public function modificationMotDePasse($id, $mdp){
             $requete = "UPDATE " . $this->tableName . "
                         SET motDePasse = :mdp
                         WHERE id_" . $this->tableName ." = :id";
             return DAO::update($requete, ["id" => $id, "mdp" => $mdp]);
+        }
+
+        /**
+         * Permet de modifier l'email d'un membre
+         */
+        public function modificationEmail($id, $email){
+            $requete = "UPDATE " . $this->tableName . "
+                        SET email = :email
+                        WHERE id_" . $this->tableName ." = :id";
+            return DAO::update($requete, ["id" => $id, "email" => $email]);
         }
     }
