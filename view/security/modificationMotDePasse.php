@@ -2,7 +2,7 @@
     <h1><i>MODIFIER VOTRE MOT DE PASSE</i></h1>
     <div>
         <label for="ancienMotDePasse">Mot de passe actuel :</label>
-        <input type="password" name="ancienMotDePasse" id="ancienMotDePasse">
+        <input type="password" name="ancienMotDePasse" id="ancienMotDePasse" required>
     </div>
     <div>
         <label for="nouveauMotDePasse">Nouveau mot de passe :</label>

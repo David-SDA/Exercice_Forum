@@ -85,7 +85,7 @@
                     }
                 }
             }
-            $sessionManager->addFlash("error", "Les mots de passe ne sont pas identiques ! Veuillez les saisirs à nouveau !");
+            $sessionManager->addFlash("error", "Échec de l'inscription !");
             return [
                 "view" => VIEW_DIR."security/inscription.php",
             ];
@@ -170,10 +170,105 @@
             ];
         }
 
-        /* Permet d'aller à la page de modification du mot de passe */
+        /**
+         * Permet d'aller à la page de modification du mot de passe
+         */
         public function allerPageModificationMotDePasse(){
             return[
                 "view" => VIEW_DIR . "security/modificationMotDePasse.php"
             ];
+        }
+
+        /**
+         * Permet de changer le mot de passe
+         */
+        public function modificationMotDePasse(){
+            $sessionManager = new Session(); // Pour pouvoir utiliser le message flash
+            $membreManager = new MembreManager(); // Pour la gestion de la base de données membre
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+
+            if(isset($_POST["submitModificationMotDePasse"])){
+                /* Filtrage des input */
+                $ancienMotDePasse = filter_input(INPUT_POST, "ancienMotDePasse", FILTER_SANITIZE_EMAIL);
+                $nouveauMotDePasse = filter_input(INPUT_POST, "nouveauMotDePasse", FILTER_SANITIZE_SPECIAL_CHARS);
+                $motDePasseConfirmation = filter_input(INPUT_POST, "motDePasseConfirmation", FILTER_SANITIZE_SPECIAL_CHARS);
+
+                /* Si le filtrage est réussi */
+                if($ancienMotDePasse && $nouveauMotDePasse && $motDePasseConfirmation){
+                    $motDePasseBdd = $membreManager->trouverMotDePasse(Session::getUser()->getEmail()); // On cherche le mot de passe associé à l'adresse mail de l'utilisateur
+                    
+                    /* Si on trouve bien le mot de passe */
+                    if($motDePasseBdd){
+                        $hash = $motDePasseBdd->getMotDePasse(); // On récupère le hash
+                        
+                        /* Si le mot de passe correspond au hachage */
+                        if(password_verify($ancienMotDePasse, $hash)){
+                            
+                            /* Lorsque les deux mots de passe ne sont pas identiques, on l'indique visuellement et on le redirige vers le formulaire*/
+                            if($nouveauMotDePasse != $motDePasseConfirmation){
+                                $sessionManager->addFlash("error", "Les mots de passe ne sont pas identiques ! Veuillez les saisir à nouveau !");
+                                return [
+                                    "view" => VIEW_DIR."security/modificationMotDePasse.php",
+                                ];
+                            }
+                            
+                            if($ancienMotDePasse != $nouveauMotDePasse){
+                                /* On hash le mot de passe */
+                                $motDePasseHash = password_hash($nouveauMotDePasse, PASSWORD_DEFAULT);
+
+                                if($membreManager->modificationMotDePasse(Session::getUser()->getId(), $motDePasseHash)){
+                                    $sessionManager->addFlash("success", "Changement de mot de passe réussi !");
+                                    return [
+                                        "view" => VIEW_DIR . "security/profil.php",
+                                        "data" => [
+                                            "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId()),
+                                            "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId()),
+                                            "topics" => $topicManager->trouverTopicsMembre(Session::getUser()->getId(), ["dateCreation", "DESC"]),
+                                            "derniersPosts" => $postManager->trouverCinqDernierPost(Session::getUser()->getId())
+                                        ]
+                                    ];
+                                }
+                                else{
+                                    $sessionManager->addFlash("error", "Échec du changement de mot de passe !");
+                                    return [
+                                        "view" => VIEW_DIR."security/modificationMotDePasse.php",
+                                    ];
+                                }
+                            }
+                            else{
+                                $sessionManager->addFlash("error", "Échec du changement de mot de passe ! Le nouveau mot de passe doit être différent de l'ancien !");
+                                return [
+                                    "view" => VIEW_DIR."security/modificationMotDePasse.php",
+                                ];
+                            }
+                        }
+                        else{
+                            $sessionManager->addFlash("error", "L'ancien mot de passe n'est pas bon");
+                            return [
+                                "view" => VIEW_DIR."security/modificationMotDePasse.php",
+                            ];
+                        }
+                    }
+                    else{
+                        $sessionManager->addFlash("error", "Échec du changement de mot de passe !");
+                        return [
+                            "view" => VIEW_DIR."security/modificationMotDePasse.php",
+                        ];
+                    }
+                }
+                else{
+                    $sessionManager->addFlash("error", "Échec du changement de mot de passe !");
+                    return [
+                        "view" => VIEW_DIR."security/modificationMotDePasse.php",
+                    ];
+                }
+            }
+            else{
+                $sessionManager->addFlash("error", "Échec du changement de mot de passe !");
+                return [
+                    "view" => VIEW_DIR."security/modificationMotDePasse.php",
+                ];
+            }
         }
     }
