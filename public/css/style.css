@@ -217,6 +217,14 @@ form textarea{
     width: 20vw;
 }
 
+/* Les liens de modification du profil */
+.modificationProfil{
+    display: flex;
+}
+.modificationProfil .lienAjout{
+    margin: 5px;
+}
+
 /* Tout les bouton d'ajout (<input>) */
 .ajoutFormulaire{
     border: none;

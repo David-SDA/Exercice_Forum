@@ -8,6 +8,7 @@ if(App\Session::getUser()){
         <p><b><i>Date d'inscription : </i></b><?= App\Session::getUser()->getDateInscription() ?></p>
         <p><b><i>Nombre de topics : </i></b><?= $result["data"]["nombreTopics"] ?></p>
         <p><b><i>Nombre de posts : </i></b><?= $result["data"]["nombrePosts"] ?></p>
+        <p class="modificationProfil"><a href="" class="lienAjout">MODIFIER L'EMAIL</a><a href="" class="lienAjout grand">MODIFIER LE MOT DE PASSE</a></p>
     </div>
     <?php
 }
