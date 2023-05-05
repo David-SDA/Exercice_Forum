@@ -291,4 +291,13 @@
                 ];
             }
         }
+
+        /**
+         * Permet d'aller à la page de modification de l'email
+         */
+        public function allerPageModificationEmail(){
+            return [
+                "view" => VIEW_DIR."security/modificationEmail.php",
+            ];
+        }
     }

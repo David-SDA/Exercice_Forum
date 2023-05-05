@@ -9,7 +9,7 @@ if(App\Session::getUser()){
         <p><b><i>Nombre de topics : </i></b><?= $result["data"]["nombreTopics"] ?></p>
         <p><b><i>Nombre de posts : </i></b><?= $result["data"]["nombrePosts"] ?></p>
         <p class="modificationProfil">
-            <a href="" class="lienAjout">MODIFIER L'EMAIL</a>
+            <a href="index.php?ctrl=security&action=allerPageModificationEmail" class="lienAjout">MODIFIER L'EMAIL</a>
             <a href="index.php?ctrl=security&action=allerPageModificationMotDePasse" class="lienAjout grand">MODIFIER LE MOT DE PASSE</a>
         </p>
     </div>
