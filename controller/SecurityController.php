@@ -169,4 +169,11 @@
                 "view" => VIEW_DIR . "home.php"
             ];
         }
+
+        /* Permet d'aller à la page de modification du mot de passe */
+        public function allerPageModificationMotDePasse(){
+            return[
+                "view" => VIEW_DIR . "security/modificationMotDePasse.php"
+            ];
+        }
     }
