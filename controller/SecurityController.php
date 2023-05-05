@@ -121,19 +121,31 @@
                         if(password_verify($motDePasse, $hash)){
                             $sessionManager->addFlash("success", "Connexion réussi !"); // On l'indique visuellement
                             Session::setUser($membre); // On stocke le membre en session
+                            return [
+                                "view" => VIEW_DIR . "home.php"
+                            ];
+                        }
+                        else{
+                            $sessionManager->addFlash("error", "L'email ou le mot de passe n'est pas bon ! Réessayez"); // On indique que la connexion a échoué
+                            return [
+                                "view" => VIEW_DIR . "security/connexion.php" // On retourne alors au formulaire d'inscription
+                            ];
                         }
                     }
                     else{
-                        $sessionManager->addFlash("error", "L'email ou le mot de passe n'est pas bon ! Réessayez"); // On indique que la connexion a échoué
+                        $sessionManager->addFlash("error", "Échec de la connexion ! Réessayez"); // On indique que la connexion a échoué
                         return [
                             "view" => VIEW_DIR . "security/connexion.php" // On retourne alors au formulaire d'inscription
                         ];
                     }
                 }
             }
-            return [
-                "view" => VIEW_DIR . "home.php" // On se redirige à la page d'accueil
-            ];
+            else{
+                $sessionManager->addFlash("error", "L'email ou le mot de passe n'est pas bon ! Réessayez"); // On indique que la connexion a échoué
+                return [
+                    "view" => VIEW_DIR . "security/connexion.php" // On retourne alors au formulaire d'inscription
+                ];
+            }
         }
 
         /**
