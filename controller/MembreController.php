@@ -6,6 +6,7 @@
     use App\AbstractController;
     use App\ControllerInterface;
     use Model\Managers\MembreManager;
+    use Model\Managers\PostManager;
     use Model\Managers\TopicManager;
 
     class MembreController extends AbstractController implements ControllerInterface{
@@ -18,6 +19,7 @@
         public function profilAdmin(){
             $membreManager = new MembreManager();
             $topicManager = new TopicManager();
+            $postManager = new PostManager();
 
             /* On filtre l'input */
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -29,7 +31,8 @@
                         "membre" => $membreManager->findOneById($id),
                         "nombreTopics" => $membreManager->nombreTopicsDeMembre($id),
                         "nombrePosts" => $membreManager->nombrePostsDeMembre($id),
-                        "topics" => $topicManager->trouverTopicsMembre($id, ["dateCreation", "DESC"])
+                        "topics" => $topicManager->trouverTopicsMembre($id, ["dateCreation", "DESC"]),
+                        "derniersPosts" => $postManager->trouverCinqDernierPost($id)
                     ]
                 ];
             }

@@ -1,6 +1,7 @@
 <?php
 $membre = $result["data"]["membre"];
 $topics = $result["data"]["topics"];
+$derniersPosts = $result["data"]["derniersPosts"];
 ?>
 <h2><i><?= $membre->getPseudo() ?></i></h2>
 <div class="detailProfil">
@@ -58,4 +59,33 @@ $topics = $result["data"]["topics"];
     <?php
     }
     ?>
+</div>
+
+<div class="liste">
+<?php
+    if($derniersPosts != NULL){
+        ?>
+        <h2><i>SES DERNIERS POSTS</i></h2>
+        <div class="element bordBas">
+            <p class="elementGauche centre"><i><b>DATE DE CRÉATION</b></i></p>
+            <p class="elementCentre"><i><b>CONTENU</b></i></p>
+            <p class="elementDroite centre"><i><b>NOM DU TOPIC</b></i></p>
+        </div>
+        <?php
+        foreach($derniersPosts as $post){
+            ?>
+            <div class="element">
+                <p class="elementGauche"><i><?= $post->getDateCreation() ?></i></p>
+                <p class="elementCentre"><?= $post->getContenu() ?></p>
+                <div class="elementDroite"><p><a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $post->getTopic()->getId() ?>"><?= $post->getTopic()->getTitre() ?></a></p></div>
+            </div>
+            <?php
+        }
+    }
+    else{
+        ?>
+        <h2>CE MEMBRE N'A PAS ÉCRIT DE POSTS</h2>
+        <?php
+    }
+?>
 </div>
