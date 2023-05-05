@@ -6,11 +6,11 @@
     </div>
     <div>
         <label for="nouveauEmail">Nouvel email :</label>
-        <input type="email" name="ancienEmail" id="ancienEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+        <input type="email" name="nouveauEmail" id="nouveauEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
     </div>
     <div>
-        <label for="EmailConfirmation">Confirmation de l'email :</label>
-        <input type="email" name="ancienEmail" id="ancienEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+        <label for="emailConfirmation">Confirmation de l'email :</label>
+        <input type="email" name="emailConfirmation" id="emailConfirmation" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
     </div>
     <div>
         <label for="motDePasse">Mot de passe :</label>
