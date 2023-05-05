@@ -84,11 +84,19 @@
                         ];
                     }
                 }
+                else{
+                    $sessionManager->addFlash("error", "Échec de l'inscription !");
+                    return [
+                        "view" => VIEW_DIR."security/inscription.php",
+                    ];
+                }
             }
-            $sessionManager->addFlash("error", "Échec de l'inscription !");
-            return [
-                "view" => VIEW_DIR."security/inscription.php",
-            ];
+            else{
+                $sessionManager->addFlash("error", "Échec de l'inscription !");
+                return [
+                    "view" => VIEW_DIR."security/inscription.php",
+                ];
+            }
         }
 
         /**
