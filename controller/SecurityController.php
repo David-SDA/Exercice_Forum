@@ -7,6 +7,7 @@
     use App\ControllerInterface;
     use Model\Managers\MembreManager;
     use Model\Managers\TopicManager;
+    use Model\Managers\PostManager;
 
     class SecurityController extends AbstractController implements ControllerInterface{
         
@@ -141,12 +142,14 @@
         public function allerPageProfil(){
             $membreManager = new MembreManager();
             $topicManager = new TopicManager();
+            $postManager = new PostManager();
             return [
                 "view" => VIEW_DIR . "security/profil.php",
                 "data" => [
                     "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId()),
                     "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId()),
-                    "topics" => $topicManager->trouverTopicsMembre(Session::getUser()->getId(), ["dateCreation", "DESC"])
+                    "topics" => $topicManager->trouverTopicsMembre(Session::getUser()->getId(), ["dateCreation", "DESC"]),
+                    "derniersPosts" => $postManager->trouverCinqDernierPost(Session::getUser()->getId())
                 ]
             ];
         }
