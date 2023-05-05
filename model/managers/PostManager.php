@@ -60,4 +60,19 @@
                     WHERE " . $this->tableName . ".id_" . $this->tableName . " = :id";
             return $this->getSingleScalarResult(DAO::select($sql, ["id" => $id], false));
         }
+
+        /**
+         * Permet de trouver les 5 derniers post d'un membre
+         */
+        public function trouverCinqDernierPost($id){
+            $sql = "SELECT *
+                    FROM " . $this->tableName . "
+                    WHERE membre_id = :id
+                    ORDER BY dateCreation DESC
+                    LIMIT 5";
+            return $this->getMultipleResults(
+                DAO::select($sql, ["id" => $id]),
+                $this->className
+            );
+        }
     }
