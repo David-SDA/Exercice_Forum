@@ -1,8 +1,12 @@
 <form action="index.php?ctrl=security&action=modificationMotDePasse" method="post">
     <h1><i>MODIFIER VOTRE MOT DE PASSE</i></h1>
     <div>
-        <label for="motDePasse">Mot de passe :</label>
-        <input type="password" name="motDePasse" id="motDePasse" required>
+        <label for="ancienMotDePasse">Mot de passe actuel :</label>
+        <input type="password" name="ancienMotDePasse" id="ancienMotDePasse">
+    </div>
+    <div>
+        <label for="nouveauMotDePasse">Nouveau mot de passe :</label>
+        <input type="password" name="nouveauMotDePasse" id="nouveauMotDePasse" required>
     </div>
     <div>
         <label for="motDePasseConfirmation">Confirmation du mot de passe :</label>
