@@ -174,7 +174,8 @@ form textarea{
     line-height: 1.6;
 }
 
-.elementGauche a,.elementCentre a, .elementDroite a{
+/* Le lien qu'il y a dans chaque elements */
+.elementGauche a, .elementCentre a, .elementDroite a{
     font-size: 1.5em;
     text-decoration: none;
     color: #000;
@@ -182,6 +183,12 @@ form textarea{
 }
 .elementGauche a:hover, .elementCentre a:hover, .elementDroite a:hover{
     text-decoration: underline;
+}
+
+/* Les icones de suppression */
+.far{
+    color: red;
+    font-size: 1.3em;
 }
 
 /* Tout les liens d'ajout (<a>) */
