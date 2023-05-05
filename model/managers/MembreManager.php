@@ -78,4 +78,14 @@
                 DAO::select($requete, ["id" => $id], false)
             );
         }
+
+        /**
+         * Permet de modifier le mot de passe
+         */
+        public function modificationMotDePasse($id, $mdp){
+            $requete = "UPDATE " . $this->tableName . "
+                        SET motDePasse = :mdp
+                        WHERE id_" . $this->tableName ." = :id";
+            return DAO::update($requete, ["id" => $id, "mdp" => $mdp]);
+        }
     }
