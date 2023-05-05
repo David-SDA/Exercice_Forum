@@ -300,4 +300,116 @@
                 "view" => VIEW_DIR."security/modificationEmail.php",
             ];
         }
+
+        /**
+         * Permet de modifier l'email
+         */
+        public function modificationEmail(){
+            $session = new Session(); // Pour pouvoir utiliser le message flash
+            $membreManager = new MembreManager(); // Pour la gestion de la base de données membre
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+
+            if(isset($_POST["submitModificationEmail"])){
+                /* Filtrage des input */
+                $ancienEmail = filter_input(INPUT_POST, "ancienEmail", FILTER_SANITIZE_EMAIL);
+                $nouveauEmail = filter_input(INPUT_POST, "nouveauEmail", FILTER_SANITIZE_EMAIL);
+                $emailConfirmation = filter_input(INPUT_POST, "emailConfirmation", FILTER_SANITIZE_EMAIL);
+                $motDePasse = filter_input(INPUT_POST, "motDePasse", FILTER_SANITIZE_SPECIAL_CHARS);
+
+                /* Si le filtrage fonctionne */
+                if($ancienEmail && $nouveauEmail && $emailConfirmation && $motDePasse){
+
+                    /* Si l'email rentré correspond bien à celui du membre actuel */
+                    if($ancienEmail == Session::getUser()->getEmail()){
+
+                        /* Si le nouvel email est identique à la confirmation de l'email */
+                        if($nouveauEmail == $emailConfirmation){
+
+                            /* Si l'ancien email est différent du nouveau */
+                            if($ancienEmail != $nouveauEmail){
+                                $motDePasseBdd = $membreManager->trouverMotDePasse(Session::getUser()->getEmail()); // On cherche le mot de passe associé à l'adresse mail
+                                
+                                /* Si l'email n'existe pas */
+                                if(!$membreManager->trouverEmail($nouveauEmail)){
+                                    /* Si on récupère bien le mot de passe */
+                                    if($motDePasseBdd){
+                                        $hash = $motDePasseBdd->getMotDePasse(); // On récupère le hash
+
+                                        /* Si on a le bon mot de passe */
+                                        if(password_verify($motDePasse, $hash)){
+                                            if($membreManager->modificationEmail(Session::getUser()->getId(), $nouveauEmail)){
+                                                if(session_unset() && session_destroy()){
+                                                    $session->addFlash("success", "Modification réussi ! Reconnectez-vous !");
+                                                }
+                                                else{
+                                                    $session->addFlash("error", "Echec de la déconnexion !");
+                                                }
+                                                return [
+                                                    "view" => VIEW_DIR . "home.php"
+                                                ];
+                                            }
+                                            else{
+                                                $session->addFlash("error", "Échec de la modification");
+                                                return [
+                                                    "view" => VIEW_DIR . "security/modificationEmail.php"
+                                                ];
+                                            }
+                                        }
+                                        else{
+                                            $session->addFlash("error", "Échec de la modification");
+                                            return [
+                                                "view" => VIEW_DIR . "security/modificationEmail.php"
+                                            ];
+                                        }
+                                    }
+                                    else{
+                                        $session->addFlash("error", "La confimation d'email n'est pas identique au nouveau !");
+                                        return [
+                                            "view" => VIEW_DIR . "security/modificationEmail.php"
+                                        ];
+                                    }
+                                }
+                                else{
+                                    $session->addFlash("error", "Échec de la modification !");
+                                    return [
+                                        "view" => VIEW_DIR."security/modificationEmail.php",
+                                    ];
+                                }
+                            }
+                            else{
+                                $session->addFlash("error", "Le nouvel email doit être différent de l'actuel !");
+                                return [
+                                    "view" => VIEW_DIR . "security/modificationEmail.php"
+                                ];
+                            }
+                        }
+                        else{
+                            $session->addFlash("error", "La confimation d'email n'est pas identique au nouveau !");
+                            return [
+                                "view" => VIEW_DIR . "security/modificationEmail.php"
+                            ];
+                        }
+                    }
+                    else{
+                        $session->addFlash("error", "L'email actuel n'est pas le bon !");
+                        return [
+                            "view" => VIEW_DIR . "security/modificationEmail.php"
+                        ];
+                    }
+                }
+                else{
+                    $session->addFlash("error", "Echec de la modification de l'email !");
+                    return [
+                        "view" => VIEW_DIR . "security/modificationEmail.php"
+                    ];
+                }
+            }
+            else{
+                $session->addFlash("error", "Echec de la modification de l'email !");
+                return [
+                    "view" => VIEW_DIR . "security/modificationEmail.php"
+                ];
+            }
+        }
     }
