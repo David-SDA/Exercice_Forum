@@ -304,8 +304,6 @@
         public function modificationEmail(){
             $session = new Session(); // Pour pouvoir utiliser le message flash
             $membreManager = new MembreManager(); // Pour la gestion de la base de données membre
-            $topicManager = new TopicManager();
-            $postManager = new PostManager();
 
             if(isset($_POST["submitModificationEmail"])){
                 /* Filtrage des input */
@@ -417,5 +415,77 @@
             return [
                 "view" => VIEW_DIR . "security/modificationPseudo.php"
             ];
+        }
+
+        /**
+         * Permer de modifier le pseudo
+         */
+        public function modificationPseudo(){
+            $session = new Session(); // Pour pouvoir utiliser le message flash
+            $membreManager = new MembreManager(); // Pour la gestion de la base de données membre
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+
+            if(isset($_POST["submitModificationPseudo"])){
+                /* Filtrage des input */
+                $ancienPseudo = filter_input(INPUT_POST, "ancienPseudo", FILTER_SANITIZE_SPECIAL_CHARS);
+                $nouveauPseudo = filter_input(INPUT_POST, "nouveauPseudo", FILTER_SANITIZE_SPECIAL_CHARS);
+
+                /* Si le filtrage fonctionne */
+                if($ancienPseudo && $nouveauPseudo){
+
+                    /* Si le nouveau pseudo est différent de l'ancien */
+                    if($ancienPseudo != $nouveauPseudo){
+
+                        /* Si le nouveau pseudo n'existe pas */
+                        if(!$membreManager->trouverPseudo($nouveauPseudo)){
+                            
+                            if($membreManager->modificationPseudo(Session::getUser()->getId(), $nouveauPseudo)){
+                                $session->addFlash("success", "Modification réussi !");
+                                Session::getUser()->setPseudo($nouveauPseudo);
+                                return [
+                                    "view" => VIEW_DIR . "security/profil.php",
+                                    "data" => [
+                                        "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId()),
+                                        "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId()),
+                                        "topics" => $topicManager->trouverTopicsMembre(Session::getUser()->getId(), ["dateCreation", "DESC"]),
+                                        "derniersPosts" => $postManager->trouverCinqDernierPost(Session::getUser()->getId())
+                                    ]
+                                ];
+                            }
+                            else{
+                                $session->addFlash("error", "Echec de la modification du pseudo !");
+                                return [
+                                    "view" => VIEW_DIR . "security/modificationPseudo.php"
+                                ];
+                            }
+                        }
+                        else{
+                            $session->addFlash("error", "Echec ! Le nouveau pseudo est déjà utilisé !");
+                            return [
+                                "view" => VIEW_DIR . "security/modificationPseudo.php"
+                            ];
+                        }
+                    }
+                    else{
+                        $session->addFlash("error", "Echec ! Les deux pseudo sont identique !");
+                        return [
+                            "view" => VIEW_DIR . "security/modificationPseudo.php"
+                        ];
+                    }
+                }
+                else{
+                    $session->addFlash("error", "Echec de la modification du pseudo !");
+                    return [
+                        "view" => VIEW_DIR . "security/modificationPseudo.php"
+                    ];
+                }
+            }
+            else{
+                $session->addFlash("error", "Echec de la modification du pseudo !");
+                return [
+                    "view" => VIEW_DIR . "security/modificationPseudo.php"
+                ];
+            }
         }
     }

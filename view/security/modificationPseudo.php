@@ -6,7 +6,7 @@
     </div>
     <div>
         <label for="nouveauPseudo">Nouveau pseudo :</label>
-        <input type="password" name="nouveauPseudo" id="nouveauPseudo" required>
+        <input type="text" name="nouveauPseudo" id="nouveauPseudo" required>
     </div>
     <input type="submit" value="CONFIRMER" name="submitModificationPseudo" class="lienAjout ajoutFormulaire">
 </form>

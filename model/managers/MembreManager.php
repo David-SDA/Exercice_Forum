@@ -28,7 +28,7 @@
         }
 
         /**
-         * Permet de trouver un membre par l'email
+         * Permet de trouver un membre par le pseudo
          */
         public function trouverPseudo($pseudo){
             $requete = "SELECT *
@@ -97,5 +97,15 @@
                         SET email = :email
                         WHERE id_" . $this->tableName ." = :id";
             return DAO::update($requete, ["id" => $id, "email" => $email]);
+        }
+
+        /**
+         * Permet de modifier le pseudo d'un membre
+         */
+        public function modificationPseudo($id, $pseudo){
+            $requete = "UPDATE " . $this->tableName . "
+                        SET pseudo = :pseudo
+                        WHERE id_" . $this->tableName . " = :id";
+            return DAO::update($requete, ["id" => $id, "pseudo" => $pseudo]);
         }
     }
