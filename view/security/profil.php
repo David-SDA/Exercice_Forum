@@ -11,6 +11,7 @@ if(App\Session::getUser()){
         <p class="modificationProfil">
             <a href="index.php?ctrl=security&action=allerPageModificationEmail" class="lienAjout">MODIFIER L'EMAIL</a>
             <a href="index.php?ctrl=security&action=allerPageModificationMotDePasse" class="lienAjout grand">MODIFIER LE MOT DE PASSE</a>
+            <a href="index.php?ctrl=security&action=allerPageModificationPseudo" class="lienAjout">MODIFIER LE PSEUDO</a>
         </p>
     </div>
     <?php

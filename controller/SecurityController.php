@@ -409,4 +409,13 @@
                 ];
             }
         }
+
+        /**
+         * Permet d'aller à la page de modification du pseudo
+         */
+        public function allerPageModificationPseudo(){
+            return [
+                "view" => VIEW_DIR . "security/modificationPseudo.php"
+            ];
+        }
     }
