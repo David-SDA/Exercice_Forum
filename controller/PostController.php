@@ -128,4 +128,76 @@
                 ];
             }
         }
+
+        /**
+         * Permet de modifier un post
+         */
+        public function modificationPost(){
+            $session = new Session();
+            $postManager = new PostManager();
+
+            /* On filtre les inputs */
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $postActuel = filter_input(INPUT_POST, "postActuel", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $nouveauPost = filter_input(INPUT_POST, "nouveauPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            /* Si le filtrage fonctionne */
+            if($id && $postActuel && $nouveauPost){
+
+                /* Si le post qu'on veut modifier est bien celui du membre en session */
+                if($session->getUser()->getId() == $postManager->findOneById($id)->getMembre()->getId()){
+                    
+                    /* Si le contenu des deux posts ne sont pas identiques */
+                    if($postActuel != $nouveauPost){
+                        
+                        /* On fait la modification de post avec une update de la date de dernière modification */
+                        if($postManager->modifierContenuPost($id, $nouveauPost)){
+                            $session->addFlash("success", "Le post a été modifié !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Post/modifierPost.php",
+                                "data" => [
+                                    "post" => $postManager->findOneById($id)
+                                ]
+                            ];
+                        }
+                        else{
+                            $session->addFlash("error", "Erreur de la modification !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Post/modifierPost.php",
+                                "data" => [
+                                    "post" => $postManager->findOneById($id)
+                                ]
+                            ];
+                        }
+                    }
+                    else{
+                        $session->addFlash("error", "Erreur de la modification !");
+                        return [
+                            "view" => VIEW_DIR . "forum/Post/modifierPost.php",
+                            "data" => [
+                                "post" => $postManager->findOneById($id)
+                            ]
+                        ];
+                    }
+                }
+                else{
+                    $session->addFlash("error", "Erreur de la modification !");
+                    return [
+                        "view" => VIEW_DIR . "forum/Post/modifierPost.php",
+                        "data" => [
+                            "post" => $postManager->findOneById($id)
+                        ]
+                    ];
+                }
+            }
+            else{
+                $session->addFlash("error", "Erreur de la modification !");
+                return [
+                    "view" => VIEW_DIR . "forum/Post/modifierPost.php",
+                    "data" => [
+                        "post" => $postManager->findOneById($id)
+                    ]
+                ];
+            }
+        }
     }
