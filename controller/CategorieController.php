@@ -42,24 +42,36 @@
             $categorieManager = new CategorieManager();
             $session = new Session();
 
-            /* On filtre l'input */
-            $nomCategorie = filter_input(INPUT_POST, "nomCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if(isset($_POST["submitCategorie"])){
 
-            /* Si le filtrage fonctionne */
-            if($nomCategorie){
-                
-                /* Si c'est bien l'admin qui veut ajouter une catégorie */
-                if($session->isAdmin()){
+                /* On filtre l'input */
+                $nomCategorie = filter_input(INPUT_POST, "nomCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-                    /* On ajoute une catégorie */
-                    if($categorieManager->add(["nomCategorie" => $nomCategorie])){
-                        $session->addFlash("success", "Ajout de la catégorie " . $nomCategorie . " réussi !");
-                        return [
-                            "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
-                            "data" => [
-                                "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
-                            ]
-                        ];
+                /* Si le filtrage fonctionne */
+                if($nomCategorie){
+                    
+                    /* Si c'est bien l'admin qui veut ajouter une catégorie */
+                    if($session->isAdmin()){
+
+                        /* On ajoute une catégorie */
+                        if($categorieManager->add(["nomCategorie" => $nomCategorie])){
+                            $session->addFlash("success", "Ajout de la catégorie " . $nomCategorie . " réussi !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
+                                "data" => [
+                                    "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                                ]
+                            ];
+                        }
+                        else{
+                            $session->addFlash("error", "Echec de l'ajout !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
+                                "data" => [
+                                    "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                                ]
+                            ];
+                        }
                     }
                     else{
                         $session->addFlash("error", "Echec de l'ajout !");

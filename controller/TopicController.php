@@ -80,33 +80,46 @@
             $postManager = new PostManager();
             $sessionManager = new Session();
 
-            /* On filtre les inputs */
-            $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $categorie = filter_input(INPUT_POST, "categorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $contenu = filter_input(INPUT_POST, "contenu", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            /* Si le filtrage fonctionne */
-            if($titre && $categorie && $contenu){
-                /* On ajoute un topic et on récupère son id */
-                $id = $topicManager->add([
-                    "titre" => $titre,
-                    "membre_id" => Session::getUser()->getId(),
-                    "categorie_id" => $categorie
-                ]);
+            /* Si le formulaire fonctionne */
+            if(isset($_POST["submitTopic"])){
                 
-                /* On ajoute le premier post du topic */
-                if($id && $postManager->add([
-                    "contenu" => $contenu,
-                    "membre_id" => Session::getUser()->getId(),
-                    "topic_id" => $id
-                ])){
-                    $sessionManager->addFlash("success", "Ajout réussi !");
-                    return [
-                        "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
-                        "data" => [
-                            "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"])
-                        ]
-                    ];
+                /* On filtre les inputs */
+                $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $categorie = filter_input(INPUT_POST, "categorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $contenu = filter_input(INPUT_POST, "contenu", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                /* Si le filtrage fonctionne */
+                if($titre && $categorie && $contenu){
+                    /* On ajoute un topic et on récupère son id */
+                    $id = $topicManager->add([
+                        "titre" => $titre,
+                        "membre_id" => Session::getUser()->getId(),
+                        "categorie_id" => $categorie
+                    ]);
+                    
+                    /* On ajoute le premier post du topic */
+                    if($id && $postManager->add([
+                        "contenu" => $contenu,
+                        "membre_id" => Session::getUser()->getId(),
+                        "topic_id" => $id
+                    ])){
+                        $sessionManager->addFlash("success", "Ajout réussi !");
+                        return [
+                            "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
+                            "data" => [
+                                "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"])
+                            ]
+                        ];
+                    }
+                    else{
+                        $sessionManager->addFlash("error", "Echec de l'ajout !");
+                        return [
+                            "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
+                            "data" => [
+                                "categories" => $categorieManager->findAll()
+                            ]
+                        ];
+                    }
                 }
                 else{
                     $sessionManager->addFlash("error", "Echec de l'ajout !");
@@ -117,15 +130,6 @@
                         ]
                     ];
                 }
-            }
-            else{
-                $sessionManager->addFlash("error", "Echec de l'ajout !");
-                return [
-                    "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
-                    "data" => [
-                        "categories" => $categorieManager->findAll()
-                    ]
-                ];
             }
         }
 
