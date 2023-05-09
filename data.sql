@@ -24,12 +24,11 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `id_categorie` int NOT NULL AUTO_INCREMENT,
   `nomCategorie` varchar(50) NOT NULL,
   PRIMARY KEY (`id_categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table forum.categorie : ~3 rows (environ)
 INSERT INTO `categorie` (`id_categorie`, `nomCategorie`) VALUES
 	(1, 'Sport'),
-	(2, 'Culture'),
 	(3, 'Automobile');
 
 -- Listage de la structure de table forum. membre
@@ -43,11 +42,11 @@ CREATE TABLE IF NOT EXISTS `membre` (
   PRIMARY KEY (`id_membre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table forum.membre : ~6 rows (environ)
+-- Listage des données de la table forum.membre : ~4 rows (environ)
 INSERT INTO `membre` (`id_membre`, `pseudo`, `email`, `motDePasse`, `dateInscription`, `role`) VALUES
 	(1, 'pseudo1', 'test1@test.com', 'test1', '2023-04-30 10:40:29', 'ROLE_MEMBER'),
 	(2, 'admin', 'admin@admin.com', '$2y$10$LUymatU5V321wthQhnwZE.aFhOa7yETbAN8ic7JGn2NQgozRz8CAC', '2023-05-02 16:53:37', 'ROLE_ADMIN'),
-	(7, 'a', 'a@a.aa', '$2y$10$fA.UymLJQeyxo.kP8A0bqeth/j9fpnZS7.hkG/j/y.CCfH1T/2PSi', '2023-05-02 11:54:58', 'ROLE_MEMBER'),
+	(7, 'a', 'a@a.aa', '$2y$10$Qdy6WrjZ/rqdVoMkukUY1e.g2YY62c/oVSOuBQDx.SPzu31BgUN9u', '2023-05-02 11:54:58', 'ROLE_MEMBER'),
 	(10, 'aa', 'aa@aa.aa', '$2y$10$gEBKnfy94UpGhjmZ4ACdtuxEWFWVXb3zYLxPsvJtLnXzL7gCQyO8O', '2023-05-03 09:32:32', 'ROLE_MEMBER'),
 	(11, 'zzzzzzzzzz', 'zzz@zzz.zz', '$2y$10$ryAPL6c2Gx9M3olmlC4qjurZu4ktz0dZ1563sxVbg5BJ9/CpLaOri', '2023-05-04 15:14:06', 'ROLE_MEMBER'),
 	(12, 'b', 'b@b.bb', '$2y$10$BuLe1mzbZW/TENXjx4HM6urIRZn46RzEr8kg5I2vZ96Uw9PzB.ZD.', '2023-05-05 11:18:45', 'ROLE_MEMBER');
@@ -56,6 +55,7 @@ INSERT INTO `membre` (`id_membre`, `pseudo`, `email`, `motDePasse`, `dateInscrip
 CREATE TABLE IF NOT EXISTS `post` (
   `id_post` int NOT NULL AUTO_INCREMENT,
   `dateCreation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateDerniereModification` datetime DEFAULT CURRENT_TIMESTAMP,
   `contenu` text NOT NULL,
   `membre_id` int NOT NULL,
   `topic_id` int NOT NULL,
@@ -64,28 +64,29 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `topic_id` (`topic_id`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`membre_id`) REFERENCES `membre` (`id_membre`),
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table forum.post : ~17 rows (environ)
-INSERT INTO `post` (`id_post`, `dateCreation`, `contenu`, `membre_id`, `topic_id`) VALUES
-	(1, '2023-04-30 10:48:43', 'test\r\ntest\r\ntest', 7, 1),
-	(2, '2023-04-30 10:49:18', 'test', 7, 2),
-	(3, '2023-04-30 10:49:34', 'test', 7, 2),
-	(4, '2023-04-30 10:49:40', 'test', 7, 2),
-	(5, '2023-04-30 10:49:59', 'test', 7, 3),
-	(6, '2023-04-30 10:50:56', 'test', 7, 4),
-	(7, '2023-05-01 11:01:30', 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test', 7, 4),
-	(8, '2023-05-01 11:55:23', 'test', 7, 4),
-	(25, '2023-05-03 16:42:44', 'test', 2, 8),
-	(28, '2023-05-04 09:19:14', 'zzz', 7, 4),
-	(31, '2023-05-04 09:25:34', 'zzzzzzzzzz', 7, 4),
-	(33, '2023-05-04 09:32:14', 'aaaa', 2, 4),
-	(34, '2023-05-04 09:32:18', 'a', 2, 4),
-	(35, '2023-05-04 09:32:21', 'eeee', 2, 4),
-	(36, '2023-05-04 09:32:24', 'eeeee', 2, 4),
-	(37, '2023-05-04 11:46:41', 't', 7, 4),
-	(38, '2023-05-04 14:13:29', 'ttt', 7, 3),
-	(41, '2023-05-05 09:23:15', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 7, 4);
+-- Listage des données de la table forum.post : ~19 rows (environ)
+INSERT INTO `post` (`id_post`, `dateCreation`, `dateDerniereModification`, `contenu`, `membre_id`, `topic_id`) VALUES
+	(1, '2023-04-30 10:48:43', '2023-05-09 11:13:58', 'test\r\ntest\r\ntest', 7, 1),
+	(2, '2023-04-30 10:49:18', '2023-05-09 11:13:58', 'test', 7, 2),
+	(3, '2023-04-30 10:49:34', '2023-05-09 11:13:58', 'test', 7, 2),
+	(4, '2023-04-30 10:49:40', '2023-05-09 11:13:58', 'test', 7, 2),
+	(5, '2023-04-30 10:49:59', '2023-05-09 11:13:58', 'test', 7, 3),
+	(6, '2023-04-30 10:50:56', '2023-05-09 11:13:58', 'test', 7, 4),
+	(7, '2023-05-01 11:01:30', '2023-05-09 11:13:58', 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test', 7, 4),
+	(8, '2023-05-01 11:55:23', '2023-05-09 11:13:58', 'test', 7, 4),
+	(25, '2023-05-03 16:42:44', '2023-05-09 11:13:58', 'test', 2, 8),
+	(28, '2023-05-04 09:19:14', '2023-05-09 11:13:58', 'zzz', 7, 4),
+	(31, '2023-05-04 09:25:34', '2023-05-09 11:13:58', 'zzzzzzzzzz', 7, 4),
+	(33, '2023-05-04 09:32:14', '2023-05-09 11:13:58', 'aaaa', 2, 4),
+	(34, '2023-05-04 09:32:18', '2023-05-09 11:13:58', 'a', 2, 4),
+	(35, '2023-05-04 09:32:21', '2023-05-09 11:13:58', 'eeee', 2, 4),
+	(36, '2023-05-04 09:32:24', '2023-05-09 11:13:58', 'eeeee', 2, 4),
+	(37, '2023-05-04 11:46:41', '2023-05-09 13:48:58', 'ttttttttttttttttttt', 7, 4),
+	(38, '2023-05-04 14:13:29', '2023-05-09 11:13:58', 'ttt', 7, 3),
+	(41, '2023-05-05 09:23:15', '2023-05-09 11:13:58', 'test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test ', 7, 4),
+	(57, '2023-05-09 11:05:32', '2023-05-09 13:38:51', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 2, 8);
 
 -- Listage de la structure de table forum. topic
 CREATE TABLE IF NOT EXISTS `topic` (
@@ -100,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `topic` (
   KEY `categorie_id` (`categorie_id`),
   CONSTRAINT `topic_ibfk_1` FOREIGN KEY (`membre_id`) REFERENCES `membre` (`id_membre`),
   CONSTRAINT `topic_ibfk_2` FOREIGN KEY (`categorie_id`) REFERENCES `categorie` (`id_categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table forum.topic : ~5 rows (environ)
 INSERT INTO `topic` (`id_topic`, `titre`, `dateCreation`, `verrouiller`, `membre_id`, `categorie_id`) VALUES
