@@ -7,6 +7,7 @@
 
         private $id;
         private $dateCreation;
+        private $dateDerniereModification;
         private $contenu;
         private $membre;
         private $topic;
@@ -47,6 +48,22 @@
          */
         public function setDateCreation($date){
             $this->dateCreation = new \DateTime($date);
+            return $this;
+        }
+
+        /**
+         * Obtient la valeur de la date de dernière modification
+         */
+        public function getDateDerniereModification(){
+            $formattedDate = $this->dateDerniereModification->format("d/m/Y, H:i:s");
+            return $formattedDate;
+        }
+
+        /**
+         * Définit la valeur de la date de dernière modification
+         */
+        public function setDateDerniereModification($date){
+            $this->dateDerniereModification = new \DateTime($date);
             return $this;
         }
 
