@@ -75,4 +75,16 @@
                 $this->className
             );
         }
+
+        /**
+         * Permet de supprimer les posts de différents topics qui ont une catégorie spécifique
+         */
+        public function supprimerPostsDeTopicsDansCategorie($id){
+            $requete = "DELETE FROM " . $this->tableName . "
+                        WHERE topic_id IN
+                            (SELECT id_topic
+                            FROM topic
+                            WHERE categorie_id = :id)";
+            return DAO::delete($requete, ["id" => $id]);
+        }
     }
