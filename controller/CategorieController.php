@@ -18,7 +18,7 @@
             /* On utilise les managers nécessaires */
             $categorieManager = new CategorieManager();
             return [
-                "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                 "data" => [
                     "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
                 ]
@@ -55,7 +55,7 @@
                     if($categorieManager->add(["nomCategorie" => $nomCategorie])){
                         $session->addFlash("success", "Ajout de la catégorie " . $nomCategorie . " réussi !");
                         return [
-                            "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                            "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                             "data" => [
                                 "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
                             ]
@@ -64,7 +64,7 @@
                     else{
                         $session->addFlash("error", "Echec de l'ajout !");
                         return [
-                            "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                            "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                             "data" => [
                                 "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
                             ]
@@ -74,7 +74,7 @@
                 else{
                     $session->addFlash("error", "Echec de l'ajout !");
                     return [
-                        "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                        "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                         "data" => [
                             "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
                         ]
@@ -84,25 +84,12 @@
             else{
                 $session->addFlash("error", "Echec de l'ajout !");
                 return [
-                    "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                    "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                     "data" => [
                         "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
                     ]
                 ];
             }
-        }
-
-        /**
-         * Permet d'aller à la page d'ajout d'un topic
-         */
-        public function allerPageAjoutTopic(){
-            $categorieManager = new CategorieManager();
-            return [
-                "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
-                "data" => [
-                    "categories" => $categorieManager->findAll()
-                ]
-            ];
         }
 
         /**
@@ -128,7 +115,7 @@
                     if($postManager->supprimerPostsDeTopicsDansCategorie($id) && $topicManager->supprimerTopicsDeCategorie($id) && $categorieManager->delete($id)){
                         $session->addFlash("success", "Suppression réussi !");
                         return [
-                            "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                            "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                             "data" => [
                                 "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
                             ]
@@ -137,7 +124,7 @@
                     else{
                         $session->addFlash("error", "Échec de la suppression !");
                         return [
-                            "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                            "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                             "data" => [
                                 "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
                             ]
@@ -147,7 +134,7 @@
                 else{
                     $session->addFlash("error", "Échec de la suppression !");
                     return [
-                        "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                        "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                         "data" => [
                             "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
                         ]
@@ -157,7 +144,7 @@
             else{
                 $session->addFlash("error", "Échec de la suppression !");
                 return [
-                    "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                    "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                     "data" => [
                         "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
                     ]
