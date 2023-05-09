@@ -18,12 +18,12 @@
          * Permet de trouver les posts d'un topic
          */
         public function trouverPostsDansTopic($id){
-            $sql = "SELECT *
+            $requete = "SELECT *
                     FROM " . $this->tableName . " p
                     WHERE p.topic_id = :id
                     ORDER BY p.dateCreation ASC";
             return $this->getMultipleResults(
-                DAO::select($sql, ["id" => $id]),
+                DAO::select($requete, ["id" => $id]),
                 $this->className
             );
         }
@@ -32,46 +32,46 @@
          * Permet de supprimer les posts du topic
          */
         public function supprimerPostsDuTopic($id){
-            $sql = "DELETE FROM " . $this->tableName . "
+            $requete = "DELETE FROM " . $this->tableName . "
                     WHERE " . $this->tableName .  ".topic_id = :id";
-            return DAO::delete($sql, ["id" => $id]);
+            return DAO::delete($requete, ["id" => $id]);
         }
 
         /**
          * Permet de récupérer le post le plus ancien grâce à l'id du topic
          */
         public function trouverPlusAncienPost($id){
-            $sql = "SELECT " . $this->tableName . ".id_" . $this->tableName . "
+            $requete = "SELECT " . $this->tableName . ".id_" . $this->tableName . "
                     FROM " . $this->tableName . "
                     WHERE " . $this->tableName . ".topic_id = :id
                     AND " . $this->tableName . ".dateCreation = (
                         SELECT MIN(" . $this->tableName . ".dateCreation)
                         FROM " . $this->tableName . "
                         WHERE " . $this->tableName . ".topic_id = :id)";
-            return $this->getSingleScalarResult(DAO::select($sql, ["id" => $id], false));
+            return $this->getSingleScalarResult(DAO::select($requete, ["id" => $id], false));
         }
 
         /**
          * Permet de trouver l'id du membre qui a écrit un post
          */
         public function trouverIdMembrePost($id){
-            $sql = "SELECT " . $this->tableName . ".membre_id
+            $requete = "SELECT " . $this->tableName . ".membre_id
                     FROM " . $this->tableName . "
                     WHERE " . $this->tableName . ".id_" . $this->tableName . " = :id";
-            return $this->getSingleScalarResult(DAO::select($sql, ["id" => $id], false));
+            return $this->getSingleScalarResult(DAO::select($requete, ["id" => $id], false));
         }
 
         /**
          * Permet de trouver les 5 derniers post d'un membre
          */
         public function trouverCinqDernierPost($id){
-            $sql = "SELECT *
+            $requete = "SELECT *
                     FROM " . $this->tableName . "
                     WHERE membre_id = :id
                     ORDER BY dateCreation DESC
                     LIMIT 5";
             return $this->getMultipleResults(
-                DAO::select($sql, ["id" => $id]),
+                DAO::select($requete, ["id" => $id]),
                 $this->className
             );
         }

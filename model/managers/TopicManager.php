@@ -20,7 +20,7 @@
         public function trouverTopicsParCategorie($id, $order){
             $orderQuery = ($order) ? "ORDER BY " . $order[0] . " " . $order[1] : "";
             
-            $sql = "SELECT *, (SELECT COUNT(post.id_post)
+            $requete = "SELECT *, (SELECT COUNT(post.id_post)
                                 FROM post
                                 WHERE post." . $this->tableName . "_id = id_" . $this->tableName . "
                                 ) AS nombrePosts
@@ -28,7 +28,7 @@
                     WHERE t.categorie_id = :id
                     " . $orderQuery;
             return $this->getMultipleResults(
-                DAO::select($sql, ["id" => $id]),
+                DAO::select($requete, ["id" => $id]),
                 $this->className
             );
         }
@@ -37,10 +37,10 @@
          * Permet de trouver l'id du membre qui a créer un topic
          */
         public function idDuMembreDuTopic($id){
-            $sql = "SELECT " . $this->tableName . ".membre_id
+            $requete = "SELECT " . $this->tableName . ".membre_id
                     FROM " . $this->tableName . "
                     WHERE " . $this->tableName . ".id_" . $this->tableName . " = :id";
-            return $this->getSingleScalarResult(DAO::select($sql, ["id" => $id], false));
+            return $this->getSingleScalarResult(DAO::select($requete, ["id" => $id], false));
         }
 
         /**
@@ -49,14 +49,14 @@
         public function trouverTopicAvecNombrePosts($order = null){
             $orderQuery = ($order) ? "ORDER BY " . $order[0] . " " . $order[1] : "";
             
-            $sql = "SELECT *, (SELECT COUNT(post.id_post)
+            $requete = "SELECT *, (SELECT COUNT(post.id_post)
                                 FROM post
                                 WHERE post." . $this->tableName . "_id = id_" . $this->tableName . "
                                 ) AS nombrePosts
                     FROM " . $this->tableName . " a
                     ". $orderQuery;
             return $this->getMultipleResults(
-                DAO::select($sql),
+                DAO::select($requete),
                 $this->className
             );
         }
@@ -65,20 +65,20 @@
          * Permet de verrouiller un topic
          */
         public function verrouillerTopic($id){
-            $sql = "UPDATE " . $this->tableName . "
+            $requete = "UPDATE " . $this->tableName . "
                     SET verrouiller = 1
                     WHERE " . $this->tableName . ".id_" .$this->tableName . " = :id";
-            return DAO::update($sql, ["id" => $id]);
+            return DAO::update($requete, ["id" => $id]);
         }
 
         /**
          * Permet de verrouiller un topic
          */
         public function deverrouillerTopic($id){
-            $sql = "UPDATE " . $this->tableName . "
+            $requete = "UPDATE " . $this->tableName . "
                     SET verrouiller = 0
                     WHERE " . $this->tableName . ".id_" .$this->tableName . " = :id";
-            return DAO::update($sql, ["id" => $id]);
+            return DAO::update($requete, ["id" => $id]);
         }
 
         /**
@@ -87,7 +87,7 @@
         public function trouverTopicsMembre($id, $order = null){
             $orderQuery = ($order) ? "ORDER BY " . $order[0] . " " . $order[1] : "";
             
-            $sql = "SELECT *, (SELECT COUNT(post.id_post)
+            $requete = "SELECT *, (SELECT COUNT(post.id_post)
                                 FROM post
                                 WHERE post." . $this->tableName . "_id = id_" . $this->tableName . "
                                 ) AS nombrePosts
@@ -95,7 +95,7 @@
                     WHERE " . $this->tableName .".membre_id = :id
                     ". $orderQuery;
             return $this->getMultipleResults(
-                DAO::select($sql, ["id" => $id]),
+                DAO::select($requete, ["id" => $id]),
                 $this->className
             );
         }
