@@ -328,7 +328,7 @@
         /**
          * Permet d'aller à la page de modification du titre du topic
          */
-        public function allerPageModificationTitreTopic($id){
+        public function allerPageModificationTitreTopic(){
             /* On utilise les managers nécessaires */
             $topicManager = new TopicManager();
 
@@ -349,6 +349,97 @@
                     "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
                     "data" => [
                         "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"]) // On cherche tout les topic trier du plus récent au plus ancien
+                    ]
+                ];
+            }
+        }
+
+        /**
+         * Permet de modifier le titre d'un topic
+         */
+        public function modificationTitreTopic(){
+            /* On utilise les managers nécessaires */
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+            $session = new Session();
+
+            /* On filtre l'input */
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if(isset($_POST["submitModificationTitreTopic"])){
+
+                /* On filtre les inputs */
+                $titreActuel = filter_input(INPUT_POST, "titreActuel", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $nouveauTitre = filter_input(INPUT_POST, "nouveauTitre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                /* Si le filtrage fonctionne */
+                if($titreActuel && $nouveauTitre){
+
+                    /* Si le nouveau titre est différent du titre actuel */
+                    if($titreActuel != $nouveauTitre){
+
+                        /* Si c'est le bon membre qui veut modifier le titre */
+                        if(Session::getUser()->getId() == $topicManager->findOneById($id)->getMembre()->getId()){
+
+                            /* On modifie le titre du topic */
+                            if($topicManager->modifierTitreTopic($id, $nouveauTitre)){
+                                $session->addFlash("success", "Modification réussi !");
+                                return [
+                                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                    "data" => [
+                                        "posts" => $postManager->trouverPostsDansTopic($id),
+                                        "ancien" => $postManager->trouverPlusAncienPost($id),
+                                        "topic" => $topicManager->findOneById($id)
+                                    ]
+                                ];
+                            }
+                            else{
+                                $session->addFlash("error", "Échec de la modification ! Le nouveau titre doit être différent !");
+                                return [
+                                    "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
+                                    "data" => [
+                                        "topic" => $topicManager->findOneById($id)
+                                    ]
+                                ];
+                            }
+
+                        }
+                        else{
+                            $session->addFlash("error", "Échec de la modification ! Le nouveau titre doit être différent !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
+                                "data" => [
+                                    "topic" => $topicManager->findOneById($id)
+                                ]
+                            ];
+                        }
+                    }
+                    else{
+                        $session->addFlash("error", "Échec de la modification ! Le nouveau titre doit être différent !");
+                        return [
+                            "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
+                            "data" => [
+                                "topic" => $topicManager->findOneById($id)
+                            ]
+                        ];
+                    }
+                }
+                else{
+                    $session->addFlash("error", "Échec de la modification !");
+                    return [
+                        "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
+                        "data" => [
+                            "topic" => $topicManager->findOneById($id)
+                        ]
+                    ];
+                }
+            }
+            else{
+                $session->addFlash("error", "Échec de la modification !");
+                return [
+                    "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
+                    "data" => [
+                        "topic" => $topicManager->findOneById($id)
                     ]
                 ];
             }
