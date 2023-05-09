@@ -381,17 +381,30 @@
                         /* Si c'est le bon membre qui veut modifier le titre */
                         if(Session::getUser()->getId() == $topicManager->findOneById($id)->getMembre()->getId()){
 
-                            /* On modifie le titre du topic */
-                            if($topicManager->modifierTitreTopic($id, $nouveauTitre)){
-                                $session->addFlash("success", "Modification réussi !");
-                                return [
-                                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                                    "data" => [
-                                        "posts" => $postManager->trouverPostsDansTopic($id),
-                                        "ancien" => $postManager->trouverPlusAncienPost($id),
-                                        "topic" => $topicManager->findOneById($id)
-                                    ]
-                                ];
+                            /* Si le topic n'est pas vérrouiller */
+                            if(!$topicManager->findOneById($id)->getVerrouiller()){
+                                
+                                /* On modifie le titre du topic */
+                                if($topicManager->modifierTitreTopic($id, $nouveauTitre)){
+                                    $session->addFlash("success", "Modification réussi !");
+                                    return [
+                                        "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                        "data" => [
+                                            "posts" => $postManager->trouverPostsDansTopic($id),
+                                            "ancien" => $postManager->trouverPlusAncienPost($id),
+                                            "topic" => $topicManager->findOneById($id)
+                                        ]
+                                    ];
+                                }
+                                else{
+                                    $session->addFlash("error", "Échec de la modification ! Le nouveau titre doit être différent !");
+                                    return [
+                                        "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
+                                        "data" => [
+                                            "topic" => $topicManager->findOneById($id)
+                                        ]
+                                    ];
+                                }
                             }
                             else{
                                 $session->addFlash("error", "Échec de la modification ! Le nouveau titre doit être différent !");
@@ -402,7 +415,6 @@
                                     ]
                                 ];
                             }
-
                         }
                         else{
                             $session->addFlash("error", "Échec de la modification ! Le nouveau titre doit être différent !");
