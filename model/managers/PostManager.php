@@ -87,4 +87,14 @@
                             WHERE categorie_id = :id)";
             return DAO::delete($requete, ["id" => $id]);
         }
+
+        /**
+         * Permet de modifier un le contenu d'un post
+         */
+        public function modifierContenuPost($id, $contenu){
+            $requete = "UPDATE " . $this->tableName . "
+                        SET contenu = :contenu, dateDerniereModification = NOW()
+                        WHERE id_" . $this->tableName . " = :id";
+            return DAO::update($requete, ["id" => $id, "contenu" => $contenu]);
+        }
     }
