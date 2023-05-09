@@ -304,6 +304,8 @@
         public function modificationEmail(){
             $session = new Session(); // Pour pouvoir utiliser le message flash
             $membreManager = new MembreManager(); // Pour la gestion de la base de données membre
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
 
             if(isset($_POST["submitModificationEmail"])){
                 /* Filtrage des input */
@@ -334,14 +336,16 @@
                                         /* Si on a le bon mot de passe */
                                         if(password_verify($motDePasse, $hash)){
                                             if($membreManager->modificationEmail(Session::getUser()->getId(), $nouveauEmail)){
-                                                if(session_unset() && session_destroy()){
-                                                    $session->addFlash("success", "Modification réussi ! Reconnectez-vous !");
-                                                }
-                                                else{
-                                                    $session->addFlash("error", "Echec de la déconnexion !");
-                                                }
+                                                $session->addFlash("success", "Modification réussi !");
+                                                Session::getUser()->setEmail($nouveauEmail);
                                                 return [
-                                                    "view" => VIEW_DIR . "home.php"
+                                                    "view" => VIEW_DIR . "security/profil.php",
+                                                    "data" => [
+                                                        "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId()),
+                                                        "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId()),
+                                                        "topics" => $topicManager->trouverTopicsMembre(Session::getUser()->getId(), ["dateCreation", "DESC"]),
+                                                        "derniersPosts" => $postManager->trouverCinqDernierPost(Session::getUser()->getId())
+                                                    ]
                                                 ];
                                             }
                                             else{
@@ -359,14 +363,14 @@
                                         }
                                     }
                                     else{
-                                        $session->addFlash("error", "La confimation d'email n'est pas identique au nouveau !");
+                                        $session->addFlash("error", "Échec de la modification !");
                                         return [
                                             "view" => VIEW_DIR . "security/modificationEmail.php"
                                         ];
                                     }
                                 }
                                 else{
-                                    $session->addFlash("error", "Échec de la modification !");
+                                    $session->addFlash("error", "Échec de l'email existe déjà !");
                                     return [
                                         "view" => VIEW_DIR."security/modificationEmail.php",
                                     ];
