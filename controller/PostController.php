@@ -16,56 +16,83 @@
          * Permet de lister les posts d'un topic
          */
         public function listerPostsDansTopic(){
-            $postManager = new PostManager();
+            /* On utilise les managers nécessaires */
             $topicManager = new TopicManager();
+            $postManager = new PostManager();
 
+            /* On filtre l'input */
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            return [
-                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                "data" => [
-                    "posts" => $postManager->trouverPostsDansTopic($id),
-                    "ancien" => $postManager->trouverPlusAncienPost($id),
-                    "topic" => $topicManager->findOneById($id)
-                ]
-            ];
+            
+            /* Si le filtrage fonctionne */
+            if($id){
+                return [
+                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                    "data" => [
+                        "posts" => $postManager->trouverPostsDansTopic($id),
+                        "ancien" => $postManager->trouverPlusAncienPost($id),
+                        "topic" => $topicManager->findOneById($id)
+                    ]
+                ];
+            }
+            else{
+                return [
+                    "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
+                    "data" => [
+                        "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"]) // On cherche tout les topic trier du plus récent au plus ancien
+                    ]
+                ];
+            }
         }
 
         /**
          * Permet d'aller à la page d'ajout d'un post
          */
         public function allerPageAjoutPost(){
-            return ["view" => VIEW_DIR . "forum/Post/ajouterPost.php"];
+            return [
+                "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
+            ];
         }
 
         /**
          * Permet d'ajoute un post
          */
         public function ajouterPost(){
-            $postManager = new PostManager();
+            /* On utilise les managers nécessaires */
             $topicManager = new TopicManager();
+            $postManager = new PostManager();
+            $session = new Session();
 
+            /* On filtre les inputs */
             $contenu = filter_input(INPUT_POST, "contenu", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $sessionManager = new Session();
-            if($postManager->add([
-                "contenu" => $contenu,
-                "membre_id" => Session::getUser()->getId(),
-                "topic_id" => $id
-            ])){
-                $sessionManager->addFlash("success", "Ajout réussi !");
+            /* Si le filtrage fonctionne */
+            if($contenu && $id){
+                if($postManager->add([
+                    "contenu" => $contenu,
+                    "membre_id" => Session::getUser()->getId(),
+                    "topic_id" => $id
+                ])){
+                    $session->addFlash("success", "Ajout réussi !");
+                    return [
+                        "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                        "data" => [
+                            "posts" => $postManager->trouverPostsDansTopic($id),
+                            "ancien" => $postManager->trouverPlusAncienPost($id),
+                            "topic" => $topicManager->findOneById($id)
+                        ]
+                    ];
+                }
+                else{
+                    $session->addFlash("error", "Echec de l'ajout !");
+                    return [
+                        "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
+                    ];
+                }
             }
-            else{
-                $sessionManager->addFlash("error", "Echec de l'ajout !");
-            }
-
+            $session->addFlash("error", "Echec de l'ajout !");
             return [
-                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                "data" => [
-                    "posts" => $postManager->trouverPostsDansTopic($id),
-                    "ancien" => $postManager->trouverPlusAncienPost($id),
-                    "topic" => $topicManager->findOneById($id)
-                ]
+                "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
             ];
         }
 
@@ -73,8 +100,9 @@
          * Permet de supprimer un post
          */
         public function supprimerPost(){
-            $postManager = new PostManager();
+            /* On utilise les managers nécessaires */
             $topicManager = new TopicManager();
+            $postManager = new PostManager();
             $session = new Session();
 
             /* On filtre les inputs */
@@ -82,38 +110,71 @@
             $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le filtrage fonctionne */
-            if($id){
-                if($session->getUser()->getId() == $postManager->trouverIdMembrePost($id) || $session->isAdmin()){ // on vérifie que le membre actuelle est bien celui qui supprime le post ou que c'est un admin
-                    if($postManager->delete($id)){ // On supprime le post
+            if($id & $idTopic){
+
+                /* Si c'est bien le bon membre qui veut supprimer le post ou si c'est un admin */
+                if($session->getUser()->getId() == $postManager->trouverIdMembrePost($id) || $session->isAdmin()){
+
+                    /* On supprime le post */
+                    if($postManager->delete($id)){
                         $session->addFlash("success", "Suppression réussi !");
+                        return [
+                            "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                            "data" => [
+                                "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                "ancien" => $postManager->trouverPlusAncienPost($id),
+                                "topic" => $topicManager->findOneById($id)
+                            ]
+                        ];
                     }
                     else{
                         $session->addFlash("error", "Echec de la suppression !");
+                        return [
+                            "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                            "data" => [
+                                "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                "ancien" => $postManager->trouverPlusAncienPost($id),
+                                "topic" => $topicManager->findOneById($id)
+                            ]
+                        ];
                     }
+                }
+                else{
+                    $session->addFlash("error", "Echec de la suppression !");
+                    return [
+                        "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                        "data" => [
+                            "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                            "ancien" => $postManager->trouverPlusAncienPost($id),
+                            "topic" => $topicManager->findOneById($id)
+                        ]
+                    ];
                 }
             }
             else{
                 $session->addFlash("error", "Echec de la suppression !");
+                return [
+                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                    "data" => [
+                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                        "ancien" => $postManager->trouverPlusAncienPost($id),
+                        "topic" => $topicManager->findOneById($id)
+                    ]
+                ];
             }
-
-            return [
-                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                "data" => [
-                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                    "ancien" => $postManager->trouverPlusAncienPost($id),
-                    "topic" => $topicManager->findOneById($id)
-                ]
-            ];
         }
 
         /**
          * Permet d'aller à la page de modification d'un post
          */
         public function allerPageModificationPost(){
+            /* On utiliser les managers nécessaires */
             $postManager = new PostManager();
             
             /* On filtre les inputs */
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            /* Si le filtrage fonctionne */
             if($id){
                 return [
                     "view" => VIEW_DIR . "forum/Post/modifierPost.php",
@@ -133,8 +194,9 @@
          * Permet de modifier un post
          */
         public function modificationPost(){
-            $session = new Session();
+            /* On utilise les managers nécessaires */
             $postManager = new PostManager();
+            $session = new Session();
 
             /* On filtre les inputs */
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
