@@ -23,6 +23,13 @@ if($posts != NULL){
     ?>
     <h1><i><?= $topic->getTitre() ?></i></h1>
     <?php
+    if(App\Session::getUser()->getId() == $topic->getMembre()->getId()){
+    ?>
+        <a href="index.php?ctrl=topic&action=allerPageModificationTitreTopic&id=<?= $topic->getId() ?>"><i class="fas fa-edit" style="color: blue;"></i></a>
+    <?php
+    }
+    ?>
+    <?php
     foreach($posts as $post){
         $verrouiller = $post->getTopic()->getVerrouiller();
 
