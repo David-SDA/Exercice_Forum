@@ -17,7 +17,7 @@
          */
         public function index(){
             return [
-                "view" => VIEW_DIR."home.php"
+                "view" => VIEW_DIR . "home.php"
             ];
         }
 
@@ -26,10 +26,11 @@
          */
         public function listerMembres(){
             $this->restrictTo("ROLE_ADMIN");
-            $membreManager = new MembreManager();
 
+            /* On utilise les managers nécessaires */
+            $membreManager = new MembreManager();
             return [
-                "view" => VIEW_DIR."security/listeMembres.php",
+                "view" => VIEW_DIR . "security/listeMembres.php",
                 "data" => [
                     "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
                 ]
