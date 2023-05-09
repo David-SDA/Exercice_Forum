@@ -1,4 +1,4 @@
-<a href="index.php?ctrl=categorie&action=allerPageAjoutTopic" class="lienAjout">AJOUTER UN TOPIC</a>
+<a href="index.php?ctrl=topic&action=allerPageAjoutTopic" class="lienAjout">AJOUTER UN TOPIC</a>
 <?php
 
 $topics = $result["data"]['topics'];

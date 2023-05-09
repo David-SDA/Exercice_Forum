@@ -103,7 +103,7 @@
         /**
          * Permet de supprimer les topics d'une catégorie
          */
-        public function supprimerTopicDeCategorie($id){
+        public function supprimerTopicsDeCategorie($id){
             $requete = "DELETE FROM " . $this->tableName . "
                         WHERE categorie_id = :id";
             return DAO::delete($requete, ["id" => $id]);
