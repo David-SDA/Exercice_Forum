@@ -32,6 +32,7 @@ if($posts != NULL){
                 <h3><?= $post->getMembre()->getPseudo() ?></h3>
                 <div>
                     <h5><?= $post->getDateCreation() ?></h5>
+                    <h5><i>Dernière modification : <?= $post->getDateDerniereModification() ?></i></h5>
                     <h5>
                         <?php
                         if(App\Session::isAdmin() || App\Session::getUser()->getId() == $post->getMembre()->getId()){
