@@ -1,7 +1,7 @@
 <?php
 $post = $result["data"]["post"];
 ?>
-<form action="index.php?ctrl=post&action=modificationPost" method="post">
+<form action="index.php?ctrl=post&action=modificationPost&id=<?= $post->getId() ?>" method="post">
     <h1><i>MODIFIER LE POST</i></h1>
     <div>
         <label for="postActuel">Post actuel :</label>
