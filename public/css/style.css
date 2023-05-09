@@ -254,6 +254,11 @@ form textarea{
     padding: 1vh 1vw;
     text-align: justify;
 }
+.postDuTopic .fas{
+    color: blue;
+    font-size: 1.3em;
+    margin-left: 1vw;
+}
 
 /* Lien de retour au topic */
 .retourTopic{

@@ -42,6 +42,13 @@ if($posts != NULL){
                         <?php
                             }
                         }
+                        if(App\Session::getUser()->getId() == $post->getMembre()->getId()){
+                            if($post->getTopic()->getVerrouiller() != 1){
+                                ?>
+                                <a href="index.php?ctrl=post&action=allerPageModificationPost&id=<?= $post->getId() ?>"><i class="fas fa-edit"></i></a>
+                                <?php
+                            }
+                        }
                         ?>
                     </h5>
                 </div>
