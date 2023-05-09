@@ -9,9 +9,22 @@ $categories = $result["data"]['categories'];
     <?php
     if($categories != NULL){
         foreach($categories as $categorie){
-
             ?>
-            <p class="uneCategorie"><a href="index.php?ctrl=topic&action=listerTopicsDansCategorie&id=<?= $categorie->getId() ?>"><?=$categorie->getNomCategorie()?></a></p>
+            <div class="element">
+                <div class="elementGauche"></div>
+                <div class="elementCentre">
+                    <p><a href="index.php?ctrl=topic&action=listerTopicsDansCategorie&id=<?= $categorie->getId() ?>"><?=$categorie->getNomCategorie()?></a></p>
+                </div>
+                <div class="elementDroite centre">
+                    <?php
+                    if(App\Session::isAdmin()){
+                    ?>
+                        <a href="index.php?ctrl=categorie&action=supprimerCategorie&id=<?= $categorie->getId() ?>"><i class="far fa-trash-alt"></i></a>
+                    <?php
+                    }
+                    ?>
+                </div>
+            </div>
             <?php
         }
     }
