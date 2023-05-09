@@ -15,8 +15,8 @@
          * Permet de lister les catégories
          */
         public function index(){
+            /* On utilise les managers nécessaires */
             $categorieManager = new CategorieManager();
-
             return [
                 "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
                 "data" => [
@@ -29,30 +29,67 @@
          * Permet d'aller à la page d'ajout d'une catégorie
          */
         public function allerPageAjoutCategorie(){
-            return ["view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php"];
+            return [
+                "view" => VIEW_DIR . "forum/Categorie/ajouterCategorie.php"
+            ];
         }
 
         /**
-         * Permet d'ajouter une catégorie et de créer un message de confirmation
+         * Permet d'ajouter une catégorie
          */
         public function ajouterCategorie(){
+            /* On utilise les managers nécessaires */
             $categorieManager = new CategorieManager();
-            
+            $session = new Session();
+
+            /* On filtre l'input */
             $nomCategorie = filter_input(INPUT_POST, "nomCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $sessionManager = new Session();
-            if($categorieManager->add(["nomCategorie" => $nomCategorie])){
-                $sessionManager->addFlash("success", "Ajout réussi !");
+
+            /* Si le filtrage fonctionne */
+            if($nomCategorie){
+                
+                /* Si c'est bien l'admin qui veut ajouter une catégorie */
+                if($session->isAdmin()){
+
+                    /* On ajoute une catégorie */
+                    if($categorieManager->add(["nomCategorie" => $nomCategorie])){
+                        $session->addFlash("success", "Ajout de la catégorie " . $nomCategorie . " réussi !");
+                        return [
+                            "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                            "data" => [
+                                "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                            ]
+                        ];
+                    }
+                    else{
+                        $session->addFlash("error", "Echec de l'ajout !");
+                        return [
+                            "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                            "data" => [
+                                "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                            ]
+                        ];
+                    }
+                }
+                else{
+                    $session->addFlash("error", "Echec de l'ajout !");
+                    return [
+                        "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                        "data" => [
+                            "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                        ]
+                    ];
+                }
             }
             else{
-                $sessionManager->addFlash("error", "Echec de l'ajout !");
+                $session->addFlash("error", "Echec de l'ajout !");
+                return [
+                    "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
+                    "data" => [
+                        "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                    ]
+                ];
             }
-
-            return [
-                "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
-                "data" => [
-                    "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
-                ]
-            ];
         }
 
         /**
@@ -72,17 +109,23 @@
          * Permet de supprimer une catégorie
          */
         public function supprimerCategorie(){
-            $session = new Session();
+            /* On utilise les managers nécessaires */
             $categorieManager = new CategorieManager();
             $topicManager = new TopicManager();
             $postManager = new PostManager();
+            $session = new Session();
 
             /* On filtre l'input */
             $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
+            /* Si le filtrage fonctionne */
             if($id){
+
+                /* Si c'est bien l'admin qui veut supprimer une catégorie */
                 if($session->isAdmin()){
-                    if($postManager->supprimerPostsDeTopicsDansCategorie($id) && $topicManager->supprimerTopicDeCategorie($id) && $categorieManager->delete($id)){
+
+                    /* On supprime les posts des topics dans la catégorie qu'on veut supprimer, on supprime les topics de la catégorie et on supprime la catégorie */
+                    if($postManager->supprimerPostsDeTopicsDansCategorie($id) && $topicManager->supprimerTopicsDeCategorie($id) && $categorieManager->delete($id)){
                         $session->addFlash("success", "Suppression réussi !");
                         return [
                             "view" => VIEW_DIR."forum/Categorie/listerCategories.php",
