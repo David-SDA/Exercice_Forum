@@ -205,6 +205,8 @@
         public function modificationMotDePasse(){
             $session = new Session(); // Pour pouvoir utiliser le message flash
             $membreManager = new MembreManager(); // Pour la gestion de la base de données membre
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
 
             if(isset($_POST["submitModificationMotDePasse"])){
                 /* Filtrage des input */
@@ -231,19 +233,22 @@
                                 ];
                             }
                             
+                            /* Si le nouveau de mot de passe est différent de l'ancien */
                             if($ancienMotDePasse != $nouveauMotDePasse){
                                 /* On hash le mot de passe */
                                 $motDePasseHash = password_hash($nouveauMotDePasse, PASSWORD_DEFAULT);
 
                                 if($membreManager->modificationMotDePasse(Session::getUser()->getId(), $motDePasseHash)){
-                                    if(session_unset() && session_destroy()){
-                                        $session->addFlash("success", "Modification réussi ! Reconnectez-vous !");
-                                    }
-                                    else{
-                                        $session->addFlash("error", "Echec de la déconnexion !");
-                                    }
+                                    $session->addFlash("success", "Modification réussi !");
+                                    Session::getUser()->setMotDePasse($motDePasseHash);
                                     return [
-                                        "view" => VIEW_DIR . "home.php"
+                                        "view" => VIEW_DIR . "security/profil.php",
+                                        "data" => [
+                                            "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId()),
+                                            "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId()),
+                                            "topics" => $topicManager->trouverTopicsMembre(Session::getUser()->getId(), ["dateCreation", "DESC"]),
+                                            "derniersPosts" => $postManager->trouverCinqDernierPost(Session::getUser()->getId())
+                                        ]
                                     ];
                                 }
                                 else{
