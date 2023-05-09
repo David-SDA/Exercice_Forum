@@ -78,7 +78,7 @@
             return [
                 "view" => VIEW_DIR."forum/Topic/listerTopics.php",
                 "data" => [
-                    "topics" => $topicManager->findAll(["dateCreation", "DESC"])
+                    "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"])
                 ]
             ];
         }
@@ -112,7 +112,7 @@
             return [
                 "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
                 "data" =>[
-                    "topics" => $topicManager->findAll(["dateCreation", "DESC"])
+                    "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"])
                 ]
             ];
         }
