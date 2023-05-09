@@ -105,4 +105,27 @@
                 ]
             ];
         }
+
+        /**
+         * Permet d'aller à la page de modification d'un post
+         */
+        public function allerPageModificationPost(){
+            $postManager = new PostManager();
+            
+            /* On filtre les inputs */
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if($id){
+                return [
+                    "view" => VIEW_DIR . "forum/Post/modifierPost.php",
+                    "data" => [
+                        "post" => $postManager->findOneById($id)
+                    ]
+                ];
+            }
+            else{
+                return [
+                    "view" => VIEW_DIR . "home.php"
+                ];
+            }
+        }
     }
