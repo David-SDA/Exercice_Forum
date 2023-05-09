@@ -324,4 +324,33 @@
                 ];
             }
         }
+
+        /**
+         * Permet d'aller à la page de modification du titre du topic
+         */
+        public function allerPageModificationTitreTopic($id){
+            /* On utilise les managers nécessaires */
+            $topicManager = new TopicManager();
+
+            /* On filtre l'input */
+            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            /* Si le filtrage fonctionne */
+            if($id){
+                return [
+                    "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
+                    "data" => [
+                        "topic" => $topicManager->findOneById($id)
+                    ]
+                ];
+            }
+            else{
+                return [
+                    "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
+                    "data" => [
+                        "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"]) // On cherche tout les topic trier du plus récent au plus ancien
+                    ]
+                ];
+            }
+        }
     }
