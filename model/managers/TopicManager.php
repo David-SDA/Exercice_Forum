@@ -108,4 +108,14 @@
                         WHERE categorie_id = :id";
             return DAO::delete($requete, ["id" => $id]);
         }
+
+        /**
+         * Permet de modifier le titre du topic
+         */
+        public function modifierTitreTopic($id, $titre){
+            $requete = "UPDATE " . $this->tableName . "
+                        SET titre = :titre
+                        WHERE id_" . $this->tableName . " = :id";
+            return DAO::update($requete, ["id" => $id, "titre" => $titre]);
+        }
     }
