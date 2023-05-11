@@ -13,7 +13,7 @@ $membres = $result["data"]["membres"];
         ?>
         <div class="element">
             <p class="elementGauche centre"><?= $membre->getDateInscription() ?></p>
-            <p class="elementCentre"><a href="index.php?ctrl=membre&action=profilAdmin&id=<?= $membre->getId() ?>"><b><?= $membre->getPseudo() ?></b></a></p>
+            <p class="elementCentre"><a href="index.php?ctrl=membre&action=profilAdmin&idMembre=<?= $membre->getId() ?>"><b><?= $membre->getPseudo() ?></b></a></p>
             <p class="elementDroite centre"><?= ($membre->hasRole("ROLE_ADMIN") ? "ADMIN" : "MEMBRE") ?></p>
         </div>
         <?php
