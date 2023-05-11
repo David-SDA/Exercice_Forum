@@ -50,7 +50,7 @@
                 return [
                     "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                     "data" => [
-                        "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                        "categories" => $categorieManager->findAll()
                     ]
                 ];
             }
@@ -130,6 +130,15 @@
                         ]
                     ];
                 }
+            }
+            else{
+                $sessionManager->addFlash("error", "Echec de l'ajout !");
+                return [
+                    "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
+                    "data" => [
+                        "categories" => $categorieManager->findAll()
+                    ]
+                ];
             }
         }
 
