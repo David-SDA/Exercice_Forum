@@ -14,7 +14,9 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
             foreach($categories as $categorie){
                 ?>
                 <div class="element">
-                    <div class="elementGauche"></div>
+                    <div class="elementGauche">
+                        <p><i>Nombre de topics : <?= $categorie->getNombreTopic() ?></i></p>
+                    </div>
                     <div class="elementCentre">
                         <p><a href="index.php?ctrl=topic&action=listerTopicsDansCategorie&idCategorie=<?= $categorie->getId() ?>"><?=$categorie->getNomCategorie()?></a></p>
                     </div>
