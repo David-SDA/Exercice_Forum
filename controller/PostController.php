@@ -81,7 +81,7 @@
                             "membre_id" => Session::getUser()->getId(),
                             "topic_id" => $idTopic
                         ])){
-                            $session->addFlash("success", "Ajout réussi !");
+                            $session->addFlash("success", "Ajout du post dans le topic '" . $topicManager->findOneById($idTopic)->getTitre() . "' réussi !");
                             return [
                                 "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                                 "data" => [
@@ -92,28 +92,28 @@
                             ];
                         }
                         else{
-                            $session->addFlash("error", "Echec de l'ajout !");
+                            $session->addFlash("error", "Échec de l'ajout du post !");
                             return [
                                 "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
                             ];
                         }
                     }
                     else{
-                        $session->addFlash("error", "Echec de l'ajout !");
+                        $session->addFlash("error", "Échec de l'ajout du post !");
                         return [
                             "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
                         ];
                     }
                 }
                 else{
-                    $session->addFlash("error", "Echec de l'ajout !");
+                    $session->addFlash("error", "Échec de l'ajout du post !");
                     return [
                         "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
                     ];
                 }
             }
             else{
-                $session->addFlash("error", "Echec de l'ajout !");
+                $session->addFlash("error", "Échec de l'ajout du post !");
                 return [
                     "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
                 ];
@@ -144,7 +144,7 @@
     
                         /* On supprime le post */
                         if($postManager->delete($idPost)){
-                            $session->addFlash("success", "Suppression réussi !");
+                            $session->addFlash("success", "Suppression du post réussi !");
                             return [
                                 "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                                 "data" => [
@@ -155,7 +155,7 @@
                             ];
                         }
                         else{
-                            $session->addFlash("error", "Echec de la suppression !");
+                            $session->addFlash("error", "Échec de la suppression du post !");
                             return [
                                 "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                                 "data" => [
@@ -167,7 +167,7 @@
                         }
                     }
                     else{
-                        $session->addFlash("error", "Echec de la suppression !");
+                        $session->addFlash("error", "Échec de la suppression du post !");
                         return [
                             "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                             "data" => [
@@ -179,7 +179,7 @@
                     }
                 }
                 else{
-                    $session->addFlash("error", "Echec de la suppression !");
+                    $session->addFlash("error", "Échec de la suppression du post !");
                     return [
                         "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                         "data" => [
@@ -191,7 +191,7 @@
                 }
             }
             else{
-                $session->addFlash("error", "Echec de la suppression !");
+                $session->addFlash("error", "Échec de la suppression du post !");
                 return [
                     "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                     "data" => [
@@ -272,7 +272,7 @@
                                     ];
                                 }
                                 else{
-                                    $session->addFlash("error", "Erreur de la modification !");
+                                    $session->addFlash("error", "Erreur de la modification du post !");
                                     return [
                                         "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                                         "data" => [
@@ -282,7 +282,7 @@
                                 }
                             }
                             else{
-                                $session->addFlash("error", "Erreur de la modification !");
+                                $session->addFlash("error", "Erreur de la modification du post !");
                                 return [
                                     "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                                     "data" => [
@@ -292,7 +292,7 @@
                             }
                         }
                         else{
-                            $session->addFlash("error", "Erreur de la modification !");
+                            $session->addFlash("error", "Erreur de la modification du post !");
                             return [
                                 "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                                 "data" => [
@@ -303,7 +303,7 @@
 
                     }
                     else{
-                        $session->addFlash("error", "Erreur de la modification !");
+                        $session->addFlash("error", "Erreur de la modification du post !");
                         return [
                             "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                             "data" => [
@@ -314,7 +314,7 @@
                     }
                 }
                 else{
-                    $session->addFlash("error", "Erreur de la modification !");
+                    $session->addFlash("error", "Erreur de la modification du post !");
                     return [
                         "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                         "data" => [
@@ -324,7 +324,7 @@
                 }
             }
             else{
-                $session->addFlash("error", "Erreur de la modification !");
+                $session->addFlash("error", "Erreur de la modification du post !");
                 return [
                     "view" => VIEW_DIR . "home.php",
                 ];
