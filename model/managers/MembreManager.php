@@ -108,4 +108,14 @@
                         WHERE id_" . $this->tableName . " = :id";
             return DAO::update($requete, ["id" => $id, "pseudo" => $pseudo]);
         }
+
+        /**
+         * Permet de modifier le rôle d'un membre
+         */
+        public function modificationRole($id, $role){
+            $requete = "UPDATE " . $this->tableName . "
+                        SET role = :role
+                        WHERE id_" . $this->tableName . " = :id";
+            return DAO::update($requete, ["id" => $id, "role" => $role]);
+        }
     }
