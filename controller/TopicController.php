@@ -65,7 +65,7 @@
             return [
                 "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
                 "data" => [
-                    "categories" => $categorieManager->findAll()
+                    "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                 ]
             ];
         }
@@ -151,26 +151,38 @@
             $postManager = new PostManager();
             $session = new Session();
 
-            /* On filtre l'input */
-            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            
-            /* Si le filtrage fonctionne */
-            if($idTopic){
+            if(!$session->getUser()->hasRole("ROLE_BAN")){
 
-                /* Si c'est bien le bon membre qui veut supprimer le topic ou si c'est un admin */
-                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($idTopic) || $session->isAdmin()){
+                /* On filtre l'input */
+                $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                
+                /* Si le filtrage fonctionne */
+                if($idTopic){
 
-                    $titreTopicSupprime = $topicManager->findOneById($idTopic)->getTitre();
+                    /* Si c'est bien le bon membre qui veut supprimer le topic ou si c'est un admin */
+                    if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($idTopic) || $session->isAdmin()){
 
-                    /* On supprime les posts du topic puis on supprime le topic */
-                    if($postManager->supprimerPostsDuTopic($idTopic) && $topicManager->delete($idTopic)){
-                        $session->addFlash("success", "Suppression du topic '$titreTopicSupprime' réussi !");
-                        return [
-                            "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
-                            "data" =>[
-                                "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"])
-                            ]
-                        ];
+                        $titreTopicSupprime = $topicManager->findOneById($idTopic)->getTitre();
+
+                        /* On supprime les posts du topic puis on supprime le topic */
+                        if($postManager->supprimerPostsDuTopic($idTopic) && $topicManager->delete($idTopic)){
+                            $session->addFlash("success", "Suppression du topic '$titreTopicSupprime' réussi !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
+                                "data" =>[
+                                    "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"])
+                                ]
+                            ];
+                        }
+                        else{
+                            $session->addFlash("error", "Échec de la suppression du topic !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
+                                "data" =>[
+                                    "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"])
+                                ]
+                            ];
+                        }
                     }
                     else{
                         $session->addFlash("error", "Échec de la suppression du topic !");
@@ -212,25 +224,38 @@
             $postManager = new PostManager();
             $session = new Session();
 
-            /* On filtre l'input */
-            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if(!$session->getUser()->hasRole("ROLE_BAN")){
+                /* On filtre l'input */
+                $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            if($idTopic){
+                if($idTopic){
 
-                /* Si c'est le bon utilisateur qui veut vérouiller le topic ou si c'est l'admin */
-                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($idTopic) || $session->isAdmin()){
+                    /* Si c'est le bon utilisateur qui veut vérouiller le topic ou si c'est l'admin */
+                    if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($idTopic) || $session->isAdmin()){
 
-                    /* On vérrouille le topic */
-                    if($topicManager->verrouillerTopic($idTopic)){
-                        $session->addFlash("success", "Vérrouillage réussi !");
-                        return [
-                            "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                            "data" => [
-                                "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                                "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                                "topic" => $topicManager->findOneById($idTopic)
-                            ]
-                        ];
+                        /* On vérrouille le topic */
+                        if($topicManager->verrouillerTopic($idTopic)){
+                            $session->addFlash("success", "Vérrouillage réussi !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                "data" => [
+                                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                    "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                    "topic" => $topicManager->findOneById($idTopic)
+                                ]
+                            ];
+                        }
+                        else{
+                            $session->addFlash("error", "Échec du vérrouillage !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                "data" => [
+                                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                    "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                    "topic" => $topicManager->findOneById($idTopic)
+                                ]
+                            ];
+                        }
                     }
                     else{
                         $session->addFlash("error", "Échec du vérrouillage !");
@@ -259,12 +284,7 @@
             else{
                 $session->addFlash("error", "Échec du vérrouillage !");
                 return [
-                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                    "data" => [
-                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                        "topic" => $topicManager->findOneById($idTopic)
-                    ]
+                    "view" => VIEW_DIR . "home.php"
                 ];
             }
         }
@@ -278,26 +298,39 @@
             $postManager = new PostManager();
             $session = new Session();
 
-            /* On filtre l'input */
-            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if(!$session->getUser()->hasRole("ROLE_BAN")){
+                /* On filtre l'input */
+                $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            /* Si le filtrage fonctionne */
-            if($idTopic){
+                /* Si le filtrage fonctionne */
+                if($idTopic){
 
-                /* Si c'est bien le bon utilisateur qui veut dévérouiller le topic ou si c'est l'admin */
-                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($idTopic) || $session->isAdmin()){
+                    /* Si c'est bien le bon utilisateur qui veut dévérouiller le topic ou si c'est l'admin */
+                    if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($idTopic) || $session->isAdmin()){
 
-                    /* On dévérrouille le topic */
-                    if($topicManager->deverrouillerTopic($idTopic)){
-                        $session->addFlash("success", "Déverrouillage réussi !");
-                        return [
-                            "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                            "data" => [
-                                "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                                "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                                "topic" => $topicManager->findOneById($idTopic)
-                            ]
-                        ];
+                        /* On dévérrouille le topic */
+                        if($topicManager->deverrouillerTopic($idTopic)){
+                            $session->addFlash("success", "Déverrouillage réussi !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                "data" => [
+                                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                    "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                    "topic" => $topicManager->findOneById($idTopic)
+                                ]
+                            ];
+                        }
+                        else{
+                            $session->addFlash("error", "Échec du déverrouillage !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                "data" => [
+                                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                    "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                    "topic" => $topicManager->findOneById($idTopic)
+                                ]
+                            ];
+                        }
                     }
                     else{
                         $session->addFlash("error", "Échec du déverrouillage !");
@@ -326,12 +359,7 @@
             else{
                 $session->addFlash("error", "Échec du déverrouillage !");
                 return [
-                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                    "data" => [
-                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                        "topic" => $topicManager->findOneById($idTopic)
-                    ]
+                    "view" => VIEW_DIR . "home.php"
                 ];
             }
         }
@@ -342,25 +370,33 @@
         public function allerPageModificationTitreTopic(){
             /* On utilise les managers nécessaires */
             $topicManager = new TopicManager();
+            $session = new Session();
 
-            /* On filtre l'input */
-            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if(!$session->getUser()->hasRole("ROLE_BAN")){
+                /* On filtre l'input */
+                $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            /* Si le filtrage fonctionne */
-            if($idTopic){
-                return [
-                    "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
-                    "data" => [
-                        "topic" => $topicManager->findOneById($idTopic)
-                    ]
-                ];
+                /* Si le filtrage fonctionne */
+                if($idTopic){
+                    return [
+                        "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
+                        "data" => [
+                            "topic" => $topicManager->findOneById($idTopic)
+                        ]
+                    ];
+                }
+                else{
+                    return [
+                        "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
+                        "data" => [
+                            "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"]) // On cherche tout les topic trier du plus récent au plus ancien
+                        ]
+                    ];
+                }
             }
             else{
                 return [
-                    "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
-                    "data" => [
-                        "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"]) // On cherche tout les topic trier du plus récent au plus ancien
-                    ]
+                    "view" => VIEW_DIR . "home.php"
                 ];
             }
         }
@@ -473,20 +509,27 @@
             $categorieManager = new CategorieManager();
             $session = new Session();
 
-            /* On filtre l'input */
-            $idCategorie = filter_input(INPUT_GET, "idCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if(!$session->getUser()->hasRole("ROLE_BAN")){
+                /* On filtre l'input */
+                $idCategorie = filter_input(INPUT_GET, "idCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            /* Si le filtrage fonctionne */
-            if($idCategorie){
-                return [
-                    "view" => VIEW_DIR . "forum/Topic/ajouterTopicDansCategorie.php",
-                    "data" => [
-                        "categorie" => $categorieManager->findOneById($idCategorie)
-                    ]
-                ];
+                /* Si le filtrage fonctionne */
+                if($idCategorie){
+                    return [
+                        "view" => VIEW_DIR . "forum/Topic/ajouterTopicDansCategorie.php",
+                        "data" => [
+                            "categorie" => $categorieManager->findOneById($idCategorie)
+                        ]
+                    ];
+                }
+                else{
+                    $session->addFlash("error", "Erreur d'accès à la page d'ajout d'un topic dans une catégorie !");
+                    return [
+                        "view" => VIEW_DIR . "home.php"
+                    ];
+                }
             }
             else{
-                $session->addFlash("error", "Erreur d'accès à la page d'ajout d'un topic dans une catégorie !");
                 return [
                     "view" => VIEW_DIR . "home.php"
                 ];
