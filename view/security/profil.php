@@ -87,7 +87,7 @@ $derniersPosts = $result["data"]["derniersPosts"];
             <div class="element">
                 <p class="elementGauche"><i><?= $post->getDateCreation() ?></i></p>
                 <p class="elementCentre"><?= $post->getContenu() ?></p>
-                <div class="elementDroite"><p><a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $post->getTopic()->getId() ?>"><?= $post->getTopic()->getTitre() ?></a></p></div>
+                <div class="elementDroite"><p><a href="index.php?ctrl=post&action=listerPostsDansTopic&idTopic=<?= $post->getTopic()->getId() ?>"><?= $post->getTopic()->getTitre() ?></a></p></div>
             </div>
             <?php
         }
