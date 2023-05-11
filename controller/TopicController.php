@@ -34,15 +34,15 @@
             $categorieManager = new CategorieManager();
 
             /* On filtre l'input */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idCategorie = filter_input(INPUT_GET, "idCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le filtrage fonctionne */
-            if($id){
+            if($idCategorie){
                 return [
                     "view" => VIEW_DIR . "forum/Topic/listerTopicsDansCategorie.php",
                     "data" => [
-                        "topics" => $topicManager->trouverTopicsParCategorie($id, ["dateCreation", "DESC"]),
-                        "categorie" => $categorieManager->findOneById($id)
+                        "topics" => $topicManager->trouverTopicsParCategorie($idCategorie, ["dateCreation", "DESC"]),
+                        "categorie" => $categorieManager->findOneById($idCategorie)
                     ]
                 ];
             }
@@ -152,16 +152,16 @@
             $session = new Session();
 
             /* On filtre l'input */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
             /* Si le filtrage fonctionne */
-            if($id){
+            if($idTopic){
 
                 /* Si c'est bien le bon membre qui veut supprimer le topic ou si c'est un admin */
-                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($id) || $session->isAdmin()){
+                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($idTopic) || $session->isAdmin()){
 
                     /* On supprime les posts du topic puis on supprime le topic */
-                    if($postManager->supprimerPostsDuTopic($id) && $topicManager->delete($id)){
+                    if($postManager->supprimerPostsDuTopic($idTopic) && $topicManager->delete($idTopic)){
                         $session->addFlash("success", "Suppression réussi !");
                         return [
                             "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
@@ -211,22 +211,22 @@
             $session = new Session();
 
             /* On filtre l'input */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            if($id){
+            if($idTopic){
 
                 /* Si c'est le bon utilisateur qui veut vérouiller le topic ou si c'est l'admin */
-                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($id) || $session->isAdmin()){
+                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($idTopic) || $session->isAdmin()){
 
                     /* On vérrouille le topic */
-                    if($topicManager->verrouillerTopic($id)){
+                    if($topicManager->verrouillerTopic($idTopic)){
                         $session->addFlash("success", "Verrouillage réussi !");
                         return [
                             "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                             "data" => [
-                                "posts" => $postManager->trouverPostsDansTopic($id),
-                                "ancien" => $postManager->trouverPlusAncienPost($id),
-                                "topic" => $topicManager->findOneById($id)
+                                "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                "topic" => $topicManager->findOneById($idTopic)
                             ]
                         ];
                     }
@@ -235,9 +235,9 @@
                         return [
                             "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                             "data" => [
-                                "posts" => $postManager->trouverPostsDansTopic($id),
-                                "ancien" => $postManager->trouverPlusAncienPost($id),
-                                "topic" => $topicManager->findOneById($id)
+                                "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                "topic" => $topicManager->findOneById($idTopic)
                             ]
                         ];
                     }
@@ -247,9 +247,9 @@
                     return [
                         "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                         "data" => [
-                            "posts" => $postManager->trouverPostsDansTopic($id),
-                            "ancien" => $postManager->trouverPlusAncienPost($id),
-                            "topic" => $topicManager->findOneById($id)
+                            "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                            "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                            "topic" => $topicManager->findOneById($idTopic)
                         ]
                     ];
                 }
@@ -259,9 +259,9 @@
                 return [
                     "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                     "data" => [
-                        "posts" => $postManager->trouverPostsDansTopic($id),
-                        "ancien" => $postManager->trouverPlusAncienPost($id),
-                        "topic" => $topicManager->findOneById($id)
+                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                        "topic" => $topicManager->findOneById($idTopic)
                     ]
                 ];
             }
@@ -277,23 +277,23 @@
             $session = new Session();
 
             /* On filtre l'input */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le filtrage fonctionne */
-            if($id){
+            if($idTopic){
 
                 /* Si c'est bien le bon utilisateur qui veut dévérouiller le topic ou si c'est l'admin */
-                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($id) || $session->isAdmin()){
+                if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($idTopic) || $session->isAdmin()){
 
                     /* On dévérrouille le topic */
-                    if($topicManager->deverrouillerTopic($id)){
+                    if($topicManager->deverrouillerTopic($idTopic)){
                         $session->addFlash("success", "Déverrouillage réussi !");
                         return [
                             "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                             "data" => [
-                                "posts" => $postManager->trouverPostsDansTopic($id),
-                                "ancien" => $postManager->trouverPlusAncienPost($id),
-                                "topic" => $topicManager->findOneById($id)
+                                "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                "topic" => $topicManager->findOneById($idTopic)
                             ]
                         ];
                     }
@@ -302,9 +302,9 @@
                         return [
                             "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                             "data" => [
-                                "posts" => $postManager->trouverPostsDansTopic($id),
-                                "ancien" => $postManager->trouverPlusAncienPost($id),
-                                "topic" => $topicManager->findOneById($id)
+                                "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                "topic" => $topicManager->findOneById($idTopic)
                             ]
                         ];
                     }
@@ -314,9 +314,9 @@
                     return [
                         "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                         "data" => [
-                            "posts" => $postManager->trouverPostsDansTopic($id),
-                            "ancien" => $postManager->trouverPlusAncienPost($id),
-                            "topic" => $topicManager->findOneById($id)
+                            "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                            "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                            "topic" => $topicManager->findOneById($idTopic)
                         ]
                     ];
                 }
@@ -326,9 +326,9 @@
                 return [
                     "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                     "data" => [
-                        "posts" => $postManager->trouverPostsDansTopic($id),
-                        "ancien" => $postManager->trouverPlusAncienPost($id),
-                        "topic" => $topicManager->findOneById($id)
+                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                        "topic" => $topicManager->findOneById($idTopic)
                     ]
                 ];
             }
@@ -342,14 +342,14 @@
             $topicManager = new TopicManager();
 
             /* On filtre l'input */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le filtrage fonctionne */
-            if($id){
+            if($idTopic){
                 return [
                     "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
                     "data" => [
-                        "topic" => $topicManager->findOneById($id)
+                        "topic" => $topicManager->findOneById($idTopic)
                     ]
                 ];
             }
@@ -373,7 +373,7 @@
             $session = new Session();
 
             /* On filtre l'input */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             if(isset($_POST["submitModificationTitreTopic"])){
 
@@ -388,20 +388,20 @@
                     if($titreActuel != $nouveauTitre){
 
                         /* Si c'est le bon membre qui veut modifier le titre */
-                        if(Session::getUser()->getId() == $topicManager->findOneById($id)->getMembre()->getId()){
+                        if(Session::getUser()->getId() == $topicManager->findOneById($idTopic)->getMembre()->getId()){
 
                             /* Si le topic n'est pas vérrouiller */
-                            if(!$topicManager->findOneById($id)->getVerrouiller()){
+                            if(!$topicManager->findOneById($idTopic)->getVerrouiller()){
                                 
                                 /* On modifie le titre du topic */
-                                if($topicManager->modifierTitreTopic($id, $nouveauTitre)){
+                                if($topicManager->modifierTitreTopic($idTopic, $nouveauTitre)){
                                     $session->addFlash("success", "Modification réussi !");
                                     return [
                                         "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                                         "data" => [
-                                            "posts" => $postManager->trouverPostsDansTopic($id),
-                                            "ancien" => $postManager->trouverPlusAncienPost($id),
-                                            "topic" => $topicManager->findOneById($id)
+                                            "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                            "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                            "topic" => $topicManager->findOneById($idTopic)
                                         ]
                                     ];
                                 }
@@ -410,7 +410,7 @@
                                     return [
                                         "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
                                         "data" => [
-                                            "topic" => $topicManager->findOneById($id)
+                                            "topic" => $topicManager->findOneById($idTopic)
                                         ]
                                     ];
                                 }
@@ -420,7 +420,7 @@
                                 return [
                                     "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
                                     "data" => [
-                                        "topic" => $topicManager->findOneById($id)
+                                        "topic" => $topicManager->findOneById($idTopic)
                                     ]
                                 ];
                             }
@@ -430,7 +430,7 @@
                             return [
                                 "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
                                 "data" => [
-                                    "topic" => $topicManager->findOneById($id)
+                                    "topic" => $topicManager->findOneById($idTopic)
                                 ]
                             ];
                         }
@@ -440,7 +440,7 @@
                         return [
                             "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
                             "data" => [
-                                "topic" => $topicManager->findOneById($id)
+                                "topic" => $topicManager->findOneById($idTopic)
                             ]
                         ];
                     }
@@ -450,7 +450,7 @@
                     return [
                         "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
                         "data" => [
-                            "topic" => $topicManager->findOneById($id)
+                            "topic" => $topicManager->findOneById($idTopic)
                         ]
                     ];
                 }
@@ -460,7 +460,7 @@
                 return [
                     "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
                     "data" => [
-                        "topic" => $topicManager->findOneById($id)
+                        "topic" => $topicManager->findOneById($idTopic)
                     ]
                 ];
             }
