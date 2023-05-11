@@ -103,7 +103,7 @@
                         "membre_id" => Session::getUser()->getId(),
                         "topic_id" => $id
                     ])){
-                        $session->addFlash("success", "Ajout réussi !");
+                        $session->addFlash("success", "Ajout du topic '$titre' réussi !");
                         return [
                             "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
                             "data" => [
@@ -112,7 +112,7 @@
                         ];
                     }
                     else{
-                        $session->addFlash("error", "Echec de l'ajout !");
+                        $session->addFlash("error", "Échec de l'ajout du topic !");
                         return [
                             "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
                             "data" => [
@@ -122,7 +122,7 @@
                     }
                 }
                 else{
-                    $session->addFlash("error", "Echec de l'ajout !");
+                    $session->addFlash("error", "Échec de l'ajout du topic !");
                     return [
                         "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
                         "data" => [
@@ -132,7 +132,7 @@
                 }
             }
             else{
-                $session->addFlash("error", "Echec de l'ajout !");
+                $session->addFlash("error", "Échec de l'ajout du topic !");
                 return [
                     "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
                     "data" => [
@@ -160,9 +160,11 @@
                 /* Si c'est bien le bon membre qui veut supprimer le topic ou si c'est un admin */
                 if($session->getUser()->getId() == $topicManager->idDuMembreDuTopic($idTopic) || $session->isAdmin()){
 
+                    $titreTopicSupprime = $topicManager->findOneById($idTopic)->getTitre();
+
                     /* On supprime les posts du topic puis on supprime le topic */
                     if($postManager->supprimerPostsDuTopic($idTopic) && $topicManager->delete($idTopic)){
-                        $session->addFlash("success", "Suppression réussi !");
+                        $session->addFlash("success", "Suppression du topic '$titreTopicSupprime' réussi !");
                         return [
                             "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
                             "data" =>[
@@ -171,7 +173,7 @@
                         ];
                     }
                     else{
-                        $session->addFlash("error", "Echec de la suppression !");
+                        $session->addFlash("error", "Échec de la suppression du topic !");
                         return [
                             "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
                             "data" =>[
@@ -181,7 +183,7 @@
                     }
                 }
                 else{
-                    $session->addFlash("error", "Echec de la suppression !");
+                    $session->addFlash("error", "Échec de la suppression du topic !");
                     return [
                         "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
                         "data" =>[
@@ -191,7 +193,7 @@
                 }
             }
             else{
-                $session->addFlash("error", "Echec de la suppression !!");
+                $session->addFlash("error", "Échec de la suppression du topic !");
                 return [
                     "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
                     "data" =>[
@@ -220,7 +222,7 @@
 
                     /* On vérrouille le topic */
                     if($topicManager->verrouillerTopic($idTopic)){
-                        $session->addFlash("success", "Verrouillage réussi !");
+                        $session->addFlash("success", "Vérrouillage réussi !");
                         return [
                             "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                             "data" => [
@@ -231,7 +233,7 @@
                         ];
                     }
                     else{
-                        $session->addFlash("error", "Echec du verrouillage !");
+                        $session->addFlash("error", "Échec du vérrouillage !");
                         return [
                             "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                             "data" => [
@@ -243,7 +245,7 @@
                     }
                 }
                 else{
-                    $session->addFlash("error", "Echec du verrouillage !");
+                    $session->addFlash("error", "Échec du vérrouillage !");
                     return [
                         "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                         "data" => [
@@ -255,7 +257,7 @@
                 }
             }
             else{
-                $session->addFlash("error", "Echec du verrouillage !");
+                $session->addFlash("error", "Échec du vérrouillage !");
                 return [
                     "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                     "data" => [
@@ -298,7 +300,7 @@
                         ];
                     }
                     else{
-                        $session->addFlash("error", "Echec du déverrouillage !");
+                        $session->addFlash("error", "Échec du déverrouillage !");
                         return [
                             "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                             "data" => [
@@ -310,7 +312,7 @@
                     }
                 }
                 else{
-                    $session->addFlash("error", "Echec du déverrouillage !");
+                    $session->addFlash("error", "Échec du déverrouillage !");
                     return [
                         "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                         "data" => [
@@ -322,7 +324,7 @@
                 }
             }
             else{
-                $session->addFlash("error", "Echec du déverrouillage !");
+                $session->addFlash("error", "Échec du déverrouillage !");
                 return [
                     "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                     "data" => [
@@ -395,7 +397,7 @@
                                 
                                 /* On modifie le titre du topic */
                                 if($topicManager->modifierTitreTopic($idTopic, $nouveauTitre)){
-                                    $session->addFlash("success", "Modification réussi !");
+                                    $session->addFlash("success", "Modification réussi ! Le topic a comme titre '$nouveauTitre'");
                                     return [
                                         "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                                         "data" => [
@@ -406,7 +408,7 @@
                                     ];
                                 }
                                 else{
-                                    $session->addFlash("error", "Échec de la modification ! Le nouveau titre doit être différent !");
+                                    $session->addFlash("error", "Échec de la modification !");
                                     return [
                                         "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
                                         "data" => [
@@ -416,7 +418,7 @@
                                 }
                             }
                             else{
-                                $session->addFlash("error", "Échec de la modification ! Le nouveau titre doit être différent !");
+                                $session->addFlash("error", "Échec de la modification !");
                                 return [
                                     "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
                                     "data" => [
@@ -426,7 +428,7 @@
                             }
                         }
                         else{
-                            $session->addFlash("error", "Échec de la modification ! Le nouveau titre doit être différent !");
+                            $session->addFlash("error", "Échec de la modification !");
                             return [
                                 "view" => VIEW_DIR . "forum/Topic/modifierTitreTopic.php",
                                 "data" => [
@@ -521,7 +523,7 @@
                         "membre_id" => Session::getUser()->getId(),
                         "topic_id" => $id
                     ])){
-                        $session->addFlash("success", "Ajout réussi !");
+                        $session->addFlash("success", "Ajout du topic '$titre' réussi !");
                         return [
                             "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
                             "data" => [
@@ -530,7 +532,7 @@
                         ];
                     }
                     else{
-                        $session->addFlash("error", "Echec de l'ajout !");
+                        $session->addFlash("error", "Échec de l'ajout du topic !");
                         return [
                             "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
                             "data" => [
@@ -540,7 +542,7 @@
                     }
                 }
                 else{
-                    $session->addFlash("error", "Echec de l'ajout !");
+                    $session->addFlash("error", "Échec de l'ajout du topic !");
                     return [
                         "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
                         "data" => [
@@ -550,7 +552,7 @@
                 }
             }
             else{
-                $session->addFlash("error", "Echec de l'ajout du topic dans la catégorie !");
+                $session->addFlash("error", "Échec de l'ajout du topic !");
                 return [
                     "view" => VIEW_DIR . "home.php",
                 ];
