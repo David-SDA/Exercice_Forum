@@ -129,30 +129,43 @@
             $postManager = new PostManager();
             $session = new Session();
 
-            /* On filtre les inputs */
-            $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if(!$session->getUser()->hasRole("ROLE_BAN")){
+                /* On filtre les inputs */
+                $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            /* Si le filtrage fonctionne */
-            if($idPost && $idTopic){
+                /* Si le filtrage fonctionne */
+                if($idPost && $idTopic){
 
-                /* Si le topic n'est pas vérouiller */
-                if(!$topicManager->findOneById($idTopic)->getVerrouiller()){
-                    
-                    /* Si c'est bien le bon membre qui veut supprimer le post ou si c'est un admin */
-                    if($session->getUser()->getId() == $postManager->trouverIdMembrePost($idPost) || $session->isAdmin()){
-    
-                        /* On supprime le post */
-                        if($postManager->delete($idPost)){
-                            $session->addFlash("success", "Suppression du post réussi !");
-                            return [
-                                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                                "data" => [
-                                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                                    "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                                    "topic" => $topicManager->findOneById($idTopic)
-                                ]
-                            ];
+                    /* Si le topic n'est pas vérouiller */
+                    if(!$topicManager->findOneById($idTopic)->getVerrouiller()){
+                        
+                        /* Si c'est bien le bon membre qui veut supprimer le post ou si c'est un admin */
+                        if($session->getUser()->getId() == $postManager->trouverIdMembrePost($idPost) || $session->isAdmin()){
+        
+                            /* On supprime le post */
+                            if($postManager->delete($idPost)){
+                                $session->addFlash("success", "Suppression du post réussi !");
+                                return [
+                                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                    "data" => [
+                                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                        "topic" => $topicManager->findOneById($idTopic)
+                                    ]
+                                ];
+                            }
+                            else{
+                                $session->addFlash("error", "Échec de la suppression du post !");
+                                return [
+                                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                    "data" => [
+                                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                        "topic" => $topicManager->findOneById($idTopic)
+                                    ]
+                                ];
+                            }
                         }
                         else{
                             $session->addFlash("error", "Échec de la suppression du post !");
@@ -193,12 +206,7 @@
             else{
                 $session->addFlash("error", "Échec de la suppression du post !");
                 return [
-                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                    "data" => [
-                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                        "topic" => $topicManager->findOneById($idTopic)
-                    ]
+                    "view" => VIEW_DIR . "home.php",
                 ];
             }
         }
