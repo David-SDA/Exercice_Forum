@@ -78,7 +78,7 @@
             $categorieManager = new CategorieManager();
             $topicManager = new TopicManager();
             $postManager = new PostManager();
-            $sessionManager = new Session();
+            $session = new Session();
 
             /* Si le formulaire fonctionne */
             if(isset($_POST["submitTopic"])){
@@ -103,7 +103,7 @@
                         "membre_id" => Session::getUser()->getId(),
                         "topic_id" => $id
                     ])){
-                        $sessionManager->addFlash("success", "Ajout réussi !");
+                        $session->addFlash("success", "Ajout réussi !");
                         return [
                             "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
                             "data" => [
@@ -112,7 +112,7 @@
                         ];
                     }
                     else{
-                        $sessionManager->addFlash("error", "Echec de l'ajout !");
+                        $session->addFlash("error", "Echec de l'ajout !");
                         return [
                             "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
                             "data" => [
@@ -122,7 +122,7 @@
                     }
                 }
                 else{
-                    $sessionManager->addFlash("error", "Echec de l'ajout !");
+                    $session->addFlash("error", "Echec de l'ajout !");
                     return [
                         "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
                         "data" => [
@@ -132,7 +132,7 @@
                 }
             }
             else{
-                $sessionManager->addFlash("error", "Echec de l'ajout !");
+                $session->addFlash("error", "Echec de l'ajout !");
                 return [
                     "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
                     "data" => [
@@ -487,6 +487,72 @@
                 $session->addFlash("error", "Erreur d'accès à la page d'ajout d'un topic dans une catégorie !");
                 return [
                     "view" => VIEW_DIR . "home.php"
+                ];
+            }
+        }
+
+        public function ajouterTopicDansCategorie(){
+            /* On utilise les managers nécessaires */
+            $categorieManager = new CategorieManager();
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+            $session = new Session();
+
+            /* Si le formulaire fonctionne */
+            if(isset($_POST["submitTopicDansCategorie"])){
+
+                /* On filtre les inputs */
+                $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $contenu = filter_input(INPUT_POST, "contenu", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $idCategorie = filter_input(INPUT_GET, "idCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                /* Si le filtrage fonctionne */
+                if($titre && $contenu && $idCategorie){
+                    /* On ajoute un topic et on récupère son id */
+                    $id = $topicManager->add([
+                        "titre" => $titre,
+                        "membre_id" => Session::getUser()->getId(),
+                        "categorie_id" => $idCategorie
+                    ]);
+                    
+                    /* On ajoute le premier post du topic */
+                    if($id && $postManager->add([
+                        "contenu" => $contenu,
+                        "membre_id" => Session::getUser()->getId(),
+                        "topic_id" => $id
+                    ])){
+                        $session->addFlash("success", "Ajout réussi !");
+                        return [
+                            "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
+                            "data" => [
+                                "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"])
+                            ]
+                        ];
+                    }
+                    else{
+                        $session->addFlash("error", "Echec de l'ajout !");
+                        return [
+                            "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
+                            "data" => [
+                                "categories" => $categorieManager->findAll()
+                            ]
+                        ];
+                    }
+                }
+                else{
+                    $session->addFlash("error", "Echec de l'ajout !");
+                    return [
+                        "view" => VIEW_DIR . "forum/Topic/ajouterTopic.php",
+                        "data" => [
+                            "categories" => $categorieManager->findAll()
+                        ]
+                    ];
+                }
+            }
+            else{
+                $session->addFlash("error", "Echec de l'ajout du topic dans la catégorie !");
+                return [
+                    "view" => VIEW_DIR . "home.php",
                 ];
             }
         }
