@@ -2,7 +2,7 @@
 $post = $result["data"]["post"];
 ?>
 <a href="index.php?ctrl=post&action=listerPostsDansTopic&idTopic=<?= $post->getTopic()->getId() ?>" class="retourTopic"><span><i class="fas fa-arrow-left"></i></span>Retour au topic</a>
-<form action="index.php?ctrl=post&action=modificationPost&idPost=<?= $post->getId() ?>" method="post">
+<form action="index.php?ctrl=post&action=modificationPost&idPost=<?= $post->getId() ?>&idTopic=<?= $post->getTopic()->getId() ?>" method="post">
     <h1><i>MODIFIER LE POST</i></h1>
     <div>
         <label for="postActuel">Post actuel :</label>

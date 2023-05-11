@@ -234,6 +234,7 @@
          */
         public function modificationPost(){
             /* On utilise les managers nécessaires */
+            $topicManager = new TopicManager();
             $postManager = new PostManager();
             $session = new Session();
 
@@ -244,7 +245,7 @@
                 /* On filtre les inputs */
                 $postActuel = filter_input(INPUT_POST, "postActuel", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $nouveauPost = filter_input(INPUT_POST, "nouveauPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $idPost = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 /* Si le filtrage fonctionne */
                 if($idPost && $postActuel && $nouveauPost){
@@ -262,9 +263,11 @@
                                 if($postManager->modifierContenuPost($idPost, $nouveauPost)){
                                     $session->addFlash("success", "Le post a été modifié !");
                                     return [
-                                        "view" => VIEW_DIR . "forum/Post/modifierPost.php",
+                                        "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                                         "data" => [
-                                            "post" => $postManager->findOneById($idPost)
+                                            "posts" => $postManager->trouverPostsDansTopic($postManager->findOneById($idPost)->getTopic()->getId()),
+                                            "ancien" => $postManager->trouverPlusAncienPost($postManager->findOneById($idPost)->getTopic()->getId()),
+                                            "topic" => $topicManager->findOneById($postManager->findOneById($idPost)->getTopic()->getId())
                                         ]
                                     ];
                                 }
