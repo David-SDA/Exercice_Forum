@@ -20,7 +20,7 @@
             return [
                 "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                 "data" => [
-                    "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                    "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                 ]
             ];
         }
