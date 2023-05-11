@@ -29,7 +29,7 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
                         <i>Posts : <?= $topic->getNombrePosts() ?></i>
                     </p>
                     <div class="elementCentre">
-                        <a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a>
+                        <a href="index.php?ctrl=post&action=listerPostsDansTopic&idTopic=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a>
                         <p><i><?= $topic->getDateCreation() ?></i></p>
                         <?php
                             if($topic->getVerrouiller()){
@@ -49,7 +49,7 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
                         <?php
                         if(App\Session::isAdmin() || App\Session::getUser()->getId() == $topic->getMembre()->getId()){
                         ?>
-                            <a href="index.php?ctrl=topic&action=supprimerTopic&id=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>
+                            <a href="index.php?ctrl=topic&action=supprimerTopic&idTopic=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>
                         <?php
                         }
                         ?>
