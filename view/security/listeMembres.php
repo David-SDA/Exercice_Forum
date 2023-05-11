@@ -14,7 +14,30 @@ $membres = $result["data"]["membres"];
         <div class="element">
             <p class="elementGauche centre"><?= $membre->getDateInscription() ?></p>
             <p class="elementCentre"><a href="index.php?ctrl=membre&action=profilAdmin&idMembre=<?= $membre->getId() ?>"><b><?= $membre->getPseudo() ?></b></a></p>
-            <p class="elementDroite centre"><?= ($membre->hasRole("ROLE_ADMIN") ? "ADMIN" : "MEMBRE") ?></p>
+            <p class="elementDroite centre">
+                <?php 
+                if($membre->hasRole("ROLE_ADMIN")){
+                    echo "ADMIN";
+                }
+                elseif($membre->hasRole("ROLE_MEMBRE")){
+                    echo "MEMBRE";
+                }
+                else{
+                    echo "BANNI";
+                }
+
+                if($membre->hasRole("ROLE_BANNI")){
+                ?>
+                    <a href="" class="lienAjout unban">DÉBANNIR</a>
+                <?php
+                }
+                else{
+                    ?>
+                    <a href="" class="lienAjout ban">BANNIR</a>
+                    <?php
+                }
+                ?>
+            </p>
         </div>
         <?php
     }

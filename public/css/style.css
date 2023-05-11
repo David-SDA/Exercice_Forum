@@ -216,6 +216,14 @@ form textarea{
     margin-right: 20vw;
     width: 20vw;
 }
+.ban{
+    background-color: rgb(196, 0, 0);
+    margin: 5px 0 5px 3vw;
+}
+.deban{
+    background-color: green;
+    margin: 5px 0 5px 3vw;
+}
 
 /* Les liens de modification du profil */
 .modificationProfil{
