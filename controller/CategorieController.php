@@ -54,14 +54,10 @@
                     if($session->isAdmin()){
 
                         /* On ajoute une catégorie */
-                        if($categorieManager->add(["nomCategorie" => $nomCategorie])){
+                        $idCategorie= $categorieManager->add(["nomCategorie" => $nomCategorie]);
+                        if($idCategorie){
                             $session->addFlash("success", "Ajout de la catégorie '$nomCategorie' réussi !");
-                            return [
-                                "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
-                                "data" => [
-                                    "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
-                                ]
-                            ];
+                            $this->redirectTo("topic", "listerTopicsDansCategorie", "$idCategorie");
                         }
                         else{
                             $session->addFlash("error", "Échec de l'ajout de la catégorie !");

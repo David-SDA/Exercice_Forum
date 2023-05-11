@@ -34,7 +34,7 @@
             $categorieManager = new CategorieManager();
 
             /* On filtre l'input */
-            $idCategorie = filter_input(INPUT_GET, "idCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idCategorie = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le filtrage fonctionne */
             if($idCategorie){
