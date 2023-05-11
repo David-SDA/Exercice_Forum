@@ -593,6 +593,44 @@
          * Permet de débannir un membre
          */
         public function debannir(){
+            /* On utilise les managers nécessaires */
+            $membreManager = new MembreManager();
+            $session = new Session();
 
+            /* On filtre l'input */
+            $idMembre = filter_input(INPUT_GET, "idMembre", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            /* Si le filtrage fonctionne */
+            if($idMembre){
+
+                /* On bannit l'utilisateur */
+                if($membreManager->modificationRole($idMembre, "ROLE_MEMBER")){
+                    $session->addFlash("success", "Vous avez débanni un membre");
+                    return [
+                        "view" => VIEW_DIR . "security/listeMembres.php",
+                        "data" => [
+                            "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                        ]
+                    ];
+                }
+                else{
+                    $session->addFlash("error", "Erreur de déban");
+                    return [
+                        "view" => VIEW_DIR . "security/listeMembres.php",
+                        "data" => [
+                            "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                        ]
+                    ];
+                }
+            }
+            else{
+                $session->addFlash("error", "Erreur de déban");
+                return [
+                    "view" => VIEW_DIR . "security/listeMembres.php",
+                    "data" => [
+                        "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                    ]
+                ];
+            }
         }
     }
