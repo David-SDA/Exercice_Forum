@@ -237,33 +237,46 @@
             $postManager = new PostManager();
             $session = new Session();
 
-            /* On filtre les inputs */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le formulaire fonctionne */
             if(isset($_POST["submitModificationPost"])){
+
                 /* On filtre les inputs */
                 $postActuel = filter_input(INPUT_POST, "postActuel", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $nouveauPost = filter_input(INPUT_POST, "nouveauPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 /* Si le filtrage fonctionne */
                 if($id && $postActuel && $nouveauPost){
 
-                    /* Si le post qu'on veut modifier est bien celui du membre en session */
-                    if($session->getUser()->getId() == $postManager->findOneById($id)->getMembre()->getId()){
+                    /* Si le topic n'est pas vérouiller */
+                    if(!$postManager->findOneById($id)->getTopic()->getVerrouiller()){
                         
-                        /* Si le contenu des deux posts ne sont pas identiques */
-                        if($postActuel != $nouveauPost){
+                        /* Si le post qu'on veut modifier est bien celui du membre en session */
+                        if($session->getUser()->getId() == $postManager->findOneById($id)->getMembre()->getId()){
                             
-                            /* On fait la modification de post avec une update de la date de dernière modification */
-                            if($postManager->modifierContenuPost($id, $nouveauPost)){
-                                $session->addFlash("success", "Le post a été modifié !");
-                                return [
-                                    "view" => VIEW_DIR . "forum/Post/modifierPost.php",
-                                    "data" => [
-                                        "post" => $postManager->findOneById($id)
-                                    ]
-                                ];
+                            /* Si le contenu des deux posts ne sont pas identiques */
+                            if($postActuel != $nouveauPost){
+                                
+                                /* On fait la modification de post avec une update de la date de dernière modification */
+                                if($postManager->modifierContenuPost($id, $nouveauPost)){
+                                    $session->addFlash("success", "Le post a été modifié !");
+                                    return [
+                                        "view" => VIEW_DIR . "forum/Post/modifierPost.php",
+                                        "data" => [
+                                            "post" => $postManager->findOneById($id)
+                                        ]
+                                    ];
+                                }
+                                else{
+                                    $session->addFlash("error", "Erreur de la modification !");
+                                    return [
+                                        "view" => VIEW_DIR . "forum/Post/modifierPost.php",
+                                        "data" => [
+                                            "post" => $postManager->findOneById($id)
+                                        ]
+                                    ];
+                                }
                             }
                             else{
                                 $session->addFlash("error", "Erreur de la modification !");
@@ -284,6 +297,7 @@
                                 ]
                             ];
                         }
+
                     }
                     else{
                         $session->addFlash("error", "Erreur de la modification !");
@@ -293,6 +307,7 @@
                                 "post" => $postManager->findOneById($id)
                             ]
                         ];
+
                     }
                 }
                 else{
@@ -308,10 +323,7 @@
             else{
                 $session->addFlash("error", "Erreur de la modification !");
                 return [
-                    "view" => VIEW_DIR . "forum/Post/modifierPost.php",
-                    "data" => [
-                        "post" => $postManager->findOneById($id)
-                    ]
+                    "view" => VIEW_DIR . "home.php",
                 ];
             }
         }
