@@ -35,11 +35,16 @@
                     <div id="nav-right">
                     <?php
                         
-                        if(App\Session::getUser()){
+                        if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
                             ?>
                             <a href="index.php?ctrl=topic">TOPICS</a>
                             <a href="index.php?ctrl=categorie">CATÉGORIES</a>
                             <a href="index.php?ctrl=security&action=allerPageProfil"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
+                            <a href="index.php?ctrl=security&action=deconnexion">Déconnexion</a>
+                            <?php
+                        }
+                        elseif(App\Session::getUser() && App\Session::getUser()->hasRole("ROLE_BAN")){
+                            ?>
                             <a href="index.php?ctrl=security&action=deconnexion">Déconnexion</a>
                             <?php
                         }
