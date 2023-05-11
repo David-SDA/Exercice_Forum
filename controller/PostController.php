@@ -129,6 +129,7 @@
             $postManager = new PostManager();
             $session = new Session();
 
+            /* On vérifie que l'utilisateur n'est pas banni */
             if(!$session->getUser()->hasRole("ROLE_BAN")){
                 /* On filtre les inputs */
                 $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);

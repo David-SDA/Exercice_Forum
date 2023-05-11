@@ -151,6 +151,7 @@
             $postManager = new PostManager();
             $session = new Session();
 
+            /* On vérifie que l'utilisateur n'est pas banni */
             if(!$session->getUser()->hasRole("ROLE_BAN")){
 
                 /* On filtre l'input */
@@ -224,7 +225,9 @@
             $postManager = new PostManager();
             $session = new Session();
 
+            /* On vérifie que l'utilisateur n'est pas banni */
             if(!$session->getUser()->hasRole("ROLE_BAN")){
+                
                 /* On filtre l'input */
                 $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -298,7 +301,9 @@
             $postManager = new PostManager();
             $session = new Session();
 
+            /* On vérifie que l'utilisateur n'est pas banni */
             if(!$session->getUser()->hasRole("ROLE_BAN")){
+                
                 /* On filtre l'input */
                 $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -372,7 +377,9 @@
             $topicManager = new TopicManager();
             $session = new Session();
 
+            /* On vérifie que l'utilisateur n'est pas banni */
             if(!$session->getUser()->hasRole("ROLE_BAN")){
+               
                 /* On filtre l'input */
                 $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -509,7 +516,9 @@
             $categorieManager = new CategorieManager();
             $session = new Session();
 
+            /* On vérifie que l'utilisateur n'est pas banni */
             if(!$session->getUser()->hasRole("ROLE_BAN")){
+                
                 /* On filtre l'input */
                 $idCategorie = filter_input(INPUT_GET, "idCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 

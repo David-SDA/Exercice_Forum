@@ -552,6 +552,7 @@
             $membreManager = new MembreManager();
             $session = new Session();
 
+            /* On vérifie que l'utilisateur est bien l'admin */
             if($session->isAdmin()){
                 
                 /* On filtre l'input */
@@ -609,6 +610,7 @@
             $membreManager = new MembreManager();
             $session = new Session();
 
+            /* On vérifie que l'utilisateur est bien l'admin */
             if($session->isAdmin()){
                 /* On filtre l'input */
                 $idMembre = filter_input(INPUT_GET, "idMembre", FILTER_SANITIZE_SPECIAL_CHARS);
