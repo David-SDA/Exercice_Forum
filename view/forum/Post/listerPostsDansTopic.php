@@ -11,7 +11,7 @@ if($posts != NULL){
     if(App\Session::isAdmin() || App\Session::getUser()->getId() == $topic->getMembre()->getId()){
         if(!$topic->getVerrouiller()){
         ?>
-            <a href="index.php?ctrl=topic&action=verrouillerTopic&id=<?= $topic->getId() ?>" class="lienAjout">VERROUILLER LE TOPIC</a>
+            <a href="index.php?ctrl=topic&action=verrouillerTopic&id=<?= $topic->getId() ?>" class="lienAjout grand">VERROUILLER LE TOPIC</a>
         <?php
         }
         else{

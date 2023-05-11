@@ -71,20 +71,32 @@
 
                 /* Si le filtrage fonctionne */
                 if($contenu && $id){
-                    if($postManager->add([
-                        "contenu" => $contenu,
-                        "membre_id" => Session::getUser()->getId(),
-                        "topic_id" => $id
-                    ])){
-                        $session->addFlash("success", "Ajout réussi !");
-                        return [
-                            "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                            "data" => [
-                                "posts" => $postManager->trouverPostsDansTopic($id),
-                                "ancien" => $postManager->trouverPlusAncienPost($id),
-                                "topic" => $topicManager->findOneById($id)
-                            ]
-                        ];
+                    
+                    /* Si le topic n'est pas vérrouiller */    
+                    if(!$topicManager->findOneById($id)->getVerrouiller()){
+                        
+                        /* On ajoute le post */
+                        if($postManager->add([
+                            "contenu" => $contenu,
+                            "membre_id" => Session::getUser()->getId(),
+                            "topic_id" => $id
+                        ])){
+                            $session->addFlash("success", "Ajout réussi !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                "data" => [
+                                    "posts" => $postManager->trouverPostsDansTopic($id),
+                                    "ancien" => $postManager->trouverPlusAncienPost($id),
+                                    "topic" => $topicManager->findOneById($id)
+                                ]
+                            ];
+                        }
+                        else{
+                            $session->addFlash("error", "Echec de l'ajout !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
+                            ];
+                        }
                     }
                     else{
                         $session->addFlash("error", "Echec de l'ajout !");
