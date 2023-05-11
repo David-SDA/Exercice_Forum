@@ -543,4 +543,56 @@
                 ];
             }
         }
+
+        /**
+         * Permet de bannir un membre
+         */
+        public function bannir(){
+            /* On utilise les managers nécessaires */
+            $membreManager = new MembreManager();
+            $session = new Session();
+
+            /* On filtre l'input */
+            $idMembre = filter_input(INPUT_GET, "idMembre", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            /* Si le filtrage fonctionne */
+            if($idMembre){
+
+                /* On bannit l'utilisateur */
+                if($membreManager->modificationRole($idMembre, "ROLE_BAN")){
+                    $session->addFlash("success", "Vous avez banni un membre");
+                    return [
+                        "view" => VIEW_DIR . "security/listeMembres.php",
+                        "data" => [
+                            "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                        ]
+                    ];
+                }
+                else{
+                    $session->addFlash("error", "Erreur de ban");
+                    return [
+                        "view" => VIEW_DIR . "security/listeMembres.php",
+                        "data" => [
+                            "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                        ]
+                    ];
+                }
+            }
+            else{
+                $session->addFlash("error", "Erreur de ban");
+                return [
+                    "view" => VIEW_DIR . "security/listeMembres.php",
+                    "data" => [
+                        "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                    ]
+                ];
+            }
+        }
+
+        /**
+         * Permet de débannir un membre
+         */
+        public function debannir(){
+
+        }
     }
