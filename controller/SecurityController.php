@@ -381,6 +381,8 @@
 
                                         /* Si on a le bon mot de passe */
                                         if(password_verify($motDePasse, $hash)){
+
+                                            /* On modifie l'email */
                                             if($membreManager->modificationEmail(Session::getUser()->getId(), $nouveauEmail)){
                                                 $session->addFlash("success", "Modification réussi !");
                                                 Session::getUser()->setEmail($nouveauEmail);
@@ -492,6 +494,7 @@
                         /* Si le nouveau pseudo n'existe pas */
                         if(!$membreManager->trouverPseudo($nouveauPseudo)){
                             
+                            /* On modifie le pseudo */
                             if($membreManager->modificationPseudo(Session::getUser()->getId(), $nouveauPseudo)){
                                 $session->addFlash("success", "Modification réussi !");
                                 Session::getUser()->setPseudo($nouveauPseudo);
