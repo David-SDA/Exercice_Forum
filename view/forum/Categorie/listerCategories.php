@@ -13,13 +13,13 @@ $categories = $result["data"]['categories'];
             <div class="element">
                 <div class="elementGauche"></div>
                 <div class="elementCentre">
-                    <p><a href="index.php?ctrl=topic&action=listerTopicsDansCategorie&id=<?= $categorie->getId() ?>"><?=$categorie->getNomCategorie()?></a></p>
+                    <p><a href="index.php?ctrl=topic&action=listerTopicsDansCategorie&idCategorie=<?= $categorie->getId() ?>"><?=$categorie->getNomCategorie()?></a></p>
                 </div>
                 <div class="elementDroite centre">
                     <?php
                     if(App\Session::isAdmin()){
                     ?>
-                        <a href="index.php?ctrl=categorie&action=supprimerCategorie&id=<?= $categorie->getId() ?>"><i class="far fa-trash-alt"></i></a>
+                        <a href="index.php?ctrl=categorie&action=supprimerCategorie&idCategorie=<?= $categorie->getId() ?>"><i class="far fa-trash-alt"></i></a>
                     <?php
                     }
                     ?>

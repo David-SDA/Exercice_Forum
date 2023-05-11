@@ -115,16 +115,16 @@
             $session = new Session();
 
             /* On filtre l'input */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idCategorie = filter_input(INPUT_GET, "idCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
             /* Si le filtrage fonctionne */
-            if($id){
+            if($idCategorie){
 
                 /* Si c'est bien l'admin qui veut supprimer une catégorie */
                 if($session->isAdmin()){
 
                     /* On supprime les posts des topics dans la catégorie qu'on veut supprimer, on supprime les topics de la catégorie et on supprime la catégorie */
-                    if($postManager->supprimerPostsDeTopicsDansCategorie($id) && $topicManager->supprimerTopicsDeCategorie($id) && $categorieManager->delete($id)){
+                    if($postManager->supprimerPostsDeTopicsDansCategorie($idCategorie) && $topicManager->supprimerTopicsDeCategorie($idCategorie) && $categorieManager->delete($idCategorie)){
                         $session->addFlash("success", "Suppression réussi !");
                         return [
                             "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
