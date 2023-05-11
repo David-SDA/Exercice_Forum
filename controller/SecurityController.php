@@ -552,21 +552,33 @@
             $membreManager = new MembreManager();
             $session = new Session();
 
-            /* On filtre l'input */
-            $idMembre = filter_input(INPUT_GET, "idMembre", FILTER_SANITIZE_SPECIAL_CHARS);
+            if($session->isAdmin()){
+                
+                /* On filtre l'input */
+                $idMembre = filter_input(INPUT_GET, "idMembre", FILTER_SANITIZE_SPECIAL_CHARS);
 
-            /* Si le filtrage fonctionne */
-            if($idMembre){
+                /* Si le filtrage fonctionne */
+                if($idMembre){
 
-                /* On bannit l'utilisateur */
-                if($membreManager->modificationRole($idMembre, "ROLE_BAN")){
-                    $session->addFlash("success", "Vous avez banni le membre " . $membreManager->findOneById($idMembre)->getPseudo());
-                    return [
-                        "view" => VIEW_DIR . "security/listeMembres.php",
-                        "data" => [
-                            "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                        ]
-                    ];
+                    /* On bannit l'utilisateur */
+                    if($membreManager->modificationRole($idMembre, "ROLE_BAN")){
+                        $session->addFlash("success", "Vous avez banni le membre " . $membreManager->findOneById($idMembre)->getPseudo());
+                        return [
+                            "view" => VIEW_DIR . "security/listeMembres.php",
+                            "data" => [
+                                "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                            ]
+                        ];
+                    }
+                    else{
+                        $session->addFlash("error", "Échec du bannissement");
+                        return [
+                            "view" => VIEW_DIR . "security/listeMembres.php",
+                            "data" => [
+                                "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                            ]
+                        ];
+                    }
                 }
                 else{
                     $session->addFlash("error", "Échec du bannissement");
@@ -597,21 +609,32 @@
             $membreManager = new MembreManager();
             $session = new Session();
 
-            /* On filtre l'input */
-            $idMembre = filter_input(INPUT_GET, "idMembre", FILTER_SANITIZE_SPECIAL_CHARS);
+            if($session->isAdmin()){
+                /* On filtre l'input */
+                $idMembre = filter_input(INPUT_GET, "idMembre", FILTER_SANITIZE_SPECIAL_CHARS);
 
-            /* Si le filtrage fonctionne */
-            if($idMembre){
+                /* Si le filtrage fonctionne */
+                if($idMembre){
 
-                /* On bannit l'utilisateur */
-                if($membreManager->modificationRole($idMembre, "ROLE_MEMBER")){
-                    $session->addFlash("success", "Vous avez débanni le membre " . $membreManager->findOneById($idMembre)->getPseudo());
-                    return [
-                        "view" => VIEW_DIR . "security/listeMembres.php",
-                        "data" => [
-                            "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                        ]
-                    ];
+                    /* On bannit l'utilisateur */
+                    if($membreManager->modificationRole($idMembre, "ROLE_MEMBER")){
+                        $session->addFlash("success", "Vous avez débanni le membre " . $membreManager->findOneById($idMembre)->getPseudo());
+                        return [
+                            "view" => VIEW_DIR . "security/listeMembres.php",
+                            "data" => [
+                                "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                            ]
+                        ];
+                    }
+                    else{
+                        $session->addFlash("error", "Échec du débannisssment !");
+                        return [
+                            "view" => VIEW_DIR . "security/listeMembres.php",
+                            "data" => [
+                                "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                            ]
+                        ];
+                    }
                 }
                 else{
                     $session->addFlash("error", "Échec du débannisssment !");
