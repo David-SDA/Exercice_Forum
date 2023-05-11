@@ -1,54 +1,59 @@
-<a href="index.php?ctrl=topic&action=allerPageAjoutTopic" class="lienAjout">AJOUTER UN TOPIC</a>
 <?php
-
-$topics = $result["data"]['topics'];
-    
+if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
 ?>
-<div class="liste">
-    <h1>TOPICS</h1>
+    <a href="index.php?ctrl=topic&action=allerPageAjoutTopic" class="lienAjout">AJOUTER UN TOPIC</a>
     <?php
-    if($topics != NULL){
-        foreach($topics as $topic){
-            ?>
-            <div class="element">
-                <p class="elementGauche">
-                    <b><i><?= $topic->getMembre()->getPseudo() ?></i></b><br>
-                    <i>Posts : <?= $topic->getNombrePosts() ?></i>
-                </p>
-                <div class="elementCentre">
-                    <a href="index.php?ctrl=post&action=listerPostsDansTopic&idTopic=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a>
-                    <p><i><?= $topic->getDateCreation() ?></i></p>
-                    <?php
-                        if($topic->getVerrouiller()){
+
+    $topics = $result["data"]['topics'];
+        
+    ?>
+    <div class="liste">
+        <h1>TOPICS</h1>
+        <?php
+        if($topics != NULL){
+            foreach($topics as $topic){
+                ?>
+                <div class="element">
+                    <p class="elementGauche">
+                        <b><i><?= $topic->getMembre()->getPseudo() ?></i></b><br>
+                        <i>Posts : <?= $topic->getNombrePosts() ?></i>
+                    </p>
+                    <div class="elementCentre">
+                        <a href="index.php?ctrl=post&action=listerPostsDansTopic&idTopic=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a>
+                        <p><i><?= $topic->getDateCreation() ?></i></p>
+                        <?php
+                            if($topic->getVerrouiller()){
+                            ?>
+                                <p><i class="fas fa-lock"></i></p>
+                            <?php
+                            }
+                            else{
+                                ?>
+                                <p><i class="fas fa-lock-open"></i></p>
+                                <?php
+                            }
                         ?>
-                            <p><i class="fas fa-lock"></i></p>
+                    </div>
+                    <p class="elementDroite">
+                        <i><?= $topic->getCategorie()->getNomCategorie() ?></i>
+                        <?php
+                        if(App\Session::isAdmin() || App\Session::getUser()->getId() == $topic->getMembre()->getId()){
+                        ?>
+                            <a href="index.php?ctrl=topic&action=supprimerTopic&idTopic=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>
                         <?php
                         }
-                        else{
-                            ?>
-                            <p><i class="fas fa-lock-open"></i></p>
-                            <?php
-                        }
-                    ?>
+                        ?>
+                    </p>
                 </div>
-                <p class="elementDroite">
-                    <i><?= $topic->getCategorie()->getNomCategorie() ?></i>
-                    <?php
-                    if(App\Session::isAdmin() || App\Session::getUser()->getId() == $topic->getMembre()->getId()){
-                    ?>
-                        <a href="index.php?ctrl=topic&action=supprimerTopic&idTopic=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>
-                    <?php
-                    }
-                    ?>
-                </p>
-            </div>
-    <?php
+        <?php
+            }
         }
-    }
-    else{
+        else{
+            ?>
+            <p>Il n'y a pas de topics !</p>
+        <?php
+        }
         ?>
-        <p>Il n'y a pas de topics !</p>
-    <?php
-    }
-    ?>
-</div>
+    </div>
+<?php
+}
