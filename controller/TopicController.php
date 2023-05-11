@@ -465,4 +465,29 @@
                 ];
             }
         }
+
+        public function allerPageAjoutTopicDansCategorie(){
+            /* On utilise les managers nécessaires */
+            $categorieManager = new CategorieManager();
+            $session = new Session();
+
+            /* On filtre l'input */
+            $idCategorie = filter_input(INPUT_GET, "idCategorie", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            /* Si le filtrage fonctionne */
+            if($idCategorie){
+                return [
+                    "view" => VIEW_DIR . "forum/Topic/ajouterTopicDansCategorie.php",
+                    "data" => [
+                        "categorie" => $categorieManager->findOneById($idCategorie)
+                    ]
+                ];
+            }
+            else{
+                $session->addFlash("error", "Erreur d'accès à la page d'ajout d'un topic dans une catégorie !");
+                return [
+                    "view" => VIEW_DIR . "home.php"
+                ];
+            }
+        }
     }

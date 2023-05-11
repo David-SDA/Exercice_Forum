@@ -2,7 +2,9 @@
 
 $topics = $result["data"]["topics"];
 $categorie = $result["data"]["categorie"];
-    
+?>
+<a href="index.php?ctrl=topic&action=allerPageAjoutTopicDansCategorie&idCategorie=<?= $categorie->getId() ?>" class="lienAjout">AJOUTER UN TOPIC</a>
+<?php    
 if($topics != NULL){
     ?>
     <div class="liste">
