@@ -19,16 +19,16 @@ $membres = $result["data"]["membres"];
                 if($membre->hasRole("ROLE_ADMIN")){
                     echo "ADMIN";
                 }
-                elseif($membre->hasRole("ROLE_MEMBRE")){
+                elseif($membre->hasRole("ROLE_MEMBER")){
                     echo "MEMBRE";
                 }
                 else{
                     echo "BANNI";
                 }
 
-                if($membre->hasRole("ROLE_BANNI")){
+                if($membre->hasRole("ROLE_BAN")){
                 ?>
-                    <a href="" class="lienAjout unban">DÉBANNIR</a>
+                    <a href="" class="lienAjout deban">DÉBANNIR</a>
                 <?php
                 }
                 else{
