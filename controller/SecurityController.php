@@ -144,8 +144,8 @@
                         
                         /* Si le mot de passe correspond au hachage */
                         if(password_verify($motDePasse, $hash)){
-                            $session->addFlash("success", "Connexion réussi !"); // On l'indique visuellement
                             Session::setUser($membre); // On stocke le membre en session
+                            $session->addFlash("success", "Connexion réussi ! Bienvenue " . Session::getUser()->getPseudo()); // On l'indique visuellement
                             return [
                                 "view" => VIEW_DIR . "home.php"
                             ];
@@ -213,7 +213,7 @@
                 ];
             }
             else{
-                $session->addFlash("error", "Echec de la déconnexion !");
+                $session->addFlash("error", "Échec de la déconnexion !");
                 return [
                     "view" => VIEW_DIR . "home.php"
                 ];
@@ -269,7 +269,7 @@
 
                                     /* On change le mot de passe */
                                     if($membreManager->modificationMotDePasse(Session::getUser()->getId(), $motDePasseHash)){
-                                        $session->addFlash("success", "Modification réussi !");
+                                        $session->addFlash("success", "Modification du mot de passe réussi !");
                                         Session::getUser()->setMotDePasse($motDePasseHash);
                                         return [
                                             "view" => VIEW_DIR . "security/profil.php",
@@ -282,14 +282,14 @@
                                         ];
                                     }
                                     else{
-                                        $session->addFlash("error", "Échec du changement de mot de passe !");
+                                        $session->addFlash("error", "Échec de la modification du mot de passe !");
                                         return [
                                             "view" => VIEW_DIR . "security/modificationMotDePasse.php",
                                         ];
                                     }
                                 }
                                 else{
-                                    $session->addFlash("error", "Échec du changement de mot de passe ! Le nouveau mot de passe doit être différent de l'ancien !");
+                                    $session->addFlash("error", "Échec de la modification du mot de passe ! Le nouveau mot de passe doit être différent de l'ancien !");
                                     return [
                                         "view" => VIEW_DIR . "security/modificationMotDePasse.php",
                                     ];
@@ -310,21 +310,21 @@
                         }
                     }
                     else{
-                        $session->addFlash("error", "Échec du changement de mot de passe !");
+                        $session->addFlash("error", "Échec de la modification du mot de passe !");
                         return [
                             "view" => VIEW_DIR . "security/modificationMotDePasse.php",
                         ];
                     }
                 }
                 else{
-                    $session->addFlash("error", "Échec du changement de mot de passe !");
+                    $session->addFlash("error", "Échec de la modification du mot de passe !");
                     return [
                         "view" => VIEW_DIR . "security/modificationMotDePasse.php",
                     ];
                 }
             }
             else{
-                $session->addFlash("error", "Échec du changement de mot de passe !");
+                $session->addFlash("error", "Échec de la modification du mot de passe !");
                 return [
                     "view" => VIEW_DIR . "security/modificationMotDePasse.php",
                 ];
@@ -384,7 +384,7 @@
 
                                             /* On modifie l'email */
                                             if($membreManager->modificationEmail(Session::getUser()->getId(), $nouveauEmail)){
-                                                $session->addFlash("success", "Modification réussi !");
+                                                $session->addFlash("success", "Modification de l'email réussi !");
                                                 Session::getUser()->setEmail($nouveauEmail);
                                                 return [
                                                     "view" => VIEW_DIR . "security/profil.php",
@@ -397,63 +397,63 @@
                                                 ];
                                             }
                                             else{
-                                                $session->addFlash("error", "Échec de la modification");
+                                                $session->addFlash("error", "Échec de la modification de l'email");
                                                 return [
                                                     "view" => VIEW_DIR . "security/modificationEmail.php"
                                                 ];
                                             }
                                         }
                                         else{
-                                            $session->addFlash("error", "Échec de la modification");
+                                            $session->addFlash("error", "Échec de la modification de l'email");
                                             return [
                                                 "view" => VIEW_DIR . "security/modificationEmail.php"
                                             ];
                                         }
                                     }
                                     else{
-                                        $session->addFlash("error", "Échec de la modification !");
+                                        $session->addFlash("error", "Échec de la modification de l'email");
                                         return [
                                             "view" => VIEW_DIR . "security/modificationEmail.php"
                                         ];
                                     }
                                 }
                                 else{
-                                    $session->addFlash("error", "Échec de la modification, l'email existe déjà !");
+                                    $session->addFlash("error", "Échec de la modification de l'email, l'email existe déjà !");
                                     return [
                                         "view" => VIEW_DIR . "security/modificationEmail.php",
                                     ];
                                 }
                             }
                             else{
-                                $session->addFlash("error", "Le nouvel email doit être différent de l'actuel !");
+                                $session->addFlash("error", "Échec de la modification de l'email, le nouvel email doit être différent de l'actuel !");
                                 return [
                                     "view" => VIEW_DIR . "security/modificationEmail.php"
                                 ];
                             }
                         }
                         else{
-                            $session->addFlash("error", "La confimation d'email n'est pas identique au nouveau !");
+                            $session->addFlash("error", "Échec de la modification de l'email, la confimation d'email n'est pas identique au nouveau !");
                             return [
                                 "view" => VIEW_DIR . "security/modificationEmail.php"
                             ];
                         }
                     }
                     else{
-                        $session->addFlash("error", "L'email actuel n'est pas le bon !");
+                        $session->addFlash("error", "Échec de la modification de l'email, l'email actuel n'est pas le bon !");
                         return [
                             "view" => VIEW_DIR . "security/modificationEmail.php"
                         ];
                     }
                 }
                 else{
-                    $session->addFlash("error", "Echec de la modification de l'email !");
+                    $session->addFlash("error", "Échec de la modification de l'email");
                     return [
                         "view" => VIEW_DIR . "security/modificationEmail.php"
                     ];
                 }
             }
             else{
-                $session->addFlash("error", "Echec de la modification de l'email !");
+                $session->addFlash("error", "Échec de la modification de l'email");
                 return [
                     "view" => VIEW_DIR . "security/modificationEmail.php"
                 ];
@@ -496,7 +496,7 @@
                             
                             /* On modifie le pseudo */
                             if($membreManager->modificationPseudo(Session::getUser()->getId(), $nouveauPseudo)){
-                                $session->addFlash("success", "Modification réussi !");
+                                $session->addFlash("success", "Modification de pseudo réussi ! Vous êtes maintenant $nouveauPseudo !");
                                 Session::getUser()->setPseudo($nouveauPseudo);
                                 return [
                                     "view" => VIEW_DIR . "security/profil.php",
@@ -509,35 +509,35 @@
                                 ];
                             }
                             else{
-                                $session->addFlash("error", "Echec de la modification du pseudo !");
+                                $session->addFlash("error", "Échec de la modification du pseudo !");
                                 return [
                                     "view" => VIEW_DIR . "security/modificationPseudo.php"
                                 ];
                             }
                         }
                         else{
-                            $session->addFlash("error", "Echec ! Le nouveau pseudo est déjà utilisé !");
+                            $session->addFlash("error", "Échec de la modification du pseudo ! Le nouveau pseudo est déjà utilisé !");
                             return [
                                 "view" => VIEW_DIR . "security/modificationPseudo.php"
                             ];
                         }
                     }
                     else{
-                        $session->addFlash("error", "Echec ! Les deux pseudo sont identique !");
+                        $session->addFlash("error", "Échec de la modification du pseudo ! Les deux pseudo sont identique !");
                         return [
                             "view" => VIEW_DIR . "security/modificationPseudo.php"
                         ];
                     }
                 }
                 else{
-                    $session->addFlash("error", "Echec de la modification du pseudo !");
+                    $session->addFlash("error", "Échec de la modification du pseudo !");
                     return [
                         "view" => VIEW_DIR . "security/modificationPseudo.php"
                     ];
                 }
             }
             else{
-                $session->addFlash("error", "Echec de la modification du pseudo !");
+                $session->addFlash("error", "Échec de la modification du pseudo !");
                 return [
                     "view" => VIEW_DIR . "security/modificationPseudo.php"
                 ];
@@ -560,7 +560,7 @@
 
                 /* On bannit l'utilisateur */
                 if($membreManager->modificationRole($idMembre, "ROLE_BAN")){
-                    $session->addFlash("success", "Vous avez banni un membre");
+                    $session->addFlash("success", "Vous avez banni le membre " . $membreManager->findOneById($idMembre)->getPseudo());
                     return [
                         "view" => VIEW_DIR . "security/listeMembres.php",
                         "data" => [
@@ -569,7 +569,7 @@
                     ];
                 }
                 else{
-                    $session->addFlash("error", "Erreur de ban");
+                    $session->addFlash("error", "Échec du bannissement");
                     return [
                         "view" => VIEW_DIR . "security/listeMembres.php",
                         "data" => [
@@ -579,7 +579,7 @@
                 }
             }
             else{
-                $session->addFlash("error", "Erreur de ban");
+                $session->addFlash("error", "Échec du bannissement");
                 return [
                     "view" => VIEW_DIR . "security/listeMembres.php",
                     "data" => [
@@ -605,7 +605,7 @@
 
                 /* On bannit l'utilisateur */
                 if($membreManager->modificationRole($idMembre, "ROLE_MEMBER")){
-                    $session->addFlash("success", "Vous avez débanni un membre");
+                    $session->addFlash("success", "Vous avez débanni le membre " . $membreManager->findOneById($idMembre)->getPseudo());
                     return [
                         "view" => VIEW_DIR . "security/listeMembres.php",
                         "data" => [
@@ -614,7 +614,7 @@
                     ];
                 }
                 else{
-                    $session->addFlash("error", "Erreur de déban");
+                    $session->addFlash("error", "Échec du débannisssment !");
                     return [
                         "view" => VIEW_DIR . "security/listeMembres.php",
                         "data" => [
@@ -624,7 +624,7 @@
                 }
             }
             else{
-                $session->addFlash("error", "Erreur de déban");
+                $session->addFlash("error", "Échec du débannisssment !");
                 return [
                     "view" => VIEW_DIR . "security/listeMembres.php",
                     "data" => [
