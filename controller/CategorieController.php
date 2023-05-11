@@ -55,50 +55,50 @@
 
                         /* On ajoute une catégorie */
                         if($categorieManager->add(["nomCategorie" => $nomCategorie])){
-                            $session->addFlash("success", "Ajout de la catégorie " . $nomCategorie . " réussi !");
+                            $session->addFlash("success", "Ajout de la catégorie '$nomCategorie' réussi !");
                             return [
                                 "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                                 "data" => [
-                                    "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                                    "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                                 ]
                             ];
                         }
                         else{
-                            $session->addFlash("error", "Echec de l'ajout !");
+                            $session->addFlash("error", "Échec de l'ajout de la catégorie !");
                             return [
                                 "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                                 "data" => [
-                                    "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                                    "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                                 ]
                             ];
                         }
                     }
                     else{
-                        $session->addFlash("error", "Echec de l'ajout !");
+                        $session->addFlash("error", "Échec de l'ajout de la catégorie !");
                         return [
                             "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                             "data" => [
-                                "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                                "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                             ]
                         ];
                     }
                 }
                 else{
-                    $session->addFlash("error", "Echec de l'ajout !");
+                    $session->addFlash("error", "Échec de l'ajout de la catégorie !");
                     return [
                         "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                         "data" => [
-                            "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                            "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                         ]
                     ];
                 }
             }
             else{
-                $session->addFlash("error", "Echec de l'ajout !");
+                $session->addFlash("error", "Échec de l'ajout de la catégorie !");
                 return [
                     "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                     "data" => [
-                        "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                        "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                     ]
                 ];
             }
@@ -123,13 +123,15 @@
                 /* Si c'est bien l'admin qui veut supprimer une catégorie */
                 if($session->isAdmin()){
 
+                    $nomCategorie = $categorieManager->findOneById($idCategorie)->getNomCategorie();
+
                     /* On supprime les posts des topics dans la catégorie qu'on veut supprimer, on supprime les topics de la catégorie et on supprime la catégorie */
                     if($postManager->supprimerPostsDeTopicsDansCategorie($idCategorie) && $topicManager->supprimerTopicsDeCategorie($idCategorie) && $categorieManager->delete($idCategorie)){
-                        $session->addFlash("success", "Suppression réussi !");
+                        $session->addFlash("success", "Suppression de la catégorie '$nomCategorie' réussi !");
                         return [
                             "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                             "data" => [
-                                "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                                "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                             ]
                         ];
                     }
@@ -138,7 +140,7 @@
                         return [
                             "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                             "data" => [
-                                "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                                "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                             ]
                         ];
                     }
@@ -148,7 +150,7 @@
                     return [
                         "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                         "data" => [
-                            "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                            "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                         ]
                     ];
                 }
@@ -158,7 +160,7 @@
                 return [
                     "view" => VIEW_DIR . "forum/Categorie/listerCategories.php",
                     "data" => [
-                        "categories" => $categorieManager->findAll(["id_categorie", "ASC"])
+                        "categories" => $categorieManager->trouverCategorieAvecNombreTopic(["nomCategorie", "ASC"])
                     ]
                 ];
             }
