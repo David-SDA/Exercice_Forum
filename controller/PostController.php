@@ -21,16 +21,16 @@
             $postManager = new PostManager();
 
             /* On filtre l'input */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
             /* Si le filtrage fonctionne */
-            if($id){
+            if($idTopic){
                 return [
                     "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                     "data" => [
-                        "posts" => $postManager->trouverPostsDansTopic($id),
-                        "ancien" => $postManager->trouverPlusAncienPost($id),
-                        "topic" => $topicManager->findOneById($id)
+                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                        "topic" => $topicManager->findOneById($idTopic)
                     ]
                 ];
             }
@@ -67,27 +67,27 @@
                 
                 /* On filtre les inputs */
                 $contenu = filter_input(INPUT_POST, "contenu", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 /* Si le filtrage fonctionne */
-                if($contenu && $id){
+                if($contenu && $idTopic){
                     
                     /* Si le topic n'est pas vérrouiller */    
-                    if(!$topicManager->findOneById($id)->getVerrouiller()){
+                    if(!$topicManager->findOneById($idTopic)->getVerrouiller()){
                         
                         /* On ajoute le post */
                         if($postManager->add([
                             "contenu" => $contenu,
                             "membre_id" => Session::getUser()->getId(),
-                            "topic_id" => $id
+                            "topic_id" => $idTopic
                         ])){
                             $session->addFlash("success", "Ajout réussi !");
                             return [
                                 "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                                 "data" => [
-                                    "posts" => $postManager->trouverPostsDansTopic($id),
-                                    "ancien" => $postManager->trouverPlusAncienPost($id),
-                                    "topic" => $topicManager->findOneById($id)
+                                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                    "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                    "topic" => $topicManager->findOneById($idTopic)
                                 ]
                             ];
                         }
@@ -130,20 +130,20 @@
             $session = new Session();
 
             /* On filtre les inputs */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le filtrage fonctionne */
-            if($id && $idTopic){
+            if($idPost && $idTopic){
 
                 /* Si le topic n'est pas vérouiller */
                 if(!$topicManager->findOneById($idTopic)->getVerrouiller()){
                     
                     /* Si c'est bien le bon membre qui veut supprimer le post ou si c'est un admin */
-                    if($session->getUser()->getId() == $postManager->trouverIdMembrePost($id) || $session->isAdmin()){
+                    if($session->getUser()->getId() == $postManager->trouverIdMembrePost($idPost) || $session->isAdmin()){
     
                         /* On supprime le post */
-                        if($postManager->delete($id)){
+                        if($postManager->delete($idPost)){
                             $session->addFlash("success", "Suppression réussi !");
                             return [
                                 "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
@@ -211,14 +211,14 @@
             $postManager = new PostManager();
             
             /* On filtre les inputs */
-            $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le filtrage fonctionne */
-            if($id){
+            if($idPost){
                 return [
                     "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                     "data" => [
-                        "post" => $postManager->findOneById($id)
+                        "post" => $postManager->findOneById($idPost)
                     ]
                 ];
             }
@@ -244,27 +244,27 @@
                 /* On filtre les inputs */
                 $postActuel = filter_input(INPUT_POST, "postActuel", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $nouveauPost = filter_input(INPUT_POST, "nouveauPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $idPost = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 /* Si le filtrage fonctionne */
-                if($id && $postActuel && $nouveauPost){
+                if($idPost && $postActuel && $nouveauPost){
 
                     /* Si le topic n'est pas vérouiller */
-                    if(!$postManager->findOneById($id)->getTopic()->getVerrouiller()){
+                    if(!$postManager->findOneById($idPost)->getTopic()->getVerrouiller()){
                         
                         /* Si le post qu'on veut modifier est bien celui du membre en session */
-                        if($session->getUser()->getId() == $postManager->findOneById($id)->getMembre()->getId()){
+                        if($session->getUser()->getId() == $postManager->findOneById($idPost)->getMembre()->getId()){
                             
                             /* Si le contenu des deux posts ne sont pas identiques */
                             if($postActuel != $nouveauPost){
                                 
                                 /* On fait la modification de post avec une update de la date de dernière modification */
-                                if($postManager->modifierContenuPost($id, $nouveauPost)){
+                                if($postManager->modifierContenuPost($idPost, $nouveauPost)){
                                     $session->addFlash("success", "Le post a été modifié !");
                                     return [
                                         "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                                         "data" => [
-                                            "post" => $postManager->findOneById($id)
+                                            "post" => $postManager->findOneById($idPost)
                                         ]
                                     ];
                                 }
@@ -273,7 +273,7 @@
                                     return [
                                         "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                                         "data" => [
-                                            "post" => $postManager->findOneById($id)
+                                            "post" => $postManager->findOneById($idPost)
                                         ]
                                     ];
                                 }
@@ -283,7 +283,7 @@
                                 return [
                                     "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                                     "data" => [
-                                        "post" => $postManager->findOneById($id)
+                                        "post" => $postManager->findOneById($idPost)
                                     ]
                                 ];
                             }
@@ -293,7 +293,7 @@
                             return [
                                 "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                                 "data" => [
-                                    "post" => $postManager->findOneById($id)
+                                    "post" => $postManager->findOneById($idPost)
                                 ]
                             ];
                         }
@@ -304,7 +304,7 @@
                         return [
                             "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                             "data" => [
-                                "post" => $postManager->findOneById($id)
+                                "post" => $postManager->findOneById($idPost)
                             ]
                         ];
 
@@ -315,7 +315,7 @@
                     return [
                         "view" => VIEW_DIR . "forum/Post/modifierPost.php",
                         "data" => [
-                            "post" => $postManager->findOneById($id)
+                            "post" => $postManager->findOneById($idPost)
                         ]
                     ];
                 }

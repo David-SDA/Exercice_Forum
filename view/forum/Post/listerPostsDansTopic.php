@@ -11,12 +11,12 @@ if($posts != NULL){
     if(App\Session::isAdmin() || App\Session::getUser()->getId() == $topic->getMembre()->getId()){
         if(!$topic->getVerrouiller()){
         ?>
-            <a href="index.php?ctrl=topic&action=verrouillerTopic&id=<?= $topic->getId() ?>" class="lienAjout grand">VERROUILLER LE TOPIC</a>
+            <a href="index.php?ctrl=topic&action=verrouillerTopic&idTopic=<?= $topic->getId() ?>" class="lienAjout grand">VERROUILLER LE TOPIC</a>
         <?php
         }
         else{
             ?>
-            <a href="index.php?ctrl=topic&action=deverrouillerTopic&id=<?= $topic->getId() ?>" class="lienAjout grand">DÉVERROUILLER LE TOPIC</a>
+            <a href="index.php?ctrl=topic&action=deverrouillerTopic&idTopic=<?= $topic->getId() ?>" class="lienAjout grand">DÉVERROUILLER LE TOPIC</a>
         <?php
         }
     }
@@ -25,7 +25,7 @@ if($posts != NULL){
     <?php
     if(App\Session::getUser()->getId() == $topic->getMembre()->getId() && !$topic->getVerrouiller()){
     ?>
-        <a href="index.php?ctrl=topic&action=allerPageModificationTitreTopic&id=<?= $topic->getId() ?>"><i class="fas fa-edit" style="color: blue;"></i></a>
+        <a href="index.php?ctrl=topic&action=allerPageModificationTitreTopic&idTopic=<?= $topic->getId() ?>"><i class="fas fa-edit" style="color: blue;"></i></a>
     <?php
     }
     ?>
@@ -45,14 +45,14 @@ if($posts != NULL){
                         if(App\Session::isAdmin() || App\Session::getUser()->getId() == $post->getMembre()->getId()){
                             if($idAncienPost != $post->getId() && $post->getTopic()->getVerrouiller() != 1){
                         ?>
-                                <a href="index.php?ctrl=post&action=supprimerPost&id=<?= $post->getId() ?>&idTopic=<?= $post->getTopic()->getId() ?>"><i class="far fa-trash-alt"></i></a>
+                                <a href="index.php?ctrl=post&action=supprimerPost&idPost=<?= $post->getId() ?>&idTopic=<?= $post->getTopic()->getId() ?>"><i class="far fa-trash-alt"></i></a>
                         <?php
                             }
                         }
                         if(App\Session::getUser()->getId() == $post->getMembre()->getId()){
                             if($post->getTopic()->getVerrouiller() != 1){
                                 ?>
-                                <a href="index.php?ctrl=post&action=allerPageModificationPost&id=<?= $post->getId() ?>"><i class="fas fa-edit"></i></a>
+                                <a href="index.php?ctrl=post&action=allerPageModificationPost&idPost=<?= $post->getId() ?>"><i class="fas fa-edit"></i></a>
                                 <?php
                             }
                         }
@@ -73,7 +73,7 @@ else{
 
 if(!$verrouiller){
 ?>
-    <a href="index.php?ctrl=post&action=allerPageAjoutPost&id=<?= $_GET["id"] ?>" class="lienAjout">AJOUTER UN POST</a>
+    <a href="index.php?ctrl=post&action=allerPageAjoutPost&idTopic=<?= $_GET["idTopic"] ?>" class="lienAjout">AJOUTER UN POST</a>
 <?php
 }
 ?>

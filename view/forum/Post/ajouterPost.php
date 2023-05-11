@@ -1,5 +1,5 @@
-<a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $_GET["id"] ?>" class="retourTopic"><span><i class="fas fa-arrow-left"></i></span>Retour au topic</a>
-<form action="index.php?ctrl=post&action=ajouterPost&id=<?= $_GET["id"] ?>" method="post">
+<a href="index.php?ctrl=post&action=listerPostsDansTopic&idTopic=<?= $_GET["idTopic"] ?>" class="retourTopic"><span><i class="fas fa-arrow-left"></i></span>Retour au topic</a>
+<form action="index.php?ctrl=post&action=ajouterPost&idTopic=<?= $_GET["idTopic"] ?>" method="post">
     <h1><i>AJOUTER UN POST</i></h1>
     <div>
         <label for="contenu">Contenu du post : </label>
