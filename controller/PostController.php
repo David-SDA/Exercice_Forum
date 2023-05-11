@@ -134,22 +134,37 @@
             $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le filtrage fonctionne */
-            if($id & $idTopic){
+            if($id && $idTopic){
 
-                /* Si c'est bien le bon membre qui veut supprimer le post ou si c'est un admin */
-                if($session->getUser()->getId() == $postManager->trouverIdMembrePost($id) || $session->isAdmin()){
-
-                    /* On supprime le post */
-                    if($postManager->delete($id)){
-                        $session->addFlash("success", "Suppression réussi !");
-                        return [
-                            "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                            "data" => [
-                                "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                                "ancien" => $postManager->trouverPlusAncienPost($id),
-                                "topic" => $topicManager->findOneById($id)
-                            ]
-                        ];
+                /* Si le topic n'est pas vérouiller */
+                if(!$topicManager->findOneById($idTopic)->getVerrouiller()){
+                    
+                    /* Si c'est bien le bon membre qui veut supprimer le post ou si c'est un admin */
+                    if($session->getUser()->getId() == $postManager->trouverIdMembrePost($id) || $session->isAdmin()){
+    
+                        /* On supprime le post */
+                        if($postManager->delete($id)){
+                            $session->addFlash("success", "Suppression réussi !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                "data" => [
+                                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                    "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                    "topic" => $topicManager->findOneById($idTopic)
+                                ]
+                            ];
+                        }
+                        else{
+                            $session->addFlash("error", "Echec de la suppression !");
+                            return [
+                                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
+                                "data" => [
+                                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                    "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                    "topic" => $topicManager->findOneById($idTopic)
+                                ]
+                            ];
+                        }
                     }
                     else{
                         $session->addFlash("error", "Echec de la suppression !");
@@ -157,8 +172,8 @@
                             "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                             "data" => [
                                 "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                                "ancien" => $postManager->trouverPlusAncienPost($id),
-                                "topic" => $topicManager->findOneById($id)
+                                "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                "topic" => $topicManager->findOneById($idTopic)
                             ]
                         ];
                     }
@@ -169,8 +184,8 @@
                         "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                         "data" => [
                             "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                            "ancien" => $postManager->trouverPlusAncienPost($id),
-                            "topic" => $topicManager->findOneById($id)
+                            "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                            "topic" => $topicManager->findOneById($idTopic)
                         ]
                     ];
                 }
@@ -181,8 +196,8 @@
                     "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                     "data" => [
                         "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                        "ancien" => $postManager->trouverPlusAncienPost($id),
-                        "topic" => $topicManager->findOneById($id)
+                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                        "topic" => $topicManager->findOneById($idTopic)
                     ]
                 ];
             }
