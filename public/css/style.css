@@ -297,6 +297,7 @@ form textarea{
     background-color: #808080;
 }
 
+/* Partie du détail d'un profil */
 .detailProfil{
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -304,6 +305,16 @@ form textarea{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+}
+
+/* Le message de confirmation */
+.message{
+    position: fixed;
+    top: 11vh;
+    left: 5vw;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    background-color: #e4e4e4;
 }
 
 /* Le contenu de la page sauf le footer */
