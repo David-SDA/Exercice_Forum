@@ -26,15 +26,7 @@
          */
         public function listerMembres(){
             $this->restrictTo("ROLE_ADMIN");
-
-            /* On utilise les managers nécessaires */
-            $membreManager = new MembreManager();
-            return [
-                "view" => VIEW_DIR . "security/listeMembres.php",
-                "data" => [
-                    "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                ]
-            ];
+            $this->redirectTo("membre");
         }
 
         /**

@@ -11,7 +11,15 @@
 
     class MembreController extends AbstractController implements ControllerInterface{
         
-        public function index(){}
+        public function index(){
+            $membreManager = new MembreManager();
+            return [
+                "view" => VIEW_DIR . "security/listeMembres.php",
+                "data" => [
+                    "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
+                ]
+            ];
+        }
 
         /**
          * Permet d'accéder au profil d'un membre par un admin
@@ -23,7 +31,7 @@
             $postManager = new PostManager();
 
             /* On filtre l'input */
-            $idMembre = filter_input(INPUT_GET, "idMembre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idMembre = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le filtrage fonctionne */
             if($idMembre){
@@ -39,12 +47,7 @@
                 ];
             }
             else{
-                return [
-                    "view" => VIEW_DIR . "security/listeMembres.php",
-                    "data" => [
-                        "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                    ]
-                ];
+                $this->redirectTo("membre");
             }
         }
     }
