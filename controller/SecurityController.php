@@ -62,50 +62,36 @@
                                     "role" => "ROLE_MEMBER"
                                 ])){
                                     $session->addFlash("success", "Inscription réussi ! Connectez-vous !");
-                                    return [
-                                        "view" => VIEW_DIR . "security/connexion.php"
-                                    ];
+                                    $this->redirectTo("security", "allerPageConnexion");
                                 }
                                 else{
                                     $session->addFlash("error", "Échec de l'inscription ! ");
-                                    return [
-                                        "view" => VIEW_DIR . "security/inscription.php",
-                                    ];
+                                    $this->redirectTo("security", "allerPageInscription");
                                 }
                             }
                             else{
                                 $session->addFlash("error", "Les mots de passe ne sont pas identiques ! Veuillez les saisirs à nouveau !");
-                                return [
-                                    "view" => VIEW_DIR . "security/inscription.php",
-                                ];
+                                $this->redirectTo("security", "allerPageInscription");
                             }
                         }
                         else{
                             $session->addFlash("error", "Le pseudo saisit existe déjà ! Saisissez-en un autre !");
-                            return [
-                                "view" => VIEW_DIR . "security/inscription.php",
-                            ];
+                            $this->redirectTo("security", "allerPageInscription");
                         }
                     }
                     else{
                         $session->addFlash("error", "L'email saisit existe déjà ! Saisissez-en un autre !");
-                        return [
-                            "view" => VIEW_DIR . "security/inscription.php",
-                        ];
+                        $this->redirectTo("security", "allerPageInscription");
                     }
                 }
                 else{
                     $session->addFlash("error", "Échec de l'inscription !");
-                    return [
-                        "view" => VIEW_DIR . "security/inscription.php",
-                    ];
+                    $this->redirectTo("security", "allerPageInscription");
                 }
             }
             else{
                 $session->addFlash("error", "Échec de l'inscription !");
-                return [
-                    "view" => VIEW_DIR . "security/inscription.php",
-                ];
+                $this->redirectTo("security", "allerPageInscription");
             }
         }
 
@@ -152,30 +138,22 @@
                         }
                         else{
                             $session->addFlash("error", "L'email ou le mot de passe n'est pas bon ! Réessayez");
-                            return [
-                                "view" => VIEW_DIR . "security/connexion.php"
-                            ];
+                            $this->redirectTo("security", "allerPageConnexion");
                         }
                     }
                     else{
                         $session->addFlash("error", "Échec de la connexion ! Réessayez");
-                        return [
-                            "view" => VIEW_DIR . "security/connexion.php"
-                        ];
+                        $this->redirectTo("security", "allerPageConnexion");
                     }
                 }
                 else{
                     $session->addFlash("error", "Échec de la connexion ! Réessayez");
-                    return [
-                        "view" => VIEW_DIR . "security/connexion.php"
-                    ];
+                    $this->redirectTo("security", "allerPageConnexion");
                 }
             }
             else{
                 $session->addFlash("error", "L'email ou le mot de passe n'est pas bon ! Réessayez");
-                return [
-                    "view" => VIEW_DIR . "security/connexion.php"
-                ];
+                $this->redirectTo("security", "allerPageConnexion");
             }
         }
 
@@ -271,63 +249,41 @@
                                     if($membreManager->modificationMotDePasse(Session::getUser()->getId(), $motDePasseHash)){
                                         $session->addFlash("success", "Modification du mot de passe réussi !");
                                         Session::getUser()->setMotDePasse($motDePasseHash);
-                                        return [
-                                            "view" => VIEW_DIR . "security/profil.php",
-                                            "data" => [
-                                                "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId()),
-                                                "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId()),
-                                                "topics" => $topicManager->trouverTopicsMembre(Session::getUser()->getId(), ["dateCreation", "DESC"]),
-                                                "derniersPosts" => $postManager->trouverCinqDernierPost(Session::getUser()->getId())
-                                            ]
-                                        ];
+                                        $this->redirectTo("security", "allerPageProfil");
                                     }
                                     else{
                                         $session->addFlash("error", "Échec de la modification du mot de passe !");
-                                        return [
-                                            "view" => VIEW_DIR . "security/modificationMotDePasse.php",
-                                        ];
+                                        $this->redirectTo("security", "allerPageModificationMotDePasse");
                                     }
                                 }
                                 else{
                                     $session->addFlash("error", "Échec de la modification du mot de passe ! Le nouveau mot de passe doit être différent de l'ancien !");
-                                    return [
-                                        "view" => VIEW_DIR . "security/modificationMotDePasse.php",
-                                    ];
+                                    $this->redirectTo("security", "allerPageModificationMotDePasse");
                                 }
                             }
                             else{
                                 $session->addFlash("error", "Les mots de passe ne sont pas identiques ! Veuillez les saisir à nouveau !");
-                                return [
-                                    "view" => VIEW_DIR . "security/modificationMotDePasse.php",
-                                ];
+                                $this->redirectTo("security", "allerPageModificationMotDePasse");
                             }
                         }
                         else{
                             $session->addFlash("error", "L'ancien mot de passe n'est pas bon");
-                            return [
-                                "view" => VIEW_DIR . "security/modificationMotDePasse.php",
-                            ];
+                            $this->redirectTo("security", "allerPageModificationMotDePasse");
                         }
                     }
                     else{
                         $session->addFlash("error", "Échec de la modification du mot de passe !");
-                        return [
-                            "view" => VIEW_DIR . "security/modificationMotDePasse.php",
-                        ];
+                        $this->redirectTo("security", "allerPageModificationMotDePasse");
                     }
                 }
                 else{
                     $session->addFlash("error", "Échec de la modification du mot de passe !");
-                    return [
-                        "view" => VIEW_DIR . "security/modificationMotDePasse.php",
-                    ];
+                    $this->redirectTo("security", "allerPageModificationMotDePasse");
                 }
             }
             else{
                 $session->addFlash("error", "Échec de la modification du mot de passe !");
-                return [
-                    "view" => VIEW_DIR . "security/modificationMotDePasse.php",
-                ];
+                $this->redirectTo("security", "allerPageModificationMotDePasse");
             }
         }
 
@@ -386,77 +342,51 @@
                                             if($membreManager->modificationEmail(Session::getUser()->getId(), $nouveauEmail)){
                                                 $session->addFlash("success", "Modification de l'email réussi !");
                                                 Session::getUser()->setEmail($nouveauEmail);
-                                                return [
-                                                    "view" => VIEW_DIR . "security/profil.php",
-                                                    "data" => [
-                                                        "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId()),
-                                                        "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId()),
-                                                        "topics" => $topicManager->trouverTopicsMembre(Session::getUser()->getId(), ["dateCreation", "DESC"]),
-                                                        "derniersPosts" => $postManager->trouverCinqDernierPost(Session::getUser()->getId())
-                                                    ]
-                                                ];
+                                                $this->redirectTo("security", "allerPageProfil");
                                             }
                                             else{
                                                 $session->addFlash("error", "Échec de la modification de l'email");
-                                                return [
-                                                    "view" => VIEW_DIR . "security/modificationEmail.php"
-                                                ];
+                                                $this->redirectTo("security", "allerPageModificationEmail");
                                             }
                                         }
                                         else{
                                             $session->addFlash("error", "Échec de la modification de l'email");
-                                            return [
-                                                "view" => VIEW_DIR . "security/modificationEmail.php"
-                                            ];
+                                            $this->redirectTo("security", "allerPageModificationEmail");
                                         }
                                     }
                                     else{
                                         $session->addFlash("error", "Échec de la modification de l'email");
-                                        return [
-                                            "view" => VIEW_DIR . "security/modificationEmail.php"
-                                        ];
+                                        $this->redirectTo("security", "allerPageModificationEmail");
                                     }
                                 }
                                 else{
                                     $session->addFlash("error", "Échec de la modification de l'email, l'email existe déjà !");
-                                    return [
-                                        "view" => VIEW_DIR . "security/modificationEmail.php",
-                                    ];
+                                    $this->redirectTo("security", "allerPageModificationEmail");
                                 }
                             }
                             else{
                                 $session->addFlash("error", "Échec de la modification de l'email, le nouvel email doit être différent de l'actuel !");
-                                return [
-                                    "view" => VIEW_DIR . "security/modificationEmail.php"
-                                ];
+                                $this->redirectTo("security", "allerPageModificationEmail");
                             }
                         }
                         else{
                             $session->addFlash("error", "Échec de la modification de l'email, la confimation d'email n'est pas identique au nouveau !");
-                            return [
-                                "view" => VIEW_DIR . "security/modificationEmail.php"
-                            ];
+                            $this->redirectTo("security", "allerPageModificationEmail");
                         }
                     }
                     else{
                         $session->addFlash("error", "Échec de la modification de l'email, l'email actuel n'est pas le bon !");
-                        return [
-                            "view" => VIEW_DIR . "security/modificationEmail.php"
-                        ];
+                        $this->redirectTo("security", "allerPageModificationEmail");
                     }
                 }
                 else{
                     $session->addFlash("error", "Échec de la modification de l'email");
-                    return [
-                        "view" => VIEW_DIR . "security/modificationEmail.php"
-                    ];
+                    $this->redirectTo("security", "allerPageModificationEmail");
                 }
             }
             else{
                 $session->addFlash("error", "Échec de la modification de l'email");
-                return [
-                    "view" => VIEW_DIR . "security/modificationEmail.php"
-                ];
+                $this->redirectTo("security", "allerPageModificationEmail");
             }
         }
 
@@ -498,49 +428,31 @@
                             if($membreManager->modificationPseudo(Session::getUser()->getId(), $nouveauPseudo)){
                                 $session->addFlash("success", "Modification de pseudo réussi ! Vous êtes maintenant $nouveauPseudo !");
                                 Session::getUser()->setPseudo($nouveauPseudo);
-                                return [
-                                    "view" => VIEW_DIR . "security/profil.php",
-                                    "data" => [
-                                        "nombreTopics" => $membreManager->nombreTopicsDeMembre(Session::getUser()->getId()),
-                                        "nombrePosts" => $membreManager->nombrePostsDeMembre(Session::getUser()->getId()),
-                                        "topics" => $topicManager->trouverTopicsMembre(Session::getUser()->getId(), ["dateCreation", "DESC"]),
-                                        "derniersPosts" => $postManager->trouverCinqDernierPost(Session::getUser()->getId())
-                                    ]
-                                ];
+                                $this->redirectTo("security", "allerPageProfil");
                             }
                             else{
                                 $session->addFlash("error", "Échec de la modification du pseudo !");
-                                return [
-                                    "view" => VIEW_DIR . "security/modificationPseudo.php"
-                                ];
+                                $this->redirectTo("security", "allerPageModificationPseudo");
                             }
                         }
                         else{
                             $session->addFlash("error", "Échec de la modification du pseudo ! Le nouveau pseudo est déjà utilisé !");
-                            return [
-                                "view" => VIEW_DIR . "security/modificationPseudo.php"
-                            ];
+                            $this->redirectTo("security", "allerPageModificationPseudo");
                         }
                     }
                     else{
                         $session->addFlash("error", "Échec de la modification du pseudo ! Les deux pseudo sont identique !");
-                        return [
-                            "view" => VIEW_DIR . "security/modificationPseudo.php"
-                        ];
+                        $this->redirectTo("security", "allerPageModificationPseudo");
                     }
                 }
                 else{
                     $session->addFlash("error", "Échec de la modification du pseudo !");
-                    return [
-                        "view" => VIEW_DIR . "security/modificationPseudo.php"
-                    ];
+                    $this->redirectTo("security", "allerPageModificationPseudo");
                 }
             }
             else{
                 $session->addFlash("error", "Échec de la modification du pseudo !");
-                return [
-                    "view" => VIEW_DIR . "security/modificationPseudo.php"
-                ];
+                $this->redirectTo("security", "allerPageModificationPseudo");
             }
         }
 
@@ -556,7 +468,7 @@
             if($session->isAdmin()){
                 
                 /* On filtre l'input */
-                $idMembre = filter_input(INPUT_GET, "idMembre", FILTER_SANITIZE_SPECIAL_CHARS);
+                $idMembre = filter_input(INPUT_GET, "id", FILTER_SANITIZE_SPECIAL_CHARS);
 
                 /* Si le filtrage fonctionne */
                 if($idMembre){
@@ -564,41 +476,21 @@
                     /* On bannit l'utilisateur */
                     if($membreManager->modificationRole($idMembre, "ROLE_BAN")){
                         $session->addFlash("success", "Vous avez banni le membre " . $membreManager->findOneById($idMembre)->getPseudo());
-                        return [
-                            "view" => VIEW_DIR . "security/listeMembres.php",
-                            "data" => [
-                                "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                            ]
-                        ];
+                        $this->redirectTo("membre");
                     }
                     else{
                         $session->addFlash("error", "Échec du bannissement");
-                        return [
-                            "view" => VIEW_DIR . "security/listeMembres.php",
-                            "data" => [
-                                "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                            ]
-                        ];
+                        $this->redirectTo("membre");
                     }
                 }
                 else{
                     $session->addFlash("error", "Échec du bannissement");
-                    return [
-                        "view" => VIEW_DIR . "security/listeMembres.php",
-                        "data" => [
-                            "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                        ]
-                    ];
+                    $this->redirectTo("membre");
                 }
             }
             else{
                 $session->addFlash("error", "Échec du bannissement");
-                return [
-                    "view" => VIEW_DIR . "security/listeMembres.php",
-                    "data" => [
-                        "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                    ]
-                ];
+                $this->redirectTo("membre");
             }
         }
 
@@ -613,7 +505,7 @@
             /* On vérifie que l'utilisateur est bien l'admin */
             if($session->isAdmin()){
                 /* On filtre l'input */
-                $idMembre = filter_input(INPUT_GET, "idMembre", FILTER_SANITIZE_SPECIAL_CHARS);
+                $idMembre = filter_input(INPUT_GET, "id", FILTER_SANITIZE_SPECIAL_CHARS);
 
                 /* Si le filtrage fonctionne */
                 if($idMembre){
@@ -621,41 +513,21 @@
                     /* On bannit l'utilisateur */
                     if($membreManager->modificationRole($idMembre, "ROLE_MEMBER")){
                         $session->addFlash("success", "Vous avez débanni le membre " . $membreManager->findOneById($idMembre)->getPseudo());
-                        return [
-                            "view" => VIEW_DIR . "security/listeMembres.php",
-                            "data" => [
-                                "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                            ]
-                        ];
+                        $this->redirectTo("membre");
                     }
                     else{
                         $session->addFlash("error", "Échec du débannisssment !");
-                        return [
-                            "view" => VIEW_DIR . "security/listeMembres.php",
-                            "data" => [
-                                "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                            ]
-                        ];
+                        $this->redirectTo("membre");
                     }
                 }
                 else{
                     $session->addFlash("error", "Échec du débannisssment !");
-                    return [
-                        "view" => VIEW_DIR . "security/listeMembres.php",
-                        "data" => [
-                            "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                        ]
-                    ];
+                    $this->redirectTo("membre");
                 }
             }
             else{
                 $session->addFlash("error", "Échec du débannisssment !");
-                return [
-                    "view" => VIEW_DIR . "security/listeMembres.php",
-                    "data" => [
-                        "membres" => $membreManager->findAll(['dateInscription', 'DESC'])
-                    ]
-                ];
+                $this->redirectTo("membre");
             }
         }
     }

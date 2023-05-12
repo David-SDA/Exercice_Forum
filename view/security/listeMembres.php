@@ -31,12 +31,12 @@ if(App\Session::getUser()->hasRole("ROLE_ADMIN")){
                     if(!$membre->hasRole("ROLE_ADMIN")){
                         if($membre->hasRole("ROLE_BAN")){
                         ?>
-                            <a href="index.php?ctrl=security&action=debannir&idMembre=<?= $membre->getId() ?>" class="lienAjout deban">DÉBANNIR</a>
+                            <a href="index.php?ctrl=security&action=debannir&id=<?= $membre->getId() ?>" class="lienAjout deban">DÉBANNIR</a>
                         <?php
                         }
                         else{
                             ?>
-                            <a href="index.php?ctrl=security&action=bannir&idMembre=<?= $membre->getId() ?>" class="lienAjout ban">BANNIR</a>
+                            <a href="index.php?ctrl=security&action=bannir&id=<?= $membre->getId() ?>" class="lienAjout ban">BANNIR</a>
                             <?php
                         }
                     }
