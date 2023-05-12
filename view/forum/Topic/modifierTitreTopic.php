@@ -3,7 +3,7 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
 
     $topic = $result["data"]["topic"];
     ?>
-    <form action="index.php?ctrl=topic&action=modificationTitreTopic&idTopic=<?= $topic->getId() ?>" method="post">
+    <form action="index.php?ctrl=topic&action=modificationTitreTopic&id=<?= $topic->getId() ?>" method="post">
         <h1><i>MODIFIER LE TITRE DU TOPIC</i></h1>
         <div>
             <label for="titreActuel">Titre actuel :</label>

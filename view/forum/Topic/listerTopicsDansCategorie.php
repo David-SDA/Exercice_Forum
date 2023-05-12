@@ -4,7 +4,7 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
     $topics = $result["data"]["topics"];
     $categorie = $result["data"]["categorie"];
     ?>
-    <a href="index.php?ctrl=topic&action=allerPageAjoutTopicDansCategorie&idCategorie=<?= $categorie->getId() ?>" class="lienAjout">AJOUTER UN TOPIC</a>
+    <a href="index.php?ctrl=topic&action=allerPageAjoutTopicDansCategorie&id=<?= $categorie->getId() ?>" class="lienAjout">AJOUTER UN TOPIC</a>
     <?php    
     if($topics != NULL){
         ?>
@@ -19,7 +19,7 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
                     <i>Posts : <?= $topic->getNombrePosts() ?></i>
                 </p>
                 <div class="elementCentre">
-                    <a href="index.php?ctrl=post&action=listerPostsDansTopic&idTopic=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a>
+                    <a href="index.php?ctrl=post&action=listerPostsDansTopic&id=<?= $topic->getId() ?>"><?=$topic->getTitre()?></a>
                     <p><i><?= $topic->getDateCreation() ?></i></p>
                     <?php
                     if($topic->getVerrouiller()){
@@ -39,7 +39,7 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
                     <?php
                     if(App\Session::isAdmin() || App\Session::getUser()->getId() == $topic->getMembre()->getId()){
                     ?>
-                        <a href="index.php?ctrl=topic&action=supprimerTopic&idTopic=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>
+                        <a href="index.php?ctrl=topic&action=supprimerTopic&id=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>
                     <?php
                     }
                     ?>

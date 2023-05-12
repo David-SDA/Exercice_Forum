@@ -39,7 +39,7 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
                         <?php
                         if(App\Session::isAdmin() || App\Session::getUser()->getId() == $topic->getMembre()->getId()){
                         ?>
-                            <a href="index.php?ctrl=topic&action=supprimerTopic&idTopic=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>
+                            <a href="index.php?ctrl=topic&action=supprimerTopic&id=<?= $topic->getId() ?>"><i class="far fa-trash-alt"></i></a>
                         <?php
                         }
                         ?>

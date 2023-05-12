@@ -12,12 +12,12 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
         if(App\Session::isAdmin() || App\Session::getUser()->getId() == $topic->getMembre()->getId()){
             if(!$topic->getVerrouiller()){
             ?>
-                <a href="index.php?ctrl=topic&action=verrouillerTopic&idTopic=<?= $topic->getId() ?>" class="lienAjout grand">VERROUILLER LE TOPIC</a>
+                <a href="index.php?ctrl=topic&action=verrouillerTopic&id=<?= $topic->getId() ?>" class="lienAjout grand">VERROUILLER LE TOPIC</a>
             <?php
             }
             else{
                 ?>
-                <a href="index.php?ctrl=topic&action=deverrouillerTopic&idTopic=<?= $topic->getId() ?>" class="lienAjout grand">DÉVERROUILLER LE TOPIC</a>
+                <a href="index.php?ctrl=topic&action=deverrouillerTopic&id=<?= $topic->getId() ?>" class="lienAjout grand">DÉVERROUILLER LE TOPIC</a>
             <?php
             }
         }
@@ -26,7 +26,7 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
         <?php
         if(App\Session::getUser()->getId() == $topic->getMembre()->getId() && !$topic->getVerrouiller()){
         ?>
-            <a href="index.php?ctrl=topic&action=allerPageModificationTitreTopic&idTopic=<?= $topic->getId() ?>"><i class="fas fa-edit" style="color: blue;"></i></a>
+            <a href="index.php?ctrl=topic&action=allerPageModificationTitreTopic&id=<?= $topic->getId() ?>"><i class="fas fa-edit" style="color: blue;"></i></a>
         <?php
         }
         ?>

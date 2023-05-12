@@ -3,7 +3,7 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
 
     $categorie = $result["data"]["categorie"]
     ?>
-    <form action="index.php?ctrl=topic&action=ajouterTopicDansCategorie&idCategorie=<?= $categorie->getId() ?>" method="post">
+    <form action="index.php?ctrl=topic&action=ajouterTopicDansCategorie&id=<?= $categorie->getId() ?>" method="post">
         <h1><i>AJOUTER UN TOPIC DANS LA CATÉGORIE "<?= $categorie->getNomCategorie() ?>"</i></h1>
         <div>
             <label for="titre">Titre : </label>
