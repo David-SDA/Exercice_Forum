@@ -21,7 +21,7 @@
             $postManager = new PostManager();
 
             /* On filtre l'input */
-            $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idTopic = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
             /* Si le filtrage fonctionne */
             if($idTopic){
@@ -35,12 +35,7 @@
                 ];
             }
             else{
-                return [
-                    "view" => VIEW_DIR . "forum/Topic/listerTopics.php",
-                    "data" => [
-                        "topics" => $topicManager->trouverTopicAvecNombrePosts(["dateCreation", "DESC"]) // On cherche tout les topic trier du plus récent au plus ancien
-                    ]
-                ];
+                $this->redirectTo("topic");
             }
         }
 
@@ -67,7 +62,7 @@
                 
                 /* On filtre les inputs */
                 $contenu = filter_input(INPUT_POST, "contenu", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $idTopic = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 /* Si le filtrage fonctionne */
                 if($contenu && $idTopic){
@@ -82,41 +77,26 @@
                             "topic_id" => $idTopic
                         ])){
                             $session->addFlash("success", "Ajout du post dans le topic '" . $topicManager->findOneById($idTopic)->getTitre() . "' réussi !");
-                            return [
-                                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                                "data" => [
-                                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                                    "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                                    "topic" => $topicManager->findOneById($idTopic)
-                                ]
-                            ];
+                            $this->redirectTo("post", "listerPostsDansTopic", "$idTopic");
                         }
                         else{
                             $session->addFlash("error", "Échec de l'ajout du post !");
-                            return [
-                                "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
-                            ];
+                            $this->redirectTo("post", "allerPageAjoutPost");
                         }
                     }
                     else{
                         $session->addFlash("error", "Échec de l'ajout du post !");
-                        return [
-                            "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
-                        ];
+                        $this->redirectTo("post", "allerPageAjoutPost");
                     }
                 }
                 else{
                     $session->addFlash("error", "Échec de l'ajout du post !");
-                    return [
-                        "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
-                    ];
+                    $this->redirectTo("post", "allerPageAjoutPost");
                 }
             }
             else{
                 $session->addFlash("error", "Échec de l'ajout du post !");
-                return [
-                    "view" => VIEW_DIR . "forum/Post/ajouterPost.php"
-                ];
+                $this->redirectTo("post", "allerPageAjoutPost");
             }
         }
 
@@ -132,10 +112,12 @@
             /* On vérifie que l'utilisateur n'est pas banni */
             if(!$session->getUser()->hasRole("ROLE_BAN")){
                 /* On filtre les inputs */
-                $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $idTopic = filter_input(INPUT_GET, "idTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $idPost = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                
+                /* On récupère l'id du topic de ce post */
+                $idTopic = $postManager->findOneById($idPost)->getTopic()->getId();
 
-                /* Si le filtrage fonctionne */
+                /* Si le filtrage fonctionne et qu'on a bien récupérer un l'id du topic */
                 if($idPost && $idTopic){
 
                     /* Si le topic n'est pas vérouiller */
@@ -147,68 +129,31 @@
                             /* On supprime le post */
                             if($postManager->delete($idPost)){
                                 $session->addFlash("success", "Suppression du post réussi !");
-                                return [
-                                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                                    "data" => [
-                                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                                        "topic" => $topicManager->findOneById($idTopic)
-                                    ]
-                                ];
+                                $this->redirectTo("post", "listerPostsDansTopic", "$idTopic");
                             }
                             else{
                                 $session->addFlash("error", "Échec de la suppression du post !");
-                                return [
-                                    "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                                    "data" => [
-                                        "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                                        "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                                        "topic" => $topicManager->findOneById($idTopic)
-                                    ]
-                                ];
+                                $this->redirectTo("post", "listerPostsDansTopic", "$idTopic");
                             }
                         }
                         else{
                             $session->addFlash("error", "Échec de la suppression du post !");
-                            return [
-                                "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                                "data" => [
-                                    "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                                    "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                                    "topic" => $topicManager->findOneById($idTopic)
-                                ]
-                            ];
+                            $this->redirectTo("post", "listerPostsDansTopic", "$idTopic");
                         }
                     }
                     else{
                         $session->addFlash("error", "Échec de la suppression du post !");
-                        return [
-                            "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                            "data" => [
-                                "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                                "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                                "topic" => $topicManager->findOneById($idTopic)
-                            ]
-                        ];
+                        $this->redirectTo("post", "listerPostsDansTopic", "$idTopic");
                     }
                 }
                 else{
                     $session->addFlash("error", "Échec de la suppression du post !");
-                    return [
-                        "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
-                        "data" => [
-                            "posts" => $postManager->trouverPostsDansTopic($idTopic),
-                            "ancien" => $postManager->trouverPlusAncienPost($idTopic),
-                            "topic" => $topicManager->findOneById($idTopic)
-                        ]
-                    ];
+                    $this->redirectTo("post", "listerPostsDansTopic", "$idTopic");
                 }
             }
             else{
                 $session->addFlash("error", "Échec de la suppression du post !");
-                return [
-                    "view" => VIEW_DIR . "home.php",
-                ];
+                $this->redirectTo("home");
             }
         }
 
@@ -220,7 +165,7 @@
             $postManager = new PostManager();
             
             /* On filtre les inputs */
-            $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $idPost = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /* Si le filtrage fonctionne */
             if($idPost){
@@ -232,9 +177,7 @@
                 ];
             }
             else{
-                return [
-                    "view" => VIEW_DIR . "home.php"
-                ];
+                $this->redirectTo("home");
             }
         }
 
@@ -254,9 +197,12 @@
                 /* On filtre les inputs */
                 $postActuel = filter_input(INPUT_POST, "postActuel", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $nouveauPost = filter_input(INPUT_POST, "nouveauPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $idPost = filter_input(INPUT_GET, "idPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $idPost = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-                /* Si le filtrage fonctionne */
+                /* On récupère l'id du topic de ce post */
+                $idTopic = $postManager->findOneById($idPost)->getTopic()->getId();
+
+                /* Si le filtrage fonctionne et qu'on a bien récupérer un l'id du topic */
                 if($idPost && $postActuel && $nouveauPost){
 
                     /* Si le topic n'est pas vérouiller */
@@ -274,69 +220,42 @@
                                     return [
                                         "view" => VIEW_DIR . "forum/Post/listerPostsDansTopic.php",
                                         "data" => [
-                                            "posts" => $postManager->trouverPostsDansTopic($postManager->findOneById($idPost)->getTopic()->getId()),
-                                            "ancien" => $postManager->trouverPlusAncienPost($postManager->findOneById($idPost)->getTopic()->getId()),
-                                            "topic" => $topicManager->findOneById($postManager->findOneById($idPost)->getTopic()->getId())
+                                            "posts" => $postManager->trouverPostsDansTopic($idTopic),
+                                            "ancien" => $postManager->trouverPlusAncienPost($idTopic),
+                                            "topic" => $topicManager->findOneById($idTopic)
                                         ]
                                     ];
                                 }
                                 else{
                                     $session->addFlash("error", "Erreur de la modification du post !");
-                                    return [
-                                        "view" => VIEW_DIR . "forum/Post/modifierPost.php",
-                                        "data" => [
-                                            "post" => $postManager->findOneById($idPost)
-                                        ]
-                                    ];
+                                    $this->redirectTo("post", "allerPageModificationPost", "$idPost");
                                 }
                             }
                             else{
                                 $session->addFlash("error", "Erreur de la modification du post !");
-                                return [
-                                    "view" => VIEW_DIR . "forum/Post/modifierPost.php",
-                                    "data" => [
-                                        "post" => $postManager->findOneById($idPost)
-                                    ]
-                                ];
+                                $this->redirectTo("post", "allerPageModificationPost", "$idPost");
                             }
                         }
                         else{
                             $session->addFlash("error", "Erreur de la modification du post !");
-                            return [
-                                "view" => VIEW_DIR . "forum/Post/modifierPost.php",
-                                "data" => [
-                                    "post" => $postManager->findOneById($idPost)
-                                ]
-                            ];
+                            $this->redirectTo("post", "allerPageModificationPost", "$idPost");
                         }
 
                     }
                     else{
                         $session->addFlash("error", "Erreur de la modification du post !");
-                        return [
-                            "view" => VIEW_DIR . "forum/Post/modifierPost.php",
-                            "data" => [
-                                "post" => $postManager->findOneById($idPost)
-                            ]
-                        ];
+                        $this->redirectTo("post", "allerPageModificationPost", "$idPost");
 
                     }
                 }
                 else{
                     $session->addFlash("error", "Erreur de la modification du post !");
-                    return [
-                        "view" => VIEW_DIR . "forum/Post/modifierPost.php",
-                        "data" => [
-                            "post" => $postManager->findOneById($idPost)
-                        ]
-                    ];
+                    $this->redirectTo("post", "allerPageModificationPost", "$idPost");
                 }
             }
             else{
                 $session->addFlash("error", "Erreur de la modification du post !");
-                return [
-                    "view" => VIEW_DIR . "home.php",
-                ];
+                $this->redirectTo("home");
             }
         }
     }

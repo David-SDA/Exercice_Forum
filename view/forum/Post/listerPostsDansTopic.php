@@ -46,14 +46,14 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
                             if(App\Session::isAdmin() || App\Session::getUser()->getId() == $post->getMembre()->getId()){
                                 if($idAncienPost != $post->getId() && $post->getTopic()->getVerrouiller() != 1){
                             ?>
-                                    <a href="index.php?ctrl=post&action=supprimerPost&idPost=<?= $post->getId() ?>&idTopic=<?= $post->getTopic()->getId() ?>"><i class="far fa-trash-alt"></i></a>
+                                    <a href="index.php?ctrl=post&action=supprimerPost&id=<?= $post->getId() ?>"><i class="far fa-trash-alt"></i></a>
                             <?php
                                 }
                             }
                             if(App\Session::getUser()->getId() == $post->getMembre()->getId()){
                                 if($post->getTopic()->getVerrouiller() != 1){
                                     ?>
-                                    <a href="index.php?ctrl=post&action=allerPageModificationPost&idPost=<?= $post->getId() ?>"><i class="fas fa-edit"></i></a>
+                                    <a href="index.php?ctrl=post&action=allerPageModificationPost&id=<?= $post->getId() ?>"><i class="fas fa-edit"></i></a>
                                     <?php
                                 }
                             }
@@ -74,7 +74,7 @@ if(App\Session::getUser() && !App\Session::getUser()->hasRole("ROLE_BAN")){
 
     if(!$verrouiller){
     ?>
-        <a href="index.php?ctrl=post&action=allerPageAjoutPost&idTopic=<?= $_GET["idTopic"] ?>" class="lienAjout">AJOUTER UN POST</a>
+        <a href="index.php?ctrl=post&action=allerPageAjoutPost&id=<?= $_GET["id"] ?>" class="lienAjout">AJOUTER UN POST</a>
     <?php
     }
 }
