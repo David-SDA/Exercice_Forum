@@ -40,12 +40,13 @@ CREATE TABLE IF NOT EXISTS `membre` (
   `dateInscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `role` varchar(15) NOT NULL,
   PRIMARY KEY (`id_membre`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table forum.membre : ~2 rows (environ)
+-- Listage des données de la table forum.membre : ~3 rows (environ)
 INSERT INTO `membre` (`id_membre`, `pseudo`, `email`, `motDePasse`, `dateInscription`, `role`) VALUES
-	(2, 'Admin', 'admin@admin.com', '$2y$10$WTUNywXJ6fkPMMyALUxET.Fv5t3PejJgKAABzd5Ce6np0iT3D8Ao.', '2023-05-02 16:53:37', 'ROLE_ADMIN'),
-	(13, 'pseudo', 'email@email.com', '$2y$10$nVyJ/8LQaZNoD6PNQi0Ise9xKXoqn.hKastYCnn3qd27VAk5XTvza', '2024-02-19 18:23:35', 'ROLE_MEMBER');
+	(2, 'Admin', 'admin@admin.com', '$2y$10$WTUNywXJ6fkPMMyALUxET.Fv5t3PejJgKAABzd5Ce6np0iT3D8Ao.', '2024-02-20 14:08:22', 'ROLE_ADMIN'),
+	(13, 'pseudo', 'email@email.com', '$2y$10$nVyJ/8LQaZNoD6PNQi0Ise9xKXoqn.hKastYCnn3qd27VAk5XTvza', '2024-02-19 18:23:35', 'ROLE_MEMBER'),
+	(14, 'pseudo2', 'email2@email2.com', '$2y$10$MswtnYsun.GIOGyCGviMy.aGd1ShTH2WGX8hvBVjZRTh4ZhKwJcni', '2024-02-20 17:16:38', 'ROLE_MEMBER');
 
 -- Listage de la structure de table forum. post
 CREATE TABLE IF NOT EXISTS `post` (
@@ -60,9 +61,19 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `topic_id` (`topic_id`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`membre_id`) REFERENCES `membre` (`id_membre`),
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`)
-) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table forum.post : ~0 rows (environ)
+-- Listage des données de la table forum.post : ~9 rows (environ)
+INSERT INTO `post` (`id_post`, `dateCreation`, `dateDerniereModification`, `contenu`, `membre_id`, `topic_id`) VALUES
+	(111, '2024-02-20 17:14:55', '2024-02-20 17:14:55', 'Premier post', 13, 31),
+	(112, '2024-02-20 17:15:30', '2024-02-20 17:15:30', 'Deuxi&egrave;me post', 13, 31),
+	(113, '2024-02-20 17:15:48', '2024-02-20 17:15:48', 'Premier post', 13, 32),
+	(114, '2024-02-20 17:17:45', '2024-02-20 17:17:45', 'Premier post', 14, 33),
+	(115, '2024-02-20 17:18:11', '2024-02-20 17:18:11', 'Premier post', 14, 34),
+	(116, '2024-02-20 17:18:35', '2024-02-20 17:18:35', 'Deuxi&egrave;me post', 14, 32),
+	(117, '2024-02-20 17:18:51', '2024-02-20 17:18:51', 'Troisi&egrave;me post', 14, 32),
+	(118, '2024-02-20 17:20:51', '2024-02-20 17:20:51', 'Deuxi&egrave;me post', 13, 33),
+	(119, '2024-02-20 17:21:08', '2024-02-20 17:21:08', 'Quatri&egrave;me post', 13, 32);
 
 -- Listage de la structure de table forum. topic
 CREATE TABLE IF NOT EXISTS `topic` (
@@ -77,9 +88,14 @@ CREATE TABLE IF NOT EXISTS `topic` (
   KEY `categorie_id` (`categorie_id`),
   CONSTRAINT `topic_ibfk_1` FOREIGN KEY (`membre_id`) REFERENCES `membre` (`id_membre`),
   CONSTRAINT `topic_ibfk_2` FOREIGN KEY (`categorie_id`) REFERENCES `categorie` (`id_categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
--- Listage des données de la table forum.topic : ~0 rows (environ)
+-- Listage des données de la table forum.topic : ~4 rows (environ)
+INSERT INTO `topic` (`id_topic`, `titre`, `dateCreation`, `verrouiller`, `membre_id`, `categorie_id`) VALUES
+	(31, 'Topic 1', '2024-02-20 17:14:55', 0, 13, 3),
+	(32, 'Topic 2', '2024-02-20 17:15:48', 0, 13, 1),
+	(33, 'Topic 3', '2024-02-20 17:17:45', 0, 14, 1),
+	(34, 'Topic 4', '2024-02-20 17:18:11', 0, 14, 3);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
