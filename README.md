@@ -12,3 +12,16 @@ Exercice de création d'un site de type forum avec une gestion de catégorie, to
 | Inscription | Connexion |
 | - | - |
 | ![Page d'inscription](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/inscription.png) | ![Page de connexion](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/connexion.png) |
+
+### Topic
+| Page des topics | Page d'un topic |
+| - | - |
+| ![Page des topics](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_topic.png) | ![Page d'un topic](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_un_topic.png) |
+
+| Modification du titre d'un topic | Modification d'un post |
+| - | - |
+| ![Modification du titre d'un topic](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_modif_titre_topic.png) | ![Modification d'un post](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_modif_post.png) |
+
+| Ajout d'un topic |
+| - |
+| ![Ajout d'un topic](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_ajout_topic.png) |
