@@ -26,6 +26,11 @@ Exercice de création d'un site de type forum avec une gestion de catégorie, to
 | - |
 | ![Ajout d'un topic](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_ajout_topic.png) |
 
+### Catégorie
+| Page des catégories | Page d'une catégorie |
+| - | - |
+| ![Page des catégories](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_categories.png) | ![Page d'une catégorie](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_une_categorie.png) |
+
 ### Profil
 | Page de profil | Modification du pseudo |
 | - | - |
@@ -34,3 +39,8 @@ Exercice de création d'un site de type forum avec une gestion de catégorie, to
 | Modification de l'email | Modification du mot de passe |
 | - | - |
 | ![Modification de l'email](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_modif_email.png) | ![Modification du mot de passe](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_modif_mdp.png) |
+
+### Admin
+| Page de gestion des utilisateurs | Page d'ajout d'une catégorie |
+| - | - |
+| ![Page de gestion des utilisateurs](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_admin_gestion_utilisateur.png) | ![Page d'ajout d'une catégorie](https://github.com/David-SDA/Exercice_Forum/blob/master/assets/page_ajout_categorie.png) |
